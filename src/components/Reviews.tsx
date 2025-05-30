@@ -5,21 +5,24 @@ export const Reviews = () => {
   const reviews = [
     {
       name: "Sarah M.",
+      company: "E-commerce Store Owner",
       rating: 5,
-      comment: "Exactly what I was looking for! The recommendations were spot-on and saved me hours of research.",
-      product: "Premium Product #1"
+      comment: "Migrated from shared hosting to Cloudways and my site is 3x faster! The ThunderStack optimization is incredible. Customer support helped with the entire migration for free.",
+      plan: "DigitalOcean 2GB Plan"
     },
     {
       name: "Mike R.",
+      company: "Web Development Agency", 
       rating: 5,
-      comment: "Great value for money. The detailed reviews helped me make an informed decision.",
-      product: "Best Value Product #2"
+      comment: "Managing 20+ client websites on Cloudways. The staging environments and easy scaling make our workflow so much smoother. Best managed hosting we've used.",
+      plan: "AWS Multi-site Setup"
     },
     {
       name: "Jennifer L.",
-      rating: 4,
-      comment: "Very helpful comparison tables. Made it easy to see the differences between products.",
-      product: "Budget Option #3"
+      company: "WordPress Developer",
+      rating: 5,
+      comment: "The Cloudways Bot is a game-changer! It alerts me about any issues before my clients even notice. Plus the pay-as-you-go pricing saves me money compared to fixed plans.",
+      plan: "Google Cloud Platform"
     }
   ];
 
@@ -28,10 +31,11 @@ export const Reviews = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            What Our Readers Say
+            What Cloudways Customers Say
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Don't just take our word for it. Here's what real customers have to say about our recommendations.
+            Join 250,000+ satisfied customers who chose Cloudways for their managed cloud hosting needs. 
+            See why we maintain a 97% customer retention rate.
           </p>
         </div>
 
@@ -51,11 +55,26 @@ export const Reviews = () => {
                 </p>
                 <div className="border-t pt-4">
                   <p className="font-semibold text-gray-900">{review.name}</p>
-                  <p className="text-sm text-gray-600">Purchased: {review.product}</p>
+                  <p className="text-sm text-gray-600">{review.company}</p>
+                  <p className="text-xs text-blue-600">Using: {review.plan}</p>
                 </div>
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <div className="bg-white p-6 rounded-lg shadow-sm max-w-2xl mx-auto">
+            <h3 className="text-xl font-semibold mb-2">Trusted by Industry Leaders</h3>
+            <p className="text-gray-600 mb-4">Over 250,000 websites hosted • 99.99% uptime • 24/7 expert support</p>
+            <div className="flex justify-center items-center space-x-4 text-sm text-gray-500">
+              <span>⭐ 4.7/5 on Trustpilot</span>
+              <span>•</span>
+              <span>⭐ 4.8/5 on G2</span>
+              <span>•</span> 
+              <span>⭐ 4.6/5 on Capterra</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
