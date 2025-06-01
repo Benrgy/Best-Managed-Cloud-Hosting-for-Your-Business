@@ -7,12 +7,15 @@ import { Comparison } from "@/components/Comparison";
 import { Reviews } from "@/components/Reviews";
 import { CallToAction } from "@/components/CallToAction";
 import { Footer } from "@/components/Footer";
-import { organizationSchema, reviewSchema } from "@/data/structuredData";
+import { SemanticLayout } from "@/components/SemanticLayout";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { SitemapGenerator } from "@/components/SitemapGenerator";
+import { organizationSchema, reviewSchema, faqSchema } from "@/data/structuredData";
 
 const Index = () => {
   const structuredData = {
     "@context": "https://schema.org",
-    "@graph": [organizationSchema, reviewSchema]
+    "@graph": [organizationSchema, reviewSchema, faqSchema]
   };
 
   return (
@@ -24,17 +27,17 @@ const Index = () => {
         canonicalUrl="https://yoursite.lovable.app"
         structuredData={structuredData}
       />
-      <div className="min-h-screen bg-white">
-        <main>
-          <Hero />
-          <ProductShowcase />
-          <Features />
-          <Comparison />
-          <Reviews />
-          <CallToAction />
-        </main>
+      <SemanticLayout>
+        <Breadcrumbs />
+        <Hero />
+        <ProductShowcase />
+        <Features />
+        <Comparison />
+        <Reviews />
+        <CallToAction />
         <Footer />
-      </div>
+        <SitemapGenerator />
+      </SemanticLayout>
     </>
   );
 };

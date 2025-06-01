@@ -1,14 +1,47 @@
+
+User-agent: *
+Allow: /
+
+# Block access to admin or sensitive areas (if any exist in future)
+Disallow: /admin/
+Disallow: /private/
+
+# Allow all major search engine bots
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
-User-agent: Twitterbot
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
 Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
+User-agent: Twitterbot
 Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# Sitemap location
+Sitemap: https://yoursite.lovable.app/sitemap.xml
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1
