@@ -27,10 +27,14 @@ export const SEO = ({
       <meta name="title" content={title} />
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
-      <meta name="robots" content="index, follow" />
-      <meta name="googlebot" content="index, follow" />
+      <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+      <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
       <meta name="language" content="en" />
       <meta name="author" content="Cloudways Hosting Reviews" />
+      <meta name="revisit-after" content="7 days" />
+      
+      {/* Google Search Console Verification */}
+      <meta name="google-site-verification" content="your-google-verification-code" />
       
       {/* Canonical URL */}
       <link rel="canonical" href={canonicalUrl} />
@@ -41,7 +45,10 @@ export const SEO = ({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:site_name" content="Cloudways Hosting Reviews" />
+      <meta property="og:locale" content="en_US" />
       
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -49,11 +56,19 @@ export const SEO = ({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:creator" content="@cloudways" />
+      <meta name="twitter:site" content="@cloudways" />
       
       {/* Additional SEO Meta Tags */}
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
       <meta name="theme-color" content="#2563eb" />
+      <meta name="msapplication-TileColor" content="#2563eb" />
+      
+      {/* Core Web Vitals hints */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://www.googletagmanager.com" />
+      <link rel="dns-prefetch" href="https://cloudways.com" />
       
       {/* Structured Data */}
       {structuredData && (

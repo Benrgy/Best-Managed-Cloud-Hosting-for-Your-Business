@@ -3,13 +3,17 @@ import { SEO } from "@/components/SEO";
 import { Hero } from "@/components/Hero";
 import { ProductShowcase } from "@/components/ProductShowcase";
 import { Features } from "@/components/Features";
+import { About } from "@/components/About";
 import { Comparison } from "@/components/Comparison";
 import { Reviews } from "@/components/Reviews";
+import { FAQ } from "@/components/FAQ";
+import { ConversionOptimized } from "@/components/ConversionOptimized";
 import { CallToAction } from "@/components/CallToAction";
 import { Footer } from "@/components/Footer";
 import { SemanticLayout } from "@/components/SemanticLayout";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SitemapGenerator } from "@/components/SitemapGenerator";
+import { Analytics } from "@/components/Analytics";
 import { organizationSchema, reviewSchema, faqSchema } from "@/data/structuredData";
 
 const Index = () => {
@@ -21,19 +25,23 @@ const Index = () => {
   return (
     <>
       <SEO 
-        title="Best Managed Cloud Hosting for Your Business in 2025 | Cloudways Review"
-        description="Discover why Cloudways is the #1 choice for managed cloud hosting. Get enterprise-level performance, 24/7 support, and flexible pricing starting at $11/month. Free migration included."
-        keywords="best managed cloud hosting, cloudways hosting, business cloud hosting, managed hosting services, cloud hosting providers, wordpress hosting, e-commerce hosting"
+        title="Best Managed Cloud Hosting for Your Business in 2025 | Cloudways Review & Comparison"
+        description="Discover why Cloudways is the #1 choice for managed cloud hosting. Get enterprise-level performance, 24/7 support, and flexible pricing starting at $11/month. Free migration included. Compare top hosting providers and find the perfect solution for your business."
+        keywords="best managed cloud hosting, cloudways hosting, business cloud hosting, managed hosting services, cloud hosting providers, wordpress hosting, e-commerce hosting, enterprise hosting, web hosting comparison, managed hosting reviews"
         canonicalUrl="https://yoursite.lovable.app"
         structuredData={structuredData}
       />
+      <Analytics />
       <SemanticLayout>
         <Breadcrumbs />
         <Hero />
         <ProductShowcase />
         <Features />
+        <About />
         <Comparison />
         <Reviews />
+        <FAQ />
+        <ConversionOptimized />
         <CallToAction />
         <Footer />
         <SitemapGenerator />
