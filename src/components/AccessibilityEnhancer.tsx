@@ -150,7 +150,7 @@ export const AccessibilityEnhancer = () => {
         // Handle Enter key for custom interactive elements
         if (event.key === 'Enter') {
           const target = event.target as HTMLElement;
-          if (target.getAttribute('role') === 'button' && !target.disabled) {
+          if (target.getAttribute('role') === 'button' && !(target as HTMLButtonElement).disabled) {
             target.click();
           }
         }
