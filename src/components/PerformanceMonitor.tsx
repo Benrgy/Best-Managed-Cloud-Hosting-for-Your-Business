@@ -19,7 +19,11 @@ export const PerformanceMonitor = () => {
           const fidObserver = new PerformanceObserver((list) => {
             const entries = list.getEntries();
             entries.forEach((entry) => {
-              console.log('FID:', entry.processingStart - entry.startTime);
+              // Cast to PerformanceEventTiming for FID measurements
+              const eventEntry = entry as any;
+              if (eventEntry.processingStart) {
+                console.log('FID:', eventEntry.processingStart - eventEntry.startTime);
+              }
             });
           });
           fidObserver.observe({ type: 'first-input', buffered: true });
@@ -28,8 +32,10 @@ export const PerformanceMonitor = () => {
           const clsObserver = new PerformanceObserver((list) => {
             const entries = list.getEntries();
             entries.forEach((entry) => {
-              if (!entry.hadRecentInput) {
-                console.log('CLS:', entry.value);
+              // Cast to layout shift entry type
+              const layoutEntry = entry as any;
+              if (layoutEntry.hadRecentInput !== undefined && !layoutEntry.hadRecentInput) {
+                console.log('CLS:', layoutEntry.value);
               }
             });
           });
