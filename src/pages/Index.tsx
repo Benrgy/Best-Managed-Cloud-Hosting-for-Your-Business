@@ -42,10 +42,10 @@ const Index = () => {
   return (
     <>
       <SEO 
-        title="Best Cloud Hosting for Business 2025 | Cloudways"
-        description="Cloudways is the #1 managed cloud hosting choice. Enterprise performance, 24/7 support, flexible pricing from $11/month. Free migration included."
-        keywords="best managed cloud hosting, cloudways hosting, business cloud hosting, managed hosting services, cloud hosting providers, wordpress hosting, e-commerce hosting, enterprise hosting, web hosting comparison, managed hosting reviews, thunderstack technology, aws hosting, google cloud hosting"
-        canonicalUrl="https://yoursite.lovable.app"
+        title="Beste Beheerde Cloud Hosting Nederland 2025 | Cloudways Review"
+        description="Cloudways is de #1 beheerde cloud hosting keuze in Nederland. Enterprise prestaties, 24/7 support, flexibele prijzen vanaf €10/maand. Gratis migratie inbegrepen."
+        keywords="beste beheerde cloud hosting nederland, cloudways hosting, zakelijke cloud hosting, managed hosting diensten, cloud hosting providers nederland, wordpress hosting, e-commerce hosting, enterprise hosting, web hosting vergelijking, beheerde hosting reviews, thunderstack technologie, aws hosting nederland, google cloud hosting"
+        canonicalUrl="https://cloudways-review.nl"
         structuredData={structuredData}
       />
       <Analytics />
