@@ -1,21 +1,37 @@
 
 # Robots.txt for Best Managed Cloud Hosting Reviews
-# Generated: 2025-01-01
+# Enhanced for better SEO performance
+# Last Updated: 2025-01-02
 
 User-agent: *
 Allow: /
 
-# Block access to admin or sensitive areas
+# Enhanced crawl directives
+Crawl-delay: 1
+
+# Block access to admin, API, and development areas
 Disallow: /admin/
 Disallow: /private/
 Disallow: /api/
 Disallow: /_next/
 Disallow: /404.html
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /src/
 
-# Allow all major search engine bots
+# Allow important static assets
+Allow: /images/
+Allow: /css/
+Allow: /js/
+Allow: /fonts/
+Allow: /favicon.ico
+Allow: /*.css$
+Allow: /*.js$
+
+# Priority search engine bots (faster crawl rates)
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 1
+Crawl-delay: 0.5
 
 User-agent: Bingbot
 Allow: /
@@ -37,15 +53,18 @@ User-agent: YandexBot
 Allow: /
 Crawl-delay: 2
 
-# Social media crawlers
+# Social media and messaging platform crawlers
 User-agent: facebookexternalhit
 Allow: /
+Crawl-delay: 0.5
 
 User-agent: Twitterbot
 Allow: /
+Crawl-delay: 0.5
 
 User-agent: LinkedInBot
 Allow: /
+Crawl-delay: 1
 
 User-agent: WhatsApp
 Allow: /
@@ -59,7 +78,13 @@ Allow: /
 User-agent: SkypeUriPreview
 Allow: /
 
-# Block problematic bots
+User-agent: TelegramBot
+Allow: /
+
+User-agent: DiscordBot
+Allow: /
+
+# Block SEO analysis and scraping bots
 User-agent: MJ12bot
 Disallow: /
 
@@ -72,11 +97,57 @@ Disallow: /
 User-agent: MegaIndex
 Disallow: /
 
-# Sitemap location
+User-agent: dotbot
+Disallow: /
+
+User-agent: spbot
+Disallow: /
+
+User-agent: SiteAuditBot
+Disallow: /
+
+User-agent: MauiBot
+Disallow: /
+
+User-agent: DomainStatsBot
+Disallow: /
+
+User-agent: LinkpadBot
+Disallow: /
+
+User-agent: serpstatbot
+Disallow: /
+
+# Block generic scrapers and bad bots
+User-agent: *Bot*
+Disallow: /
+
+User-agent: *Spider*
+Disallow: /
+
+User-agent: *Crawler*
+Disallow: /
+
+# Block bandwidth-heavy bots
+User-agent: 008
+Disallow: /
+
+User-agent: voltron
+Disallow: /
+
+User-agent: grapeshot
+Disallow: /
+
+# Primary sitemap location
 Sitemap: https://yoursite.lovable.app/sitemap.xml
 
-# General crawl delay for respectful crawling
-Crawl-delay: 1
+# Alternative sitemap formats
+Sitemap: https://yoursite.lovable.app/sitemap-index.xml
 
-# Host directive (non-standard but used by some bots)
+# Host directive for canonical domain
 Host: yoursite.lovable.app
+
+# Additional SEO directives
+# Cache-Control: max-age=86400
+# Clean-param: utm_source&utm_medium&utm_campaign
+

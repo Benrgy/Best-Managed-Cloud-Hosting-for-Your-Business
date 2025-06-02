@@ -1,4 +1,3 @@
-
 import { SEO } from "@/components/SEO";
 import { Hero } from "@/components/Hero";
 import { ProductShowcase } from "@/components/ProductShowcase";
@@ -14,6 +13,7 @@ import { SemanticLayout } from "@/components/SemanticLayout";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SitemapGenerator } from "@/components/SitemapGenerator";
 import { Analytics } from "@/components/Analytics";
+import { AccessibilityEnhancer } from "@/components/AccessibilityEnhancer";
 import { 
   organizationSchema, 
   websiteSchema, 
@@ -48,6 +48,7 @@ const Index = () => {
         structuredData={structuredData}
       />
       <Analytics />
+      <AccessibilityEnhancer />
       <SemanticLayout>
         <Breadcrumbs />
         <Hero />

@@ -20,7 +20,9 @@ export const Analytics = () => {
       gtag('js', new Date());
       gtag('config', '${GA_TRACKING_ID}', {
         page_title: document.title,
-        page_location: window.location.href
+        page_location: window.location.href,
+        custom_map: {'dimension1': 'user_type'},
+        enhanced_conversions: true
       });
     `;
     document.head.appendChild(script2);
@@ -52,38 +54,119 @@ export const Analytics = () => {
 
     window.addEventListener('popstate', trackPageView);
 
-    // Cleanup
-    return () => {
-      window.removeEventListener('popstate', trackPageView);
-      history.pushState = originalPushState;
-      history.replaceState = originalReplaceState;
+    // Enhanced conversion tracking
+    const trackConversion = (conversionType: string, value?: number) => {
+      if (typeof window.gtag !== 'undefined') {
+        window.gtag('event', 'conversion', {
+          event_category: 'conversion',
+          event_label: conversionType,
+          value: value || 1,
+          currency: 'USD'
+        });
+      }
     };
-  }, []);
 
-  // Track affiliate link clicks
-  useEffect(() => {
-    const trackAffiliateClick = (event: Event) => {
-      const target = event.target as HTMLElement;
-      const link = target.closest('a, button');
-      
-      if (link && (
-        link.getAttribute('href')?.includes('cloudways.com') ||
-        link.getAttribute('onclick')?.includes('cloudways.com')
-      )) {
+    // Track scroll depth
+    let maxScroll = 0;
+    const trackScrollDepth = () => {
+      const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+      if (scrollPercent > maxScroll && scrollPercent % 25 === 0) {
+        maxScroll = scrollPercent;
         if (typeof window.gtag !== 'undefined') {
-          window.gtag('event', 'affiliate_click', {
+          window.gtag('event', 'scroll_depth', {
             event_category: 'engagement',
-            event_label: 'cloudways_affiliate',
-            value: 1
+            event_label: `${scrollPercent}%`,
+            value: scrollPercent
           });
         }
       }
     };
 
-    document.addEventListener('click', trackAffiliateClick);
+    window.addEventListener('scroll', trackScrollDepth);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('popstate', trackPageView);
+      window.removeEventListener('scroll', trackScrollDepth);
+      history.pushState = originalPushState;
+      history.replaceState = originalReplaceState;
+    };
+  }, []);
+
+  // Track affiliate link clicks and conversions
+  useEffect(() => {
+    const trackInteraction = (event: Event) => {
+      const target = event.target as HTMLElement;
+      const link = target.closest('a, button');
+      
+      if (link) {
+        const href = link.getAttribute('href');
+        const onclick = link.getAttribute('onclick');
+        
+        // Track affiliate clicks
+        if (href?.includes('cloudways.com') || onclick?.includes('cloudways.com')) {
+          if (typeof window.gtag !== 'undefined') {
+            window.gtag('event', 'affiliate_click', {
+              event_category: 'conversion',
+              event_label: 'cloudways_cta',
+              value: 1
+            });
+          }
+        }
+
+        // Track email signups
+        if (link.textContent?.toLowerCase().includes('subscribe') || 
+            link.textContent?.toLowerCase().includes('newsletter')) {
+          if (typeof window.gtag !== 'undefined') {
+            window.gtag('event', 'email_signup_intent', {
+              event_category: 'engagement',
+              event_label: 'newsletter',
+              value: 1
+            });
+          }
+        }
+
+        // Track trial signups
+        if (link.textContent?.toLowerCase().includes('trial') || 
+            link.textContent?.toLowerCase().includes('free')) {
+          if (typeof window.gtag !== 'undefined') {
+            window.gtag('event', 'trial_signup_intent', {
+              event_category: 'conversion',
+              event_label: 'free_trial',
+              value: 10
+            });
+          }
+        }
+      }
+    };
+
+    document.addEventListener('click', trackInteraction);
     
     return () => {
-      document.removeEventListener('click', trackAffiliateClick);
+      document.removeEventListener('click', trackInteraction);
+    };
+  }, []);
+
+  // Track time on page
+  useEffect(() => {
+    const startTime = Date.now();
+    
+    const trackTimeOnPage = () => {
+      const timeSpent = Math.round((Date.now() - startTime) / 1000);
+      if (timeSpent > 30 && typeof window.gtag !== 'undefined') {
+        window.gtag('event', 'time_on_page', {
+          event_category: 'engagement',
+          event_label: 'quality_visitor',
+          value: timeSpent
+        });
+      }
+    };
+
+    // Track when user leaves page
+    window.addEventListener('beforeunload', trackTimeOnPage);
+    
+    return () => {
+      window.removeEventListener('beforeunload', trackTimeOnPage);
     };
   }, []);
 
