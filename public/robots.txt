@@ -1,12 +1,12 @@
 
-# Robots.txt for Beste Beheerde Cloud Hosting Reviews Nederland
-# Enhanced for better Dutch SEO performance
+# Robots.txt for Best Managed Cloud Hosting Reviews
+# Enhanced for better SEO performance
 # Last Updated: 2025-06-02
 
 User-agent: *
 Allow: /
 
-# Enhanced crawl directives for Dutch market
+# Enhanced crawl directives
 Crawl-delay: 1
 
 # Block access to admin, API, and development areas
@@ -28,7 +28,7 @@ Allow: /favicon.ico
 Allow: /*.css$
 Allow: /*.js$
 
-# Priority search engine bots (faster crawl rates for Dutch market)
+# Priority search engine bots (faster crawl rates)
 User-agent: Googlebot
 Allow: /
 Crawl-delay: 0.5
@@ -138,14 +138,13 @@ Disallow: /
 User-agent: grapeshot
 Disallow: /
 
-# Primary sitemap location for Dutch site
-Sitemap: https://cloudways-review.nl/sitemap.xml
-Sitemap: https://cloudways-review.nl/sitemap-index.xml
+# Primary sitemap location
+Sitemap: https://yoursite.lovable.app/sitemap.xml
+Sitemap: https://yoursite.lovable.app/sitemap-index.xml
 
-# Host directive for canonical Dutch domain
-Host: cloudways-review.nl
+# Host directive for canonical domain
+Host: yoursite.lovable.app
 
-# Additional SEO directives for Dutch market
+# Additional SEO directives
 # Cache-Control: max-age=86400
 # Clean-param: utm_source&utm_medium&utm_campaign
-

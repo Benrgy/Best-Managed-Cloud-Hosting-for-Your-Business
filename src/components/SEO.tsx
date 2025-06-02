@@ -12,10 +12,10 @@ interface SEOProps {
 }
 
 export const SEO = ({
-  title = "Beste Beheerde Cloud Hosting Nederland 2025 | Cloudways Review",
-  description = "Cloudways is de #1 beheerde cloud hosting keuze in Nederland. Enterprise prestaties, 24/7 support, flexibele prijzen vanaf €10/maand. Gratis migratie inbegrepen.",
-  keywords = "beste beheerde cloud hosting nederland, cloudways hosting, zakelijke cloud hosting, managed hosting diensten, cloud hosting providers nederland, wordpress hosting, e-commerce hosting, enterprise hosting, web hosting vergelijking, beheerde hosting reviews, thunderstack technologie, aws hosting nederland, google cloud hosting",
-  canonicalUrl = "https://cloudways-review.nl",
+  title = "Best Managed Cloud Hosting 2025 | Cloudways Review & Comparison",
+  description = "Cloudways is the #1 managed cloud hosting choice for businesses. Enterprise performance, 24/7 support, flexible pricing from $11/month. Free migration included.",
+  keywords = "best managed cloud hosting, cloudways hosting, business cloud hosting, managed hosting services, cloud hosting providers, wordpress hosting, ecommerce hosting, enterprise hosting, web hosting comparison, managed hosting reviews, thunderstack technology, aws hosting, google cloud hosting",
+  canonicalUrl = "https://yoursite.lovable.app",
   ogImage = "https://lovable.dev/opengraph-image-p98pqg.png",
   ogType = "website",
   structuredData
@@ -29,32 +29,28 @@ export const SEO = ({
       <meta name="keywords" content={keywords} />
       <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
       <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-      <meta name="language" content="nl" />
-      <meta name="author" content="Cloudways Hosting Reviews Nederland" />
+      <meta name="language" content="en" />
+      <meta name="author" content="Cloudways Hosting Reviews" />
       <meta name="revisit-after" content="7 days" />
-      <meta name="geo.region" content="NL" />
-      <meta name="geo.country" content="Netherlands" />
-      <meta name="geo.placename" content="Nederland" />
       
       {/* Enhanced meta tags for better SEO */}
       <meta name="distribution" content="global" />
       <meta name="rating" content="general" />
-      <meta name="coverage" content="Netherlands" />
+      <meta name="coverage" content="Worldwide" />
       <meta name="target" content="all" />
       <meta name="HandheldFriendly" content="true" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       
       {/* Google Search Console Verification */}
-      <meta name="google-site-verification" content="your-google-verification-code-nl" />
+      <meta name="google-site-verification" content="your-google-verification-code" />
       
       {/* Canonical URL */}
       <link rel="canonical" href={canonicalUrl} />
       
       {/* hreflang for multilingual SEO */}
       <link rel="alternate" href="https://yoursite.lovable.app" hrefLang="en" />
-      <link rel="alternate" href="https://cloudways-review.nl" hrefLang="nl" />
-      <link rel="alternate" href="https://cloudways-review.nl" hrefLang="x-default" />
+      <link rel="alternate" href="https://yoursite.lovable.app" hrefLang="x-default" />
       
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={ogType} />
@@ -64,10 +60,10 @@ export const SEO = ({
       <meta property="og:image" content={ogImage} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:site_name" content="Cloudways Hosting Reviews Nederland" />
-      <meta property="og:locale" content="nl_NL" />
-      <meta property="article:author" content="Cloudways Hosting Reviews Nederland" />
-      <meta property="article:publisher" content="https://cloudways-review.nl" />
+      <meta property="og:site_name" content="Cloudways Hosting Reviews" />
+      <meta property="og:locale" content="en_US" />
+      <meta property="article:author" content="Cloudways Hosting Reviews" />
+      <meta property="article:publisher" content="https://yoursite.lovable.app" />
       
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -77,7 +73,7 @@ export const SEO = ({
       <meta name="twitter:image" content={ogImage} />
       <meta name="twitter:creator" content="@cloudways" />
       <meta name="twitter:site" content="@cloudways" />
-      <meta name="twitter:domain" content="cloudways-review.nl" />
+      <meta name="twitter:domain" content="yoursite.lovable.app" />
       
       {/* Additional SEO Meta Tags */}
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
@@ -85,7 +81,7 @@ export const SEO = ({
       <meta name="theme-color" content="#2563eb" />
       <meta name="msapplication-TileColor" content="#2563eb" />
       <meta name="msapplication-navbutton-color" content="#2563eb" />
-      <meta name="apple-mobile-web-app-title" content="Cloudways Hosting Reviews Nederland" />
+      <meta name="apple-mobile-web-app-title" content="Cloudways Hosting Reviews" />
       
       {/* Critical resource preloading for better LCP */}
       <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" />
@@ -103,9 +99,9 @@ export const SEO = ({
           "@context": "https://schema.org",
           "@type": "WebSite",
           "url": "${canonicalUrl}",
-          "name": "Cloudways Hosting Reviews Nederland",
+          "name": "Cloudways Hosting Reviews",
           "description": "${description}",
-          "inLanguage": "nl"
+          "inLanguage": "en"
         }`}
       </script>
       
