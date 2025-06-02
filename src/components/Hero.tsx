@@ -30,9 +30,8 @@ export const Hero = () => {
 
         <header>
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            Best <span className="text-blue-600 relative">
+            Best <span className="text-blue-600">
               Managed Cloud Hosting
-              <div className="absolute -bottom-2 left-0 right-0 h-1 bg-blue-200 rounded"></div>
             </span><br />
             for Your Business in 2025
           </h1>
