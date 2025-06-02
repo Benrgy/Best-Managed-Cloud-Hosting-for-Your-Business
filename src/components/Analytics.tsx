@@ -1,36 +1,60 @@
-
 import { useEffect } from 'react';
 
 export const Analytics = () => {
   useEffect(() => {
-    // Google Analytics 4 setup
-    const GA_TRACKING_ID = 'G-XXXXXXXXXX'; // Replace with actual GA4 tracking ID
-    
-    // Load Google Analytics script
-    const script1 = document.createElement('script');
-    script1.async = true;
-    script1.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
-    document.head.appendChild(script1);
+    // Defer analytics loading to improve performance
+    const loadAnalytics = () => {
+      const GA_TRACKING_ID = 'G-XXXXXXXXXX'; // Replace with actual GA4 tracking ID
+      
+      // Load Google Analytics script with defer
+      const script1 = document.createElement('script');
+      script1.async = true;
+      script1.defer = true;
+      script1.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
+      document.head.appendChild(script1);
 
-    // Initialize Google Analytics
-    const script2 = document.createElement('script');
-    script2.innerHTML = `
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '${GA_TRACKING_ID}', {
-        page_title: document.title,
-        page_location: window.location.href,
-        custom_map: {'dimension1': 'user_type'},
-        enhanced_conversions: true
-      });
-    `;
-    document.head.appendChild(script2);
+      // Initialize Google Analytics after a delay to reduce main thread blocking
+      const script2 = document.createElement('script');
+      script2.innerHTML = `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${GA_TRACKING_ID}', {
+          page_title: document.title,
+          page_location: window.location.href,
+          custom_map: {'dimension1': 'user_type'},
+          enhanced_conversions: true,
+          send_page_view: false
+        });
+      `;
+      document.head.appendChild(script2);
+
+      // Track initial page view
+      setTimeout(() => {
+        if (typeof window.gtag !== 'undefined') {
+          window.gtag('event', 'page_view', {
+            page_title: document.title,
+            page_location: window.location.href,
+            page_path: window.location.pathname
+          });
+        }
+      }, 100);
+    };
+
+    // Use requestIdleCallback for better performance
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => {
+        loadAnalytics();
+      }, { timeout: 2000 });
+    } else {
+      // Fallback for browsers without requestIdleCallback
+      setTimeout(loadAnalytics, 1000);
+    }
 
     // Track page views for SPA
     const trackPageView = () => {
       if (typeof window.gtag !== 'undefined') {
-        window.gtag('config', GA_TRACKING_ID, {
+        window.gtag('event', 'page_view', {
           page_title: document.title,
           page_location: window.location.href,
           page_path: window.location.pathname
@@ -66,23 +90,28 @@ export const Analytics = () => {
       }
     };
 
-    // Track scroll depth
+    // Optimized scroll depth tracking (throttled)
     let maxScroll = 0;
+    let scrollTimeout: NodeJS.Timeout;
+    
     const trackScrollDepth = () => {
-      const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
-      if (scrollPercent > maxScroll && scrollPercent % 25 === 0) {
-        maxScroll = scrollPercent;
-        if (typeof window.gtag !== 'undefined') {
-          window.gtag('event', 'scroll_depth', {
-            event_category: 'engagement',
-            event_label: `${scrollPercent}%`,
-            value: scrollPercent
-          });
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+        if (scrollPercent > maxScroll && scrollPercent % 25 === 0) {
+          maxScroll = scrollPercent;
+          if (typeof window.gtag !== 'undefined') {
+            window.gtag('event', 'scroll_depth', {
+              event_category: 'engagement',
+              event_label: `${scrollPercent}%`,
+              value: scrollPercent
+            });
+          }
         }
-      }
+      }, 100);
     };
 
-    window.addEventListener('scroll', trackScrollDepth);
+    window.addEventListener('scroll', trackScrollDepth, { passive: true });
 
     // Cleanup
     return () => {
@@ -90,6 +119,7 @@ export const Analytics = () => {
       window.removeEventListener('scroll', trackScrollDepth);
       history.pushState = originalPushState;
       history.replaceState = originalReplaceState;
+      if (scrollTimeout) clearTimeout(scrollTimeout);
     };
   }, []);
 

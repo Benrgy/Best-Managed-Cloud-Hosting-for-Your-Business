@@ -12,8 +12,8 @@ interface SEOProps {
 }
 
 export const SEO = ({
-  title = "Best Managed Cloud Hosting for Your Business in 2025 | Cloudways Review",
-  description = "Discover why Cloudways is the #1 choice for managed cloud hosting. Get enterprise-level performance, 24/7 support, and flexible pricing starting at $11/month. Free migration included.",
+  title = "Best Cloud Hosting for Business 2025 | Cloudways",
+  description = "Cloudways is the #1 managed cloud hosting choice. Enterprise performance, 24/7 support, flexible pricing from $11/month. Free migration included.",
   keywords = "best managed cloud hosting, cloudways hosting, business cloud hosting, managed hosting services, cloud hosting providers, wordpress hosting, e-commerce hosting, enterprise hosting, web hosting comparison, managed hosting reviews",
   canonicalUrl = "https://yoursite.lovable.app",
   ogImage = "https://lovable.dev/opengraph-image-p98pqg.png",
@@ -79,15 +79,26 @@ export const SEO = ({
       <meta name="msapplication-navbutton-color" content="#2563eb" />
       <meta name="apple-mobile-web-app-title" content="Cloudways Hosting Reviews" />
       
+      {/* Critical resource preloading for better LCP */}
+      <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" />
+      <link rel="preload" as="image" href="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80" />
+      
       {/* Performance and Core Web Vitals hints */}
       <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link rel="preconnect" href="https://www.googletagmanager.com" />
       <link rel="dns-prefetch" href="https://cloudways.com" />
       <link rel="dns-prefetch" href="https://www.google-analytics.com" />
       
-      {/* Preload critical resources */}
-      <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+      {/* Defer non-critical third-party scripts */}
+      <script type="application/ld+json">
+        {`{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "url": "${canonicalUrl}",
+          "name": "Cloudways Hosting Reviews",
+          "description": "${description}"
+        }`}
+      </script>
       
       {/* Favicon and app icons */}
       <link rel="icon" type="image/x-icon" href="/favicon.ico" />

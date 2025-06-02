@@ -1,7 +1,7 @@
 
 # Robots.txt for Best Managed Cloud Hosting Reviews
 # Enhanced for better SEO performance
-# Last Updated: 2025-01-02
+# Last Updated: 2025-06-02
 
 User-agent: *
 Allow: /
@@ -140,6 +140,7 @@ Disallow: /
 
 # Primary sitemap location
 Sitemap: https://yoursite.lovable.app/sitemap.xml
+Sitemap: https://preview--best-managed-cloud-hosting-for-business.lovable.app/sitemap.xml
 
 # Alternative sitemap formats
 Sitemap: https://yoursite.lovable.app/sitemap-index.xml
@@ -150,4 +151,3 @@ Host: yoursite.lovable.app
 # Additional SEO directives
 # Cache-Control: max-age=86400
 # Clean-param: utm_source&utm_medium&utm_campaign
-
