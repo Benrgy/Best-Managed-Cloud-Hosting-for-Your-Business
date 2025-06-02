@@ -14,20 +14,36 @@ import { SemanticLayout } from "@/components/SemanticLayout";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SitemapGenerator } from "@/components/SitemapGenerator";
 import { Analytics } from "@/components/Analytics";
-import { organizationSchema, reviewSchema, faqSchema } from "@/data/structuredData";
+import { 
+  organizationSchema, 
+  websiteSchema, 
+  productSchema, 
+  reviewSchema, 
+  breadcrumbSchema, 
+  faqSchema, 
+  howToSchema 
+} from "@/data/structuredData";
 
 const Index = () => {
   const structuredData = {
     "@context": "https://schema.org",
-    "@graph": [organizationSchema, reviewSchema, faqSchema]
+    "@graph": [
+      organizationSchema, 
+      websiteSchema,
+      productSchema,
+      reviewSchema, 
+      breadcrumbSchema,
+      faqSchema,
+      howToSchema
+    ]
   };
 
   return (
     <>
       <SEO 
-        title="Best Managed Cloud Hosting for Your Business in 2025 | Cloudways Review & Comparison"
-        description="Discover why Cloudways is the #1 choice for managed cloud hosting. Get enterprise-level performance, 24/7 support, and flexible pricing starting at $11/month. Free migration included. Compare top hosting providers and find the perfect solution for your business."
-        keywords="best managed cloud hosting, cloudways hosting, business cloud hosting, managed hosting services, cloud hosting providers, wordpress hosting, e-commerce hosting, enterprise hosting, web hosting comparison, managed hosting reviews"
+        title="Best Managed Cloud Hosting for Your Business in 2025 | Cloudways Review & Complete Guide"
+        description="Discover why Cloudways is the #1 choice for managed cloud hosting. Get enterprise-level performance, ThunderStack optimization, 24/7 expert support, and flexible pricing starting at $11/month. Free migration, SSL, and 99.99% uptime guarantee included."
+        keywords="best managed cloud hosting, cloudways hosting, business cloud hosting, managed hosting services, cloud hosting providers, wordpress hosting, e-commerce hosting, enterprise hosting, web hosting comparison, managed hosting reviews, thunderstack technology, aws hosting, google cloud hosting"
         canonicalUrl="https://yoursite.lovable.app"
         structuredData={structuredData}
       />

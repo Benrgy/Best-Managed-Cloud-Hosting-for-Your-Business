@@ -1,30 +1,43 @@
 
+# Robots.txt for Best Managed Cloud Hosting Reviews
+# Generated: 2025-01-01
+
 User-agent: *
 Allow: /
 
-# Block access to admin or sensitive areas (if any exist in future)
+# Block access to admin or sensitive areas
 Disallow: /admin/
 Disallow: /private/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /404.html
 
 # Allow all major search engine bots
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Slurp
 Allow: /
+Crawl-delay: 1
 
 User-agent: DuckDuckBot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Baiduspider
 Allow: /
+Crawl-delay: 2
 
 User-agent: YandexBot
 Allow: /
+Crawl-delay: 2
 
+# Social media crawlers
 User-agent: facebookexternalhit
 Allow: /
 
@@ -40,8 +53,30 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
+User-agent: Slackbot
+Allow: /
+
+User-agent: SkypeUriPreview
+Allow: /
+
+# Block problematic bots
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MegaIndex
+Disallow: /
+
 # Sitemap location
 Sitemap: https://yoursite.lovable.app/sitemap.xml
 
-# Crawl delay for respectful crawling
+# General crawl delay for respectful crawling
 Crawl-delay: 1
+
+# Host directive (non-standard but used by some bots)
+Host: yoursite.lovable.app

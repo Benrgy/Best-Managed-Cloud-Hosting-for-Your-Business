@@ -14,7 +14,7 @@ interface SEOProps {
 export const SEO = ({
   title = "Best Managed Cloud Hosting for Your Business in 2025 | Cloudways Review",
   description = "Discover why Cloudways is the #1 choice for managed cloud hosting. Get enterprise-level performance, 24/7 support, and flexible pricing starting at $11/month. Free migration included.",
-  keywords = "best managed cloud hosting, cloudways hosting, business cloud hosting, managed hosting services, cloud hosting providers, wordpress hosting, e-commerce hosting",
+  keywords = "best managed cloud hosting, cloudways hosting, business cloud hosting, managed hosting services, cloud hosting providers, wordpress hosting, e-commerce hosting, enterprise hosting, web hosting comparison, managed hosting reviews",
   canonicalUrl = "https://yoursite.lovable.app",
   ogImage = "https://lovable.dev/opengraph-image-p98pqg.png",
   ogType = "website",
@@ -33,6 +33,15 @@ export const SEO = ({
       <meta name="author" content="Cloudways Hosting Reviews" />
       <meta name="revisit-after" content="7 days" />
       
+      {/* Enhanced meta tags for better SEO */}
+      <meta name="distribution" content="global" />
+      <meta name="rating" content="general" />
+      <meta name="coverage" content="worldwide" />
+      <meta name="target" content="all" />
+      <meta name="HandheldFriendly" content="true" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      
       {/* Google Search Console Verification */}
       <meta name="google-site-verification" content="your-google-verification-code" />
       
@@ -49,6 +58,8 @@ export const SEO = ({
       <meta property="og:image:height" content="630" />
       <meta property="og:site_name" content="Cloudways Hosting Reviews" />
       <meta property="og:locale" content="en_US" />
+      <meta property="article:author" content="Cloudways Hosting Reviews" />
+      <meta property="article:publisher" content="https://yoursite.lovable.app" />
       
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -58,17 +69,32 @@ export const SEO = ({
       <meta name="twitter:image" content={ogImage} />
       <meta name="twitter:creator" content="@cloudways" />
       <meta name="twitter:site" content="@cloudways" />
+      <meta name="twitter:domain" content="yoursite.lovable.app" />
       
       {/* Additional SEO Meta Tags */}
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
       <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
       <meta name="theme-color" content="#2563eb" />
       <meta name="msapplication-TileColor" content="#2563eb" />
+      <meta name="msapplication-navbutton-color" content="#2563eb" />
+      <meta name="apple-mobile-web-app-title" content="Cloudways Hosting Reviews" />
       
-      {/* Core Web Vitals hints */}
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      {/* Performance and Core Web Vitals hints */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link rel="preconnect" href="https://www.googletagmanager.com" />
       <link rel="dns-prefetch" href="https://cloudways.com" />
+      <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+      
+      {/* Preload critical resources */}
+      <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+      
+      {/* Favicon and app icons */}
+      <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+      <link rel="manifest" href="/site.webmanifest" />
       
       {/* Structured Data */}
       {structuredData && (
