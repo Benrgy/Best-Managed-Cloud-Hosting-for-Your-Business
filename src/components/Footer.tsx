@@ -39,11 +39,11 @@ export const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Cloud Providers</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#features" className="text-gray-300 hover:text-white">DigitalOcean Hosting</a></li>
-              <li><a href="#features" className="text-gray-300 hover:text-white">AWS Hosting</a></li>
-              <li><a href="#features" className="text-gray-300 hover:text-white">Google Cloud Hosting</a></li>
-              <li><a href="#features" className="text-gray-300 hover:text-white">Linode Hosting</a></li>
-              <li><a href="#features" className="text-gray-300 hover:text-white">Vultr Hosting</a></li>
+              <li><a href="#product-showcase" className="text-gray-300 hover:text-white">DigitalOcean Hosting</a></li>
+              <li><a href="#product-showcase" className="text-gray-300 hover:text-white">AWS Hosting</a></li>
+              <li><a href="#product-showcase" className="text-gray-300 hover:text-white">Google Cloud Hosting</a></li>
+              <li><a href="#product-showcase" className="text-gray-300 hover:text-white">Linode Hosting</a></li>
+              <li><a href="#product-showcase" className="text-gray-300 hover:text-white">Vultr Hosting</a></li>
             </ul>
           </div>
 

@@ -1,115 +1,159 @@
 
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Star, Users, Zap, Shield, Clock, Award } from "lucide-react";
 
 export const ProductShowcase = () => {
-  const hostingPlans = [
+  const plans = [
     {
-      id: 1,
-      name: "DigitalOcean - 1GB",
-      rating: 4.9,
-      reviews: 2500,
-      price: "$11/month",
-      originalPrice: "$14/month",
-      badge: "Most Popular",
-      provider: "DigitalOcean",
-      features: ["1GB RAM", "25GB Storage", "1TB Bandwidth", "Free SSL", "24/7 Support"]
+      name: "DigitalOcean Basic",
+      price: "$11",
+      period: "/month",
+      description: "Perfect for small websites and blogs",
+      features: [
+        "1 GB RAM",
+        "1 Core Processor", 
+        "25 GB Storage",
+        "1 TB Bandwidth",
+        "1 Website",
+        "Free SSL Certificate"
+      ],
+      popular: false,
+      provider: "DigitalOcean"
     },
     {
-      id: 2,
-      name: "DigitalOcean - 2GB", 
-      rating: 4.8,
-      reviews: 1890,
-      price: "$24/month",
-      originalPrice: "$30/month",
-      badge: "Best Performance",
-      provider: "DigitalOcean",
-      features: ["2GB RAM", "50GB Storage", "2TB Bandwidth", "Free SSL", "Advanced Caching"]
+      name: "Linode Standard",
+      price: "$22",
+      period: "/month", 
+      description: "Ideal for growing businesses",
+      features: [
+        "2 GB RAM",
+        "1 Core Processor",
+        "50 GB Storage", 
+        "2 TB Bandwidth",
+        "5 Websites",
+        "Free SSL Certificate",
+        "Free Backups"
+      ],
+      popular: true,
+      provider: "Linode"
     },
     {
-      id: 3,
-      name: "AWS - 1GB",
-      rating: 4.7,
-      reviews: 1250,
-      price: "$36/month",
-      originalPrice: "$45/month",
-      badge: "Enterprise Ready",
-      provider: "Amazon AWS",
-      features: ["1GB RAM", "25GB Storage", "1TB Bandwidth", "AWS Infrastructure", "Premium Support"]
+      name: "AWS Advanced",
+      price: "$42",
+      period: "/month",
+      description: "For high-traffic websites", 
+      features: [
+        "4 GB RAM",
+        "2 Core Processors",
+        "80 GB Storage",
+        "4 TB Bandwidth", 
+        "10 Websites",
+        "Free SSL Certificate",
+        "Free Backups",
+        "Staging Environment"
+      ],
+      popular: false,
+      provider: "AWS"
+    }
+  ];
+
+  const features = [
+    {
+      icon: <Zap className="h-6 w-6 text-blue-600" />,
+      title: "Lightning Fast Performance",
+      description: "Optimized servers with SSD storage and advanced caching"
+    },
+    {
+      icon: <Shield className="h-6 w-6 text-green-600" />,
+      title: "Enterprise Security", 
+      description: "Advanced firewalls, malware scanning, and SSL certificates"
+    },
+    {
+      icon: <Users className="h-6 w-6 text-purple-600" />,
+      title: "24/7 Expert Support",
+      description: "Round-the-clock assistance from certified hosting experts"
+    },
+    {
+      icon: <Clock className="h-6 w-6 text-orange-600" />,
+      title: "99.9% Uptime SLA",
+      description: "Guaranteed reliability with industry-leading uptime"
+    },
+    {
+      icon: <Award className="h-6 w-6 text-red-600" />,
+      title: "Award-Winning Platform", 
+      description: "Recognized as the best managed cloud hosting solution"
     }
   ];
 
   return (
-    <section className="py-16 px-4 bg-white" id="hosting-plans">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
+    <section id="product-showcase" className="py-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Cloudways Managed Cloud Hosting Plans
+            Choose Your Perfect Hosting Plan
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Choose from 6 top cloud providers including DigitalOcean, AWS, Google Cloud, and more. 
-            All plans include ThunderStack optimization and free migration.
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Scalable cloud hosting solutions powered by top-tier infrastructure providers. 
+            Start with what you need and scale as you grow.
           </p>
-          <div className="mt-4 p-3 bg-green-100 text-green-800 rounded-lg inline-block">
-            <strong>Limited Time:</strong> Save 20% for 3 months with code "G2Saveme20"
-          </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {hostingPlans.map((plan) => (
-            <Card key={plan.id} className="relative hover:shadow-lg transition-shadow duration-300">
-              <div className="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                {plan.badge}
-              </div>
-              <CardContent className="p-6">
-                <div className="text-center mb-4">
-                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <span className="text-2xl">☁️</span>
-                  </div>
-                  <div className="text-sm text-gray-600 font-medium">{plan.provider}</div>
+        {/* Pricing Plans */}
+        <div className="grid lg:grid-cols-3 gap-8 mb-20">
+          {plans.map((plan, index) => (
+            <Card key={index} className={`relative ${plan.popular ? 'border-blue-500 border-2 shadow-lg' : ''}`}>
+              {plan.popular && (
+                <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-blue-500">
+                  Most Popular
+                </Badge>
+              )}
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl font-bold">{plan.name}</CardTitle>
+                <CardDescription className="text-gray-600">{plan.description}</CardDescription>
+                <div className="mt-4">
+                  <span className="text-4xl font-bold text-blue-600">{plan.price}</span>
+                  <span className="text-gray-600">{plan.period}</span>
                 </div>
-                
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 text-center">
-                  {plan.name}
-                </h3>
-                
-                <div className="flex items-center justify-center mb-3">
-                  <div className="flex text-yellow-400 mr-2">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className={i < Math.floor(plan.rating) ? "★" : "☆"}>
-                        ★
-                      </span>
-                    ))}
-                  </div>
-                  <span className="text-sm text-gray-600">
-                    {plan.rating} ({plan.reviews} reviews)
-                  </span>
-                </div>
-
-                <div className="mb-4 text-center">
-                  <span className="text-2xl font-bold text-blue-600">{plan.price}</span>
-                  <span className="text-lg text-gray-400 line-through ml-2">{plan.originalPrice}</span>
-                  <div className="text-sm text-gray-500">Pay-as-you-go billing</div>
-                </div>
-
-                <ul className="text-sm text-gray-600 mb-6 space-y-2">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-center">
-                      <span className="text-green-500 mr-2">✓</span>
-                      {feature}
+                <Badge variant="outline" className="mt-2">{plan.provider}</Badge>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {plan.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className="flex items-center">
+                      <Star className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
+                      <span className="text-gray-700">{feature}</span>
                     </li>
                   ))}
                 </ul>
-
+              </CardContent>
+              <CardFooter>
                 <Button 
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                  className={`w-full ${plan.popular ? 'bg-blue-600 hover:bg-blue-700' : ''}`}
                   onClick={() => window.open('https://www.cloudways.com/en/?id=1384181', '_blank')}
                 >
-                  Start 3-Day Free Trial
+                  Start Free Trial
                 </Button>
-                <p className="text-xs text-gray-500 text-center mt-2">No credit card required</p>
-              </CardContent>
+              </CardFooter>
             </Card>
+          ))}
+        </div>
+
+        {/* Key Features */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+          {features.map((feature, index) => (
+            <div key={index} className="text-center">
+              <div className="flex justify-center mb-4">
+                {feature.icon}
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                {feature.title}
+              </h3>
+              <p className="text-gray-600 text-sm">
+                {feature.description}
+              </p>
+            </div>
           ))}
         </div>
       </div>
