@@ -1,5 +1,5 @@
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -34,6 +34,7 @@ interface RichTextEditorProps {
 export const RichTextEditor = ({ content, onChange, placeholder = "Write your content..." }: RichTextEditorProps) => {
   const editorRef = useRef<HTMLDivElement>(null);
   const [activeFormats, setActiveFormats] = useState<Set<string>>(new Set());
+  const [showPlaceholder, setShowPlaceholder] = useState(!content);
 
   const execCommand = (command: string, value?: string) => {
     document.execCommand(command, false, value);
@@ -43,7 +44,9 @@ export const RichTextEditor = ({ content, onChange, placeholder = "Write your co
 
   const updateContent = () => {
     if (editorRef.current) {
-      onChange(editorRef.current.innerHTML);
+      const newContent = editorRef.current.innerHTML;
+      onChange(newContent);
+      setShowPlaceholder(!newContent || newContent === '<br>');
     }
   };
 
@@ -124,6 +127,20 @@ export const RichTextEditor = ({ content, onChange, placeholder = "Write your co
       }
     }
   };
+
+  const handleFocus = () => {
+    setShowPlaceholder(false);
+  };
+
+  const handleBlur = () => {
+    if (editorRef.current && (!editorRef.current.innerHTML || editorRef.current.innerHTML === '<br>')) {
+      setShowPlaceholder(true);
+    }
+  };
+
+  useEffect(() => {
+    setShowPlaceholder(!content || content === '<br>');
+  }, [content]);
 
   return (
     <Card>
@@ -243,19 +260,27 @@ export const RichTextEditor = ({ content, onChange, placeholder = "Write your co
         </div>
 
         {/* Editor */}
-        <div
-          ref={editorRef}
-          contentEditable
-          dangerouslySetInnerHTML={{ __html: content }}
-          className="min-h-[400px] p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 prose prose-lg max-w-none"
-          style={{ whiteSpace: 'pre-wrap' }}
-          onInput={updateContent}
-          onKeyUp={updateActiveFormats}
-          onMouseUp={updateActiveFormats}
-          onKeyDown={handleKeyDown}
-          suppressContentEditableWarning={true}
-          placeholder={placeholder}
-        />
+        <div className="relative">
+          <div
+            ref={editorRef}
+            contentEditable
+            dangerouslySetInnerHTML={{ __html: content }}
+            className="min-h-[400px] p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 prose prose-lg max-w-none"
+            style={{ whiteSpace: 'pre-wrap' }}
+            onInput={updateContent}
+            onKeyUp={updateActiveFormats}
+            onMouseUp={updateActiveFormats}
+            onKeyDown={handleKeyDown}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            suppressContentEditableWarning={true}
+          />
+          {showPlaceholder && (
+            <div className="absolute top-4 left-4 text-gray-400 pointer-events-none">
+              {placeholder}
+            </div>
+          )}
+        </div>
 
         <div className="text-xs text-gray-500">
           Use Ctrl+B for bold, Ctrl+I for italic, Ctrl+U for underline
