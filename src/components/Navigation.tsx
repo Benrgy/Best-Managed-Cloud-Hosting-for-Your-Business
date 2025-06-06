@@ -5,6 +5,19 @@ import { useNavigate } from "react-router-dom";
 export const Navigation = () => {
   const navigate = useNavigate();
 
+  const scrollToSection = (sectionId: string) => {
+    if (window.location.pathname !== '/') {
+      // If not on home page, navigate home first then scroll
+      navigate('/');
+      setTimeout(() => {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      // If on home page, just scroll
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4">
@@ -29,14 +42,14 @@ export const Navigation = () => {
             </Button>
             <Button 
               variant="ghost" 
-              onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => scrollToSection('features')}
               className="text-gray-700 hover:text-blue-600"
             >
               Features
             </Button>
             <Button 
               variant="ghost" 
-              onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => scrollToSection('product-showcase')}
               className="text-gray-700 hover:text-blue-600"
             >
               Pricing

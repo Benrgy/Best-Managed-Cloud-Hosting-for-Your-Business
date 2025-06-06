@@ -117,6 +117,8 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:slug" element={lazy(() => import("./pages/BlogPost"))} />
+                <Route path="/admin/blog" element={lazy(() => import("./pages/BlogAdmin"))} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
