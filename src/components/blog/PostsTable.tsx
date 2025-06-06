@@ -1,7 +1,6 @@
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Edit, Trash2, Eye } from "lucide-react";
 import { BlogPost } from "@/data/blogData";
 
@@ -14,61 +13,71 @@ interface PostsTableProps {
 
 export const PostsTable = ({ posts, onEdit, onDelete, onPreview }: PostsTableProps) => {
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Title</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Category</TableHead>
-          <TableHead>Author</TableHead>
-          <TableHead>Date</TableHead>
-          <TableHead>Actions</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {posts.map((post) => (
-          <TableRow key={post.id}>
-            <TableCell className="font-medium">{post.title}</TableCell>
-            <TableCell>
-              <Badge variant={post.published ? "default" : "secondary"}>
-                {post.published ? "Published" : "Draft"}
-              </Badge>
-            </TableCell>
-            <TableCell>{post.category}</TableCell>
-            <TableCell>{post.author}</TableCell>
-            <TableCell>{new Date(post.publishDate).toLocaleDateString()}</TableCell>
-            <TableCell>
-              <div className="flex gap-1">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => onPreview(post)}
-                  title="Preview Post"
-                >
-                  <Eye size={16} />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => onEdit(post)}
-                  title="Edit Post"
-                >
-                  <Edit size={16} />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => onDelete(post)}
-                  title="Delete Post"
-                  className="text-red-600 hover:text-red-700"
-                >
-                  <Trash2 size={16} />
-                </Button>
-              </div>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <div className="overflow-x-auto">
+      <table className="w-full">
+        <thead>
+          <tr className="border-b">
+            <th className="text-left p-3">Title</th>
+            <th className="text-left p-3">Author</th>
+            <th className="text-left p-3">Category</th>
+            <th className="text-left p-3">Status</th>
+            <th className="text-left p-3">Date</th>
+            <th className="text-left p-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {posts.map((post) => (
+            <tr key={post.id} className="border-b hover:bg-gray-50">
+              <td className="p-3">
+                <div>
+                  <div className="font-medium">{post.title}</div>
+                  <div className="text-sm text-gray-500 truncate max-w-xs">
+                    {post.excerpt}
+                  </div>
+                </div>
+              </td>
+              <td className="p-3">{post.author}</td>
+              <td className="p-3">
+                <Badge variant="outline">{post.category}</Badge>
+              </td>
+              <td className="p-3">
+                <Badge variant={post.published ? "default" : "secondary"}>
+                  {post.published ? "Published" : "Draft"}
+                </Badge>
+              </td>
+              <td className="p-3 text-sm text-gray-500">
+                {new Date(post.publishedAt).toLocaleDateString()}
+              </td>
+              <td className="p-3">
+                <div className="flex gap-1">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => onPreview(post)}
+                  >
+                    <Eye size={16} />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => onEdit(post)}
+                  >
+                    <Edit size={16} />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => onDelete(post)}
+                    className="text-red-600 hover:text-red-700"
+                  >
+                    <Trash2 size={16} />
+                  </Button>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
