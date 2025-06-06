@@ -46,7 +46,7 @@ export const PostsTable = ({ posts, onEdit, onDelete, onPreview }: PostsTablePro
                 </Badge>
               </td>
               <td className="p-3 text-sm text-gray-500">
-                {new Date(post.publishedAt).toLocaleDateString()}
+                {new Date(post.publishDate).toLocaleDateString()}
               </td>
               <td className="p-3">
                 <div className="flex gap-1">

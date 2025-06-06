@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Edit, Trash2 } from "lucide-react";
 import { BlogCategory } from "@/data/blogData";
-import { CategoryEditor } from "@/components/blog/CategoryEditor";
+import { CategoryEditor } from "./CategoryEditor";
 import { useToast } from "@/hooks/use-toast";
 
 interface CategoryManagementProps {
@@ -36,7 +36,14 @@ export const CategoryManagement = ({
     }
 
     if (editingCategory) {
-      onUpdateCategory({ ...editingCategory, ...categoryData });
+      const updatedCategory: BlogCategory = { 
+        ...editingCategory, 
+        ...categoryData,
+        slug: categoryData.name?.toLowerCase().replace(/\s+/g, '-') || editingCategory.slug,
+        count: editingCategory.count,
+        color: editingCategory.color
+      };
+      onUpdateCategory(updatedCategory);
       setEditingCategory(null);
     } else {
       onCreateCategory(categoryData);
@@ -67,7 +74,16 @@ export const CategoryManagement = ({
         </CardHeader>
         <CardContent>
           <CategoryEditor
-            category={editingCategory || { id: "", name: "", description: "", metaDescription: "", keywords: "" }}
+            category={editingCategory || { 
+              id: "", 
+              name: "", 
+              slug: "",
+              description: "", 
+              metaDescription: "", 
+              keywords: "",
+              count: 0,
+              color: "bg-gray-100 text-gray-800"
+            }}
             onSave={handleSaveCategory}
             onCancel={() => {
               setEditingCategory(null);

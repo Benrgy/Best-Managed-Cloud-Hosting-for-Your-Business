@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Edit, Trash2 } from "lucide-react";
 import { BlogTag } from "@/data/blogData";
-import { TagEditor } from "@/components/blog/TagEditor";
+import { TagEditor } from "./TagEditor";
 import { useToast } from "@/hooks/use-toast";
 
 interface TagManagementProps {
@@ -36,7 +36,13 @@ export const TagManagement = ({
     }
 
     if (editingTag) {
-      onUpdateTag({ ...editingTag, ...tagData });
+      const updatedTag: BlogTag = { 
+        ...editingTag, 
+        ...tagData,
+        slug: tagData.name?.toLowerCase().replace(/\s+/g, '-') || editingTag.slug,
+        count: editingTag.count
+      };
+      onUpdateTag(updatedTag);
       setEditingTag(null);
     } else {
       onCreateTag(tagData);
@@ -67,7 +73,15 @@ export const TagManagement = ({
         </CardHeader>
         <CardContent>
           <TagEditor
-            tag={editingTag || { id: "", name: "", description: "", metaDescription: "", keywords: "" }}
+            tag={editingTag || { 
+              id: "", 
+              name: "", 
+              slug: "",
+              description: "", 
+              metaDescription: "", 
+              keywords: "",
+              count: 0
+            }}
             onSave={handleSaveTag}
             onCancel={() => {
               setEditingTag(null);
