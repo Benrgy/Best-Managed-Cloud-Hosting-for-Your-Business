@@ -1,7 +1,7 @@
 
 # Robots.txt for Best Managed Cloud Hosting Reviews
-# Enhanced for better SEO performance
-# Last Updated: 2025-06-02
+# Optimized for better SEO performance
+# Last Updated: 2025-06-06
 
 User-agent: *
 Allow: /
@@ -28,7 +28,7 @@ Allow: /favicon.ico
 Allow: /*.css$
 Allow: /*.js$
 
-# Priority search engine bots (faster crawl rates)
+# Priority search engine bots
 User-agent: Googlebot
 Allow: /
 Crawl-delay: 0.5
@@ -53,7 +53,7 @@ User-agent: YandexBot
 Allow: /
 Crawl-delay: 2
 
-# Social media and messaging platform crawlers
+# Social media crawlers
 User-agent: facebookexternalhit
 Allow: /
 Crawl-delay: 0.5
@@ -72,19 +72,7 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
-User-agent: Slackbot
-Allow: /
-
-User-agent: SkypeUriPreview
-Allow: /
-
-User-agent: TelegramBot
-Allow: /
-
-User-agent: DiscordBot
-Allow: /
-
-# Block SEO analysis and scraping bots
+# Block SEO scraping bots
 User-agent: MJ12bot
 Disallow: /
 
@@ -103,48 +91,8 @@ Disallow: /
 User-agent: spbot
 Disallow: /
 
-User-agent: SiteAuditBot
-Disallow: /
-
-User-agent: MauiBot
-Disallow: /
-
-User-agent: DomainStatsBot
-Disallow: /
-
-User-agent: LinkpadBot
-Disallow: /
-
-User-agent: serpstatbot
-Disallow: /
-
-# Block generic scrapers and bad bots
-User-agent: *Bot*
-Disallow: /
-
-User-agent: *Spider*
-Disallow: /
-
-User-agent: *Crawler*
-Disallow: /
-
-# Block bandwidth-heavy bots
-User-agent: 008
-Disallow: /
-
-User-agent: voltron
-Disallow: /
-
-User-agent: grapeshot
-Disallow: /
-
 # Primary sitemap location
 Sitemap: https://yoursite.lovable.app/sitemap.xml
-Sitemap: https://yoursite.lovable.app/sitemap-index.xml
 
 # Host directive for canonical domain
 Host: yoursite.lovable.app
-
-# Additional SEO directives
-# Cache-Control: max-age=86400
-# Clean-param: utm_source&utm_medium&utm_campaign
