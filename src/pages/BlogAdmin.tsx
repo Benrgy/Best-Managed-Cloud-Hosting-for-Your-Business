@@ -83,9 +83,12 @@ const BlogAdmin = () => {
     const newCategory: BlogCategory = {
       id: categoryData.name?.toLowerCase().replace(/\s+/g, '-') || "",
       name: categoryData.name || "",
+      slug: categoryData.name?.toLowerCase().replace(/\s+/g, '-') || "",
       description: categoryData.description || "",
       metaDescription: categoryData.metaDescription || "",
-      keywords: categoryData.keywords || ""
+      keywords: categoryData.keywords || "",
+      count: 0,
+      color: "bg-gray-100 text-gray-800"
     };
     setCategories([...categories, newCategory]);
   };
@@ -102,9 +105,11 @@ const BlogAdmin = () => {
     const newTag: BlogTag = {
       id: tagData.name?.toLowerCase().replace(/\s+/g, '-') || "",
       name: tagData.name || "",
+      slug: tagData.name?.toLowerCase().replace(/\s+/g, '-') || "",
       description: tagData.description || "",
       metaDescription: tagData.metaDescription || "",
-      keywords: tagData.keywords || ""
+      keywords: tagData.keywords || "",
+      count: 0
     };
     setTags([...tags, newTag]);
   };

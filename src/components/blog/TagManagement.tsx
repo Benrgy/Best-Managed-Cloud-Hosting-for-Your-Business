@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Edit, Trash2 } from "lucide-react";
 import { BlogTag } from "@/data/blogData";
-import { TagEditor } from "./TagEditor";
+import { TagEditor } from "@/components/blog/TagEditor";
 import { useToast } from "@/hooks/use-toast";
 
 interface TagManagementProps {

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Edit, Trash2 } from "lucide-react";
 import { BlogCategory } from "@/data/blogData";
-import { CategoryEditor } from "./CategoryEditor";
+import { CategoryEditor } from "@/components/blog/CategoryEditor";
 import { useToast } from "@/hooks/use-toast";
 
 interface CategoryManagementProps {
