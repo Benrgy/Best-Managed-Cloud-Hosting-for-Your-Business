@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar, User, Tag, Clock, ArrowLeft } from "lucide-react";
 import { blogPosts, blogCategories } from "@/data/blogData";
 import { useNavigate } from "react-router-dom";
-import ReactMarkdown from 'react-markdown';
+import { BlogPostRenderer } from "@/components/blog/BlogPostRenderer";
 
 const BlogPost = () => {
   const { slug } = useParams();
@@ -73,10 +73,10 @@ const BlogPost = () => {
                 <Badge variant="secondary" className="mb-4">
                   {category?.name || post.category}
                 </Badge>
-                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
                   {post.title}
                 </h1>
-                <p className="text-xl text-gray-600 mb-6">{post.excerpt}</p>
+                <p className="text-xl text-gray-600 mb-6 leading-relaxed">{post.excerpt}</p>
                 
                 <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500">
                   <div className="flex items-center gap-2">
@@ -103,9 +103,7 @@ const BlogPost = () => {
           </div>
           
           <div className="max-w-4xl mx-auto px-4 py-12">
-            <div className="prose prose-lg max-w-none">
-              <ReactMarkdown>{post.content}</ReactMarkdown>
-            </div>
+            <BlogPostRenderer content={post.content} />
             
             <div className="mt-12 pt-8 border-t">
               <div className="flex flex-wrap gap-2 mb-6">

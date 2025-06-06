@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,7 +9,8 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Save, X, Eye } from "lucide-react";
 import { BlogPost, blogCategories } from "@/data/blogData";
-import { SEOAnalyzer } from "./SEOAnalyzer";
+import { AdvancedSEOAnalyzer } from "./AdvancedSEOAnalyzer";
+import { RichTextEditor } from "./RichTextEditor";
 import { useToast } from "@/hooks/use-toast";
 
 interface PostEditorProps {
@@ -141,7 +141,7 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
             <TabsContent value="content" className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Content</CardTitle>
+                  <CardTitle>Basic Information</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
@@ -172,18 +172,6 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                       onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
                       placeholder="Brief description of the post"
                       rows={3}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="content">Content *</Label>
-                    <Textarea
-                      id="content"
-                      value={formData.content}
-                      onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                      placeholder="Write your post content in Markdown format"
-                      rows={20}
-                      className="font-mono"
                     />
                   </div>
 
@@ -235,6 +223,12 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                   </div>
                 </CardContent>
               </Card>
+
+              <RichTextEditor
+                content={formData.content || ''}
+                onChange={(content) => setFormData({ ...formData, content })}
+                placeholder="Write your post content..."
+              />
             </TabsContent>
 
             <TabsContent value="seo" className="space-y-6">
@@ -272,7 +266,7 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                       id="metaDescription"
                       value={formData.metaDescription}
                       onChange={(e) => setFormData({ ...formData, metaDescription: e.target.value })}
-                      placeholder="SEO meta description (140-160 characters)"
+                      placeholder="SEO meta description (150-160 characters)"
                       rows={3}
                     />
                     <p className="text-sm text-gray-500">
@@ -421,12 +415,14 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
 
         <div className="lg:col-span-1">
           {formData.title && formData.content && (
-            <SEOAnalyzer
+            <AdvancedSEOAnalyzer
               title={formData.title}
               content={formData.content}
               metaDescription={formData.metaDescription || ""}
               focusKeyword={formData.focusKeyword}
               excerpt={formData.excerpt || ""}
+              slug={formData.slug || ""}
+              image={formData.image}
             />
           )}
         </div>
