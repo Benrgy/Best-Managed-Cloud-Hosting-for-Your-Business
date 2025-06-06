@@ -2,9 +2,9 @@
 export const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Cloudways Hosting Reviews Nederland",
-  "description": "Expert reviews en vergelijkingen van Cloudways beheerde cloud hosting diensten voor Nederlandse bedrijven",
-  "url": "https://cloudways-review.nl",
+  "name": "Cloudways Hosting Reviews",
+  "description": "Expert reviews and comparisons of Cloudways managed cloud hosting services for businesses",
+  "url": "https://best-managed-cloud-hosting-for-business.lovable.app",
   "logo": {
     "@type": "ImageObject",
     "url": "https://lovable.dev/opengraph-image-p98pqg.png",
@@ -19,29 +19,25 @@ export const organizationSchema = {
   "contactPoint": {
     "@type": "ContactPoint",
     "contactType": "customer service",
-    "availableLanguage": ["Dutch", "English"]
+    "availableLanguage": ["English"]
   },
-  "areaServed": "Netherlands",
-  "address": {
-    "@type": "PostalAddress",
-    "addressCountry": "NL"
-  }
+  "areaServed": "Worldwide"
 };
 
 export const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "Beste Beheerde Cloud Hosting Reviews Nederland",
-  "url": "https://cloudways-review.nl",
-  "description": "Expert reviews en vergelijkingen van beheerde cloud hosting diensten in Nederland",
-  "inLanguage": "nl",
+  "name": "Best Managed Cloud Hosting Reviews",
+  "url": "https://best-managed-cloud-hosting-for-business.lovable.app",
+  "description": "Expert reviews and comparisons of managed cloud hosting services",
+  "inLanguage": "en",
   "publisher": {
     "@type": "Organization",
-    "name": "Cloudways Hosting Reviews Nederland"
+    "name": "Cloudways Hosting Reviews"
   },
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://cloudways-review.nl/search?q={search_term_string}",
+    "target": "https://best-managed-cloud-hosting-for-business.lovable.app/search?q={search_term_string}",
     "query-input": "required name=search_term_string"
   }
 };
@@ -49,25 +45,24 @@ export const websiteSchema = {
 export const productSchema = {
   "@context": "https://schema.org",
   "@type": "Product",
-  "name": "Cloudways Beheerde Cloud Hosting",
-  "description": "Premium beheerde cloud hosting platform met ThunderStack optimalisatie, 24/7 ondersteuning en enterprise-niveau prestaties voor Nederlandse bedrijven",
+  "name": "Cloudways Managed Cloud Hosting",
+  "description": "Premium managed cloud hosting platform with ThunderStack optimization, 24/7 support and enterprise-level performance for businesses",
   "brand": {
     "@type": "Brand",
     "name": "Cloudways"
   },
-  "category": "Web Hosting Diensten",
+  "category": "Web Hosting Services",
   "offers": {
     "@type": "Offer",
-    "price": "10.00",
-    "priceCurrency": "EUR",
+    "price": "11.00",
+    "priceCurrency": "USD",
     "priceValidUntil": "2025-12-31",
     "availability": "https://schema.org/InStock",
     "seller": {
       "@type": "Organization",
       "name": "Cloudways"
     },
-    "url": "https://www.cloudways.com/en/?id=1384181",
-    "areaServed": "Netherlands"
+    "url": "https://www.cloudways.com/en/?id=1384181"
   },
   "aggregateRating": {
     "@type": "AggregateRating",
@@ -87,9 +82,9 @@ export const productSchema = {
       },
       "author": {
         "@type": "Person",
-        "name": "Sarah van der Berg"
+        "name": "Sarah Johnson"
       },
-      "reviewBody": "Cloudways heeft de prestaties van onze online winkel getransformeerd. De beheerde hosting zorgt voor alle technische aspecten terwijl wij ons kunnen richten op het laten groeien van ons bedrijf."
+      "reviewBody": "Cloudways transformed our online store performance. The managed hosting handles all technical aspects while we focus on growing our business."
     }
   ]
 };
@@ -99,16 +94,16 @@ export const reviewSchema = {
   "@type": "Review",
   "itemReviewed": {
     "@type": "Product",
-    "name": "Cloudways Beheerde Cloud Hosting",
-    "description": "Beheerde cloud hosting platform met enterprise-niveau prestaties voor Nederlandse bedrijven",
+    "name": "Cloudways Managed Cloud Hosting",
+    "description": "Managed cloud hosting platform with enterprise-level performance for businesses",
     "brand": {
       "@type": "Brand",
       "name": "Cloudways"
     },
     "offers": {
       "@type": "Offer",
-      "price": "10.00",
-      "priceCurrency": "EUR"
+      "price": "11.00",
+      "priceCurrency": "USD"
     }
   },
   "reviewRating": {
@@ -119,15 +114,15 @@ export const reviewSchema = {
   },
   "author": {
     "@type": "Organization",
-    "name": "Cloudways Hosting Reviews Nederland"
+    "name": "Cloudways Hosting Reviews"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Cloudways Hosting Reviews Nederland"
+    "name": "Cloudways Hosting Reviews"
   },
   "datePublished": "2025-01-01",
-  "reviewBody": "Cloudways biedt uitzonderlijke beheerde cloud hosting met ThunderStack optimalisatie, 24/7 ondersteuning en flexibele prijzen. Perfect voor Nederlandse bedrijven die enterprise-niveau prestaties zoeken zonder complexiteit.",
-  "inLanguage": "nl"
+  "reviewBody": "Cloudways offers exceptional managed cloud hosting with ThunderStack optimization, 24/7 support and flexible pricing. Perfect for businesses seeking enterprise-level performance without complexity.",
+  "inLanguage": "en"
 };
 
 export const breadcrumbSchema = {
@@ -138,13 +133,13 @@ export const breadcrumbSchema = {
       "@type": "ListItem",
       "position": 1,
       "name": "Home",
-      "item": "https://cloudways-review.nl"
+      "item": "https://best-managed-cloud-hosting-for-business.lovable.app"
     },
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Beste Beheerde Cloud Hosting Nederland",
-      "item": "https://cloudways-review.nl/#features"
+      "name": "Best Managed Cloud Hosting",
+      "item": "https://best-managed-cloud-hosting-for-business.lovable.app/#features"
     }
   ]
 };
@@ -155,34 +150,34 @@ export const faqSchema = {
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Wat is de beste beheerde cloud hosting voor bedrijven in Nederland?",
+      "name": "What is the best managed cloud hosting for businesses?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Cloudways wordt algemeen beschouwd als de beste beheerde cloud hosting voor Nederlandse bedrijven, met enterprise-niveau prestaties, 24/7 ondersteuning en flexibele prijzen vanaf €10/maand. Het combineert de kracht van top cloud providers zoals AWS, Google Cloud en DigitalOcean met beheerde diensten."
+        "text": "Cloudways is widely considered the best managed cloud hosting for businesses, offering enterprise-level performance, 24/7 support, and flexible pricing starting at $11/month. It combines the power of top cloud providers like AWS, Google Cloud, and DigitalOcean with managed services."
       }
     },
     {
       "@type": "Question",
-      "name": "Hoeveel kost Cloudways beheerde hosting in Nederland?",
+      "name": "How much does Cloudways managed hosting cost?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Cloudways prijzen beginnen bij €10/maand voor een 1GB DigitalOcean server met 25GB SSD opslag. Plannen schalen op naar enterprise niveaus met pay-as-you-go facturering, geen setup kosten en inclusief gratis SSL, migratie en 24/7 ondersteuning."
+        "text": "Cloudways pricing starts at $11/month for a 1GB DigitalOcean server with 25GB SSD storage. Plans scale up to enterprise levels with pay-as-you-go billing, no setup fees, and includes free SSL, migration, and 24/7 support."
       }
     },
     {
       "@type": "Question",
-      "name": "Biedt Cloudways gratis migratie voor Nederlandse klanten?",
+      "name": "Does Cloudways offer free migration?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Ja, Cloudways biedt één gratis website migratie uitgevoerd door hun expert engineers. Het migratie team zorgt voor zero downtime en handelt alle technische aspecten af van het verhuizen van uw website van uw huidige host."
+        "text": "Yes, Cloudways offers one free website migration performed by their expert engineers. The migration team ensures zero downtime and handles all technical aspects of moving your website from your current host."
       }
     },
     {
       "@type": "Question",
-      "name": "Is Cloudways GDPR-compliant voor Nederlandse bedrijven?",
+      "name": "Is Cloudways suitable for enterprise websites?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Ja, Cloudways is volledig GDPR-compliant en biedt datacenter locaties binnen de EU voor Nederlandse bedrijven die data sovereignty vereisen. Alle persoonlijke gegevens worden veilig verwerkt volgens Nederlandse en EU wetgeving."
+        "text": "Yes, Cloudways provides enterprise-level features including dedicated firewalls, staging environments, advanced caching, team collaboration, and 24/7 expert support, making it ideal for enterprise websites and applications."
       }
     }
   ]
@@ -191,30 +186,30 @@ export const faqSchema = {
 export const howToSchema = {
   "@context": "https://schema.org",
   "@type": "HowTo",
-  "name": "Hoe de Beste Beheerde Cloud Hosting Kiezen in Nederland",
-  "description": "Stap-voor-stap gids voor het selecteren van de juiste beheerde cloud hosting provider voor uw Nederlandse bedrijf",
+  "name": "How to Choose the Best Managed Cloud Hosting",
+  "description": "Step-by-step guide to selecting the right managed cloud hosting provider for your business",
   "totalTime": "PT10M",
-  "inLanguage": "nl",
+  "inLanguage": "en",
   "step": [
     {
       "@type": "HowToStep",
-      "name": "Beoordeel Uw Vereisten",
-      "text": "Bepaal het verkeer van uw website, opslag behoeften en prestatie vereisten voor de Nederlandse markt"
+      "name": "Assess Your Requirements",
+      "text": "Determine your website traffic, storage needs, and performance requirements"
     },
     {
       "@type": "HowToStep", 
-      "name": "Vergelijk Cloud Providers",
-      "text": "Evalueer verschillende cloud infrastructuur providers zoals AWS, Google Cloud en DigitalOcean voor Nederlandse datacenters"
+      "name": "Compare Cloud Providers",
+      "text": "Evaluate different cloud infrastructure providers like AWS, Google Cloud, and DigitalOcean"
     },
     {
       "@type": "HowToStep",
-      "name": "Controleer Ondersteuning Kwaliteit",
-      "text": "Zorg ervoor dat 24/7 expert ondersteuning beschikbaar is via live chat, telefoon en email in uw tijdzone"
+      "name": "Check Support Quality",
+      "text": "Ensure 24/7 expert support is available via live chat, phone, and email"
     },
     {
       "@type": "HowToStep",
-      "name": "Bekijk Beveiligingsfeatures",
-      "text": "Zoek naar SSL certificaten, firewalls, regelmatige backups, malware scanning en GDPR compliance voor Nederlandse wet"
+      "name": "Review Security Features",
+      "text": "Look for SSL certificates, firewalls, regular backups, and malware scanning"
     }
   ]
 };

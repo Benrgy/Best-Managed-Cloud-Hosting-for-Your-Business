@@ -1,5 +1,6 @@
 
 import { ReactNode } from 'react';
+import { Navigation } from './Navigation';
 
 interface SemanticLayoutProps {
   children: ReactNode;
@@ -16,9 +17,7 @@ export const SemanticLayout = ({ children }: SemanticLayoutProps) => {
       </a>
       
       <header role="banner">
-        <nav role="navigation" aria-label="Main navigation">
-          {/* Navigation would go here if we had one */}
-        </nav>
+        <Navigation />
       </header>
 
       <main id="main-content" role="main">

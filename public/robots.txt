@@ -92,7 +92,7 @@ User-agent: spbot
 Disallow: /
 
 # Primary sitemap location
-Sitemap: https://yoursite.lovable.app/sitemap.xml
+Sitemap: https://best-managed-cloud-hosting-for-business.lovable.app/sitemap.xml
 
 # Host directive for canonical domain
-Host: yoursite.lovable.app
+Host: best-managed-cloud-hosting-for-business.lovable.app

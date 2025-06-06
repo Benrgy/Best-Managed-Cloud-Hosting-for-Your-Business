@@ -12,10 +12,10 @@ interface SEOProps {
 }
 
 export const SEO = ({
-  title = "Best Managed Cloud Hosting 2025 | Cloudways Review",
-  description = "Cloudways is the #1 managed cloud hosting choice for businesses. Enterprise performance, 24/7 support, flexible pricing from $11/month.",
+  title = "Best Managed Cloud Hosting 2025 | Cloudways",
+  description = "Cloudways is the #1 managed cloud hosting choice. Enterprise performance, 24/7 support, flexible pricing from $11/month. Free migration.",
   keywords = "best managed cloud hosting, cloudways hosting, business cloud hosting, managed hosting services, cloud hosting providers, wordpress hosting, ecommerce hosting, enterprise hosting, web hosting comparison, managed hosting reviews, thunderstack technology, aws hosting, google cloud hosting",
-  canonicalUrl = "https://yoursite.lovable.app",
+  canonicalUrl = "https://best-managed-cloud-hosting-for-business.lovable.app",
   ogImage = "https://lovable.dev/opengraph-image-p98pqg.png",
   ogType = "website",
   structuredData
@@ -45,12 +45,12 @@ export const SEO = ({
       {/* Google Search Console Verification */}
       <meta name="google-site-verification" content="your-google-verification-code" />
       
-      {/* Single Canonical URL - Fixed duplicate issue */}
+      {/* Single Canonical URL */}
       <link rel="canonical" href={canonicalUrl} />
       
       {/* hreflang for multilingual SEO */}
-      <link rel="alternate" href="https://yoursite.lovable.app" hrefLang="en" />
-      <link rel="alternate" href="https://yoursite.lovable.app" hrefLang="x-default" />
+      <link rel="alternate" href="https://best-managed-cloud-hosting-for-business.lovable.app" hrefLang="en" />
+      <link rel="alternate" href="https://best-managed-cloud-hosting-for-business.lovable.app" hrefLang="x-default" />
       
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={ogType} />
@@ -63,7 +63,7 @@ export const SEO = ({
       <meta property="og:site_name" content="Cloudways Hosting Reviews" />
       <meta property="og:locale" content="en_US" />
       <meta property="article:author" content="Cloudways Hosting Reviews" />
-      <meta property="article:publisher" content="https://yoursite.lovable.app" />
+      <meta property="article:publisher" content="https://best-managed-cloud-hosting-for-business.lovable.app" />
       
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -73,7 +73,7 @@ export const SEO = ({
       <meta name="twitter:image" content={ogImage} />
       <meta name="twitter:creator" content="@cloudways" />
       <meta name="twitter:site" content="@cloudways" />
-      <meta name="twitter:domain" content="yoursite.lovable.app" />
+      <meta name="twitter:domain" content="best-managed-cloud-hosting-for-business.lovable.app" />
       
       {/* Additional SEO Meta Tags */}
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />

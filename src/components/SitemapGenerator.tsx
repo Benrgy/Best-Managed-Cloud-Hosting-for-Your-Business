@@ -11,7 +11,7 @@ interface SitemapUrl {
 export const SitemapGenerator = () => {
   useEffect(() => {
     const generateSitemap = () => {
-      const baseUrl = 'https://yoursite.lovable.app';
+      const baseUrl = 'https://best-managed-cloud-hosting-for-business.lovable.app';
       const currentDate = new Date().toISOString().split('T')[0];
       
       const urls: SitemapUrl[] = [
@@ -22,10 +22,16 @@ export const SitemapGenerator = () => {
           priority: '1.0'
         },
         {
+          loc: `${baseUrl}/blog`,
+          lastmod: currentDate,
+          changefreq: 'weekly',
+          priority: '0.9'
+        },
+        {
           loc: `${baseUrl}/#product-showcase`,
           lastmod: currentDate,
           changefreq: 'monthly',
-          priority: '0.9'
+          priority: '0.8'
         },
         {
           loc: `${baseUrl}/#features`,
@@ -72,10 +78,8 @@ ${urls.map(url => `  <url>
   </url>`).join('\n')}
 </urlset>`;
 
-      // Send sitemap to console for now (in production, this would be saved to public/sitemap.xml)
       console.log('Generated comprehensive sitemap:', sitemapXml);
       
-      // Also generate robots.txt instructions
       const robotsContent = `# Enhanced robots.txt for better SEO
 User-agent: *
 Allow: /
@@ -102,10 +106,8 @@ Host: ${baseUrl.replace('https://', '')}`;
       console.log('Enhanced robots.txt content:', robotsContent);
     };
 
-    // Generate sitemap on component mount
     generateSitemap();
     
-    // Update sitemap daily
     const interval = setInterval(generateSitemap, 24 * 60 * 60 * 1000);
     
     return () => clearInterval(interval);
