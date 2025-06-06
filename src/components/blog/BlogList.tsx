@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, User, Tag } from "lucide-react";
-import { blogPosts } from "@/data/blogPosts";
+import { blogPosts, blogCategories } from "@/data/blogData";
 import { useNavigate } from "react-router-dom";
 
 export const BlogList = () => {
@@ -27,7 +27,9 @@ export const BlogList = () => {
             <div className="md:w-2/3">
               <CardHeader className="pb-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <Badge variant="secondary">{post.category}</Badge>
+                  <Badge variant="secondary">
+                    {blogCategories.find(c => c.id === post.category)?.name || post.category}
+                  </Badge>
                   {post.featured && <Badge variant="outline">Featured</Badge>}
                   <span className="text-sm text-gray-500">{post.readTime}</span>
                 </div>

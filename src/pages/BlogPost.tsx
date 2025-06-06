@@ -5,7 +5,7 @@ import { SemanticLayout } from "@/components/SemanticLayout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, User, Tag, Clock, ArrowLeft } from "lucide-react";
-import { blogPosts } from "@/data/blogPosts";
+import { blogPosts, blogCategories } from "@/data/blogData";
 import { useNavigate } from "react-router-dom";
 import ReactMarkdown from 'react-markdown';
 
@@ -19,14 +19,17 @@ const BlogPost = () => {
     return <Navigate to="/404" replace />;
   }
 
+  const category = blogCategories.find(c => c.id === post.category);
+
   return (
     <>
       <SEO 
-        title={`${post.title} | CloudHost Pro Blog`}
+        title={post.seoTitle || `${post.title} | CloudHost Pro Blog`}
         description={post.metaDescription}
         keywords={post.keywords}
-        canonicalUrl={`https://best-managed-cloud-hosting-for-business.lovable.app/blog/${post.slug}`}
+        canonicalUrl={post.canonicalUrl || `https://best-managed-cloud-hosting-for-business.lovable.app/blog/${post.slug}`}
         ogType="article"
+        ogImage={post.image}
         structuredData={{
           "@context": "https://schema.org",
           "@type": "Article",
@@ -49,7 +52,7 @@ const BlogPost = () => {
           "dateModified": post.publishDate,
           "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": `https://best-managed-cloud-hosting-for-business.lovable.app/blog/${post.slug}`
+            "@id": post.canonicalUrl || `https://best-managed-cloud-hosting-for-business.lovable.app/blog/${post.slug}`
           }
         }}
       />
@@ -67,7 +70,9 @@ const BlogPost = () => {
               </Button>
               
               <div className="mb-6">
-                <Badge variant="secondary" className="mb-4">{post.category}</Badge>
+                <Badge variant="secondary" className="mb-4">
+                  {category?.name || post.category}
+                </Badge>
                 <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                   {post.title}
                 </h1>
