@@ -9,7 +9,7 @@ const NotFound = () => {
   return (
     <>
       <SEO 
-        title="Page Not Found - Best Managed Cloud Hosting | Cloudways Review"
+        title="Page Not Found - Best Managed Cloud Hosting | CloudHost Pro"
         description="The page you're looking for doesn't exist. Discover the best managed cloud hosting solutions with Cloudways - enterprise performance starting at $11/month."
         canonicalUrl="https://yoursite.lovable.app/404"
       />
