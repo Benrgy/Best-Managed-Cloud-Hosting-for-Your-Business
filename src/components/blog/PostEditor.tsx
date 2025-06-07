@@ -7,10 +7,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Save, X, Eye } from "lucide-react";
+import { Save, X, Eye, Code, Calendar } from "lucide-react";
 import { BlogPost, blogCategories } from "@/data/blogData";
 import { AdvancedSEOAnalyzer } from "./AdvancedSEOAnalyzer";
 import { RichTextEditor } from "./RichTextEditor";
+import { HTMLEditor } from "./HTMLEditor";
+import { PostScheduler } from "./PostScheduler";
 import { useToast } from "@/hooks/use-toast";
 
 interface PostEditorProps {
@@ -22,6 +24,7 @@ interface PostEditorProps {
 
 export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProps) => {
   const { toast } = useToast();
+  const [editorMode, setEditorMode] = useState<'visual' | 'html'>('visual');
   const [formData, setFormData] = useState<Partial<BlogPost>>({
     title: post?.title || "",
     slug: post?.slug || "",
@@ -44,7 +47,21 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
     canonicalUrl: post?.canonicalUrl || "",
     noIndex: post?.noIndex || false,
     noFollow: post?.noFollow || false,
-    schema: post?.schema || ""
+    schema: post?.schema || "",
+    publishDate: post?.publishDate || "",
+    publishTime: post?.publishTime || "",
+    scheduled: post?.scheduled || false,
+    autoPublish: post?.autoPublish || false,
+    metaTitle: post?.metaTitle || "",
+    imageAlt: post?.imageAlt || "",
+    imageTitle: post?.imageTitle || "",
+    videoSEO: post?.videoSEO || {
+      title: "",
+      description: "",
+      transcript: "",
+      duration: "",
+      thumbnailUrl: ""
+    }
   });
 
   const generateSlug = (title: string) => {
@@ -59,7 +76,20 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
       ...formData,
       title,
       slug: generateSlug(title),
-      seoTitle: title.length > 60 ? title.substring(0, 57) + '...' : title
+      seoTitle: title.length > 60 ? title.substring(0, 57) + '...' : title,
+      metaTitle: title
+    });
+  };
+
+  const handleScheduleChange = (schedule: {
+    publishDate: string;
+    publishTime: string;
+    scheduled: boolean;
+    autoPublish: boolean;
+  }) => {
+    setFormData({
+      ...formData,
+      ...schedule
     });
   };
 
@@ -131,10 +161,11 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <Tabs defaultValue="content" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="content">Content</TabsTrigger>
               <TabsTrigger value="seo">SEO</TabsTrigger>
               <TabsTrigger value="social">Social</TabsTrigger>
+              <TabsTrigger value="schedule">Schedule</TabsTrigger>
               <TabsTrigger value="advanced">Advanced</TabsTrigger>
             </TabsList>
 
@@ -221,14 +252,67 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                       placeholder="https://example.com/image.jpg"
                     />
                   </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="imageAlt">Image Alt Text (SEO)</Label>
+                    <Input
+                      id="imageAlt"
+                      value={formData.imageAlt}
+                      onChange={(e) => setFormData({ ...formData, imageAlt: e.target.value })}
+                      placeholder="Descriptive alt text for featured image"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="imageTitle">Image Title</Label>
+                    <Input
+                      id="imageTitle"
+                      value={formData.imageTitle}
+                      onChange={(e) => setFormData({ ...formData, imageTitle: e.target.value })}
+                      placeholder="Image title attribute"
+                    />
+                  </div>
                 </CardContent>
               </Card>
 
-              <RichTextEditor
-                content={formData.content || ''}
-                onChange={(content) => setFormData({ ...formData, content })}
-                placeholder="Write your post content..."
-              />
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle>Content Editor</CardTitle>
+                    <div className="flex gap-2">
+                      <Button
+                        variant={editorMode === 'visual' ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setEditorMode('visual')}
+                      >
+                        Visual
+                      </Button>
+                      <Button
+                        variant={editorMode === 'html' ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setEditorMode('html')}
+                      >
+                        <Code size={16} className="mr-1" />
+                        HTML
+                      </Button>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  {editorMode === 'visual' ? (
+                    <RichTextEditor
+                      content={formData.content || ''}
+                      onChange={(content) => setFormData({ ...formData, content })}
+                      placeholder="Write your post content..."
+                    />
+                  ) : (
+                    <HTMLEditor
+                      content={formData.content || ''}
+                      onChange={(content) => setFormData({ ...formData, content })}
+                    />
+                  )}
+                </CardContent>
+              </Card>
             </TabsContent>
 
             <TabsContent value="seo" className="space-y-6">
@@ -312,6 +396,92 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                       <Label htmlFor="noFollow">No Follow</Label>
                     </div>
                   </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="metaTitle">Meta Title (Alternative)</Label>
+                    <Input
+                      id="metaTitle"
+                      value={formData.metaTitle}
+                      onChange={(e) => setFormData({ ...formData, metaTitle: e.target.value })}
+                      placeholder="Alternative meta title if different from SEO title"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Video SEO (if applicable)</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="videoTitle">Video Title</Label>
+                    <Input
+                      id="videoTitle"
+                      value={formData.videoSEO?.title || ""}
+                      onChange={(e) => setFormData({ 
+                        ...formData, 
+                        videoSEO: { ...formData.videoSEO, title: e.target.value }
+                      })}
+                      placeholder="Video title for SEO"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="videoDescription">Video Description</Label>
+                    <Textarea
+                      id="videoDescription"
+                      value={formData.videoSEO?.description || ""}
+                      onChange={(e) => setFormData({ 
+                        ...formData, 
+                        videoSEO: { ...formData.videoSEO, description: e.target.value }
+                      })}
+                      placeholder="Video description for SEO"
+                      rows={3}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="videoDuration">Video Duration</Label>
+                      <Input
+                        id="videoDuration"
+                        value={formData.videoSEO?.duration || ""}
+                        onChange={(e) => setFormData({ 
+                          ...formData, 
+                          videoSEO: { ...formData.videoSEO, duration: e.target.value }
+                        })}
+                        placeholder="PT5M30S (5 min 30 sec)"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="videoThumbnail">Video Thumbnail URL</Label>
+                      <Input
+                        id="videoThumbnail"
+                        value={formData.videoSEO?.thumbnailUrl || ""}
+                        onChange={(e) => setFormData({ 
+                          ...formData, 
+                          videoSEO: { ...formData.videoSEO, thumbnailUrl: e.target.value }
+                        })}
+                        placeholder="https://example.com/thumb.jpg"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="videoTranscript">Video Transcript (SEO boost)</Label>
+                    <Textarea
+                      id="videoTranscript"
+                      value={formData.videoSEO?.transcript || ""}
+                      onChange={(e) => setFormData({ 
+                        ...formData, 
+                        videoSEO: { ...formData.videoSEO, transcript: e.target.value }
+                      })}
+                      placeholder="Full video transcript for SEO..."
+                      rows={6}
+                    />
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -369,6 +539,16 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                   </div>
                 </CardContent>
               </Card>
+            </TabsContent>
+
+            <TabsContent value="schedule" className="space-y-6">
+              <PostScheduler
+                publishDate={formData.publishDate}
+                publishTime={formData.publishTime}
+                scheduled={formData.scheduled}
+                autoPublish={formData.autoPublish}
+                onScheduleChange={handleScheduleChange}
+              />
             </TabsContent>
 
             <TabsContent value="advanced" className="space-y-6">

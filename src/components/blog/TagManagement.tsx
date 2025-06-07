@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit, Trash2, Target } from "lucide-react";
 import { BlogTag } from "@/data/blogData";
 import { TagEditor } from "./TagEditor";
+import { TagSEO } from "./TagSEO";
 import { useToast } from "@/hooks/use-toast";
 
 interface TagManagementProps {
@@ -23,6 +22,7 @@ export const TagManagement = ({
 }: TagManagementProps) => {
   const { toast } = useToast();
   const [editingTag, setEditingTag] = useState<BlogTag | null>(null);
+  const [seoTag, setSeoTag] = useState<BlogTag | null>(null);
   const [isCreating, setIsCreating] = useState(false);
 
   const handleSaveTag = (tagData: Partial<BlogTag>) => {
@@ -64,6 +64,32 @@ export const TagManagement = ({
       });
     }
   };
+
+  const handleSEOUpdate = (tag: BlogTag, updates: Partial<BlogTag>) => {
+    const updatedTag = { ...tag, ...updates };
+    onUpdateTag(updatedTag);
+    toast({
+      title: "Success",
+      description: "Tag SEO updated successfully"
+    });
+  };
+
+  if (seoTag) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h3 className="text-xl font-semibold">SEO Settings for "{seoTag.name}"</h3>
+          <Button variant="outline" onClick={() => setSeoTag(null)}>
+            Back to Tags
+          </Button>
+        </div>
+        <TagSEO
+          tag={seoTag}
+          onUpdate={(updates) => handleSEOUpdate(seoTag, updates)}
+        />
+      </div>
+    );
+  }
 
   if (editingTag || isCreating) {
     return (
@@ -107,7 +133,7 @@ export const TagManagement = ({
       <CardContent>
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
-            <div key={tag.id} className="flex items-center gap-1 p-2 border rounded-lg">
+            <div key={tag.id} className="flex items-center gap-1 p-3 border rounded-lg">
               <div className="flex-1">
                 <span className="text-sm font-medium">{tag.name}</span>
                 {tag.description && (
@@ -115,6 +141,14 @@ export const TagManagement = ({
                 )}
               </div>
               <div className="flex gap-1">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSeoTag(tag)}
+                  title="SEO Settings"
+                >
+                  <Target size={12} />
+                </Button>
                 <Button
                   variant="ghost"
                   size="sm"

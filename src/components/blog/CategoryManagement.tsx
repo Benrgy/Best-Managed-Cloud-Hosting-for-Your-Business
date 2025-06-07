@@ -1,11 +1,11 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit, Trash2, Target } from "lucide-react";
 import { BlogCategory } from "@/data/blogData";
 import { CategoryEditor } from "./CategoryEditor";
+import { CategorySEO } from "./CategorySEO";
 import { useToast } from "@/hooks/use-toast";
 
 interface CategoryManagementProps {
@@ -23,6 +23,7 @@ export const CategoryManagement = ({
 }: CategoryManagementProps) => {
   const { toast } = useToast();
   const [editingCategory, setEditingCategory] = useState<BlogCategory | null>(null);
+  const [seoCategory, setSeoCategory] = useState<BlogCategory | null>(null);
   const [isCreating, setIsCreating] = useState(false);
 
   const handleSaveCategory = (categoryData: Partial<BlogCategory>) => {
@@ -66,6 +67,32 @@ export const CategoryManagement = ({
     }
   };
 
+  const handleSEOUpdate = (category: BlogCategory, updates: Partial<BlogCategory>) => {
+    const updatedCategory = { ...category, ...updates };
+    onUpdateCategory(updatedCategory);
+    toast({
+      title: "Success",
+      description: "Category SEO updated successfully"
+    });
+  };
+
+  if (seoCategory) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h3 className="text-xl font-semibold">SEO Settings for "{seoCategory.name}"</h3>
+          <Button variant="outline" onClick={() => setSeoCategory(null)}>
+            Back to Categories
+          </Button>
+        </div>
+        <CategorySEO
+          category={seoCategory}
+          onUpdate={(updates) => handleSEOUpdate(seoCategory, updates)}
+        />
+      </div>
+    );
+  }
+
   if (editingCategory || isCreating) {
     return (
       <Card>
@@ -107,22 +134,30 @@ export const CategoryManagement = ({
         </div>
       </CardHeader>
       <CardContent>
-        <div className="space-y-2">
+        <div className="space-y-4">
           {categories.map((category) => (
-            <div key={category.id} className="flex items-center justify-between p-3 border rounded-lg">
+            <div key={category.id} className="flex items-center justify-between p-4 border rounded-lg">
               <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="font-medium">{category.name}</span>
-                  <Badge variant="outline">{category.id}</Badge>
+                <div className="flex items-center gap-2 mb-2">
+                  <h3 className="font-semibold">{category.name}</h3>
+                  <Badge className={category.color}>{category.count} posts</Badge>
                 </div>
                 {category.description && (
-                  <p className="text-sm text-gray-600 mt-1">{category.description}</p>
+                  <p className="text-sm text-gray-600 mb-2">{category.description}</p>
                 )}
                 {category.metaDescription && (
-                  <p className="text-xs text-gray-500 mt-1">SEO: {category.metaDescription}</p>
+                  <p className="text-xs text-gray-500">Meta: {category.metaDescription}</p>
                 )}
               </div>
-              <div className="flex gap-1">
+              <div className="flex gap-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSeoCategory(category)}
+                  title="SEO Settings"
+                >
+                  <Target size={16} />
+                </Button>
                 <Button
                   variant="ghost"
                   size="sm"
