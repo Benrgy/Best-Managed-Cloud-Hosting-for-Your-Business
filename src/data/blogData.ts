@@ -16,6 +16,8 @@ export interface BlogPost {
   imageTitle?: string;
   readTime: number;
   published: boolean;
+  featured?: boolean;
+  seoTitle?: string;
   metaTitle?: string;
   metaDescription?: string;
   focusKeyword?: string;
@@ -36,6 +38,7 @@ export interface BlogPost {
     duration?: string;
     uploadDate?: string;
     thumbnailUrl?: string;
+    transcript?: string;
   };
 }
 
@@ -98,6 +101,8 @@ export const blogPosts: BlogPost[] = [
     image: "https://source.unsplash.com/random/800x450?react",
     readTime: 5,
     published: true,
+    featured: true,
+    seoTitle: "React Hooks Guide",
     metaTitle: "React Hooks Guide",
     metaDescription: "A comprehensive guide to React Hooks with examples.",
     focusKeyword: "React Hooks",
@@ -133,6 +138,8 @@ export const blogPosts: BlogPost[] = [
     image: "https://source.unsplash.com/random/800x450?nextjs",
     readTime: 7,
     published: true,
+    featured: false,
+    seoTitle: "Next.js Tutorial",
     metaTitle: "Next.js Tutorial",
     metaDescription: "Learn how to get started with Next.js and build your first application.",
     focusKeyword: "Next.js",
@@ -168,6 +175,8 @@ export const blogPosts: BlogPost[] = [
     image: "https://source.unsplash.com/random/800x450?webassembly",
     readTime: 6,
     published: true,
+    featured: false,
+    seoTitle: "WebAssembly: The Future of Web Development",
     metaTitle: "WebAssembly: The Future of Web Development",
     metaDescription: "Explore how WebAssembly is revolutionizing web development.",
     focusKeyword: "WebAssembly",
@@ -203,6 +212,8 @@ export const blogPosts: BlogPost[] = [
     image: "https://source.unsplash.com/random/800x450?typescript",
     readTime: 8,
     published: true,
+    featured: false,
+    seoTitle: "TypeScript: A Practical Guide",
     metaTitle: "TypeScript: A Practical Guide",
     metaDescription: "Master TypeScript and improve your JavaScript development skills.",
     focusKeyword: "TypeScript",
@@ -238,6 +249,8 @@ export const blogPosts: BlogPost[] = [
     image: "https://source.unsplash.com/random/800x450?nodejs",
     readTime: 9,
     published: true,
+    featured: false,
+    seoTitle: "Node.js and Express: Building RESTful APIs",
     metaTitle: "Node.js and Express: Building RESTful APIs",
     metaDescription: "Learn how to build RESTful APIs using Node.js and Express.",
     focusKeyword: "RESTful APIs",
