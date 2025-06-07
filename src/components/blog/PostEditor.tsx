@@ -124,7 +124,17 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           <PostBasicInfo
-            formData={formData}
+            formData={{
+              title: formData.title,
+              slug: formData.slug,
+              excerpt: formData.excerpt,
+              author: formData.author,
+              category: formData.category,
+              tags: formData.tags,
+              image: formData.image,
+              imageAlt: formData.imageAlt || "",
+              imageTitle: formData.imageTitle || ""
+            }}
             onFieldChange={handleFieldChange}
             onDateChange={handleDateChange}
             categories={categories}
