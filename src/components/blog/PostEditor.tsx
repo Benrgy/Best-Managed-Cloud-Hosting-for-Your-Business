@@ -2,22 +2,13 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { CategorySelect } from "./CategorySelect";
-import { TagSelect } from "./TagSelect";
+import { BlogPost } from "@/data/blogData";
+import { PostBasicInfo } from "./forms/PostBasicInfo";
 import { PostContent } from "./forms/PostContent";
 import { PostSEOForm } from "./forms/PostSEOForm";
 import { PostSocialForm } from "./forms/PostSocialForm";
 import { PostVideoSEO } from "./forms/PostVideoSEO";
 import { PostAdvancedSettings } from "./forms/PostAdvancedSettings";
-import { BlogPost } from "@/data/blogData";
 
 interface PostEditorProps {
   post: BlogPost | null;
@@ -41,6 +32,7 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
       image: "",
       imageAlt: "",
       imageTitle: "",
+      readTime: "5 min read",
       published: false,
       featured: false,
       focusKeyword: "",
@@ -201,114 +193,5 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
         </div>
       </div>
     </div>
-  );
-};
-
-interface PostBasicInfoProps {
-  formData: BlogPost;
-  onFieldChange: (field: string, value: any) => void;
-  onDateChange: (date: Date | undefined) => void;
-  categories: { label: string; value: string; }[];
-  tags: { label: string; value: string; }[];
-}
-
-const PostBasicInfo = ({ formData, onFieldChange, onDateChange, categories, tags }: PostBasicInfoProps) => {
-  const publishDate = formData.publishDate ? new Date(formData.publishDate) : undefined;
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Basic Information</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="title">Title</Label>
-          <Input
-            id="title"
-            value={formData.title}
-            onChange={(e) => onFieldChange('title', e.target.value)}
-            placeholder="Post title"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="excerpt">Excerpt</Label>
-          <Textarea
-            id="excerpt"
-            value={formData.excerpt}
-            onChange={(e) => onFieldChange('excerpt', e.target.value)}
-            placeholder="Short description of the post"
-            rows={2}
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="author">Author</Label>
-          <Input
-            id="author"
-            value={formData.author}
-            onChange={(e) => onFieldChange('author', e.target.value)}
-            placeholder="Author name"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label>Publish Date</Label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant={"outline"}
-                className={cn(
-                  "w-[240px] justify-start text-left font-normal",
-                  !publishDate && "text-muted-foreground"
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {publishDate ? format(publishDate, "PPP") : (
-                  <span>Pick a date</span>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                mode="single"
-                selected={publishDate}
-                onSelect={onDateChange}
-                disabled={(date) => date > new Date()}
-                initialFocus
-              />
-            </PopoverContent>
-          </Popover>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="category">Category</Label>
-          <CategorySelect
-            categories={categories}
-            selectedCategory={formData.category}
-            onSelectCategory={(category) => onFieldChange('category', category)}
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="tags">Tags</Label>
-          <TagSelect
-            tags={tags}
-            selectedTags={formData.tags}
-            onSelectTags={(tags) => onFieldChange('tags', tags)}
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="image">Image URL</Label>
-          <Input
-            id="image"
-            value={formData.image || ""}
-            onChange={(e) => onFieldChange('image', e.target.value)}
-            placeholder="Featured image URL"
-          />
-        </div>
-      </CardContent>
-    </Card>
   );
 };
