@@ -1,18 +1,17 @@
+
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Save, X, Eye, Code, Calendar } from "lucide-react";
-import { BlogPost, blogCategories } from "@/data/blogData";
+import { Save, X, Eye } from "lucide-react";
+import { BlogPost } from "@/data/blogData";
 import { AdvancedSEOAnalyzer } from "./AdvancedSEOAnalyzer";
-import { RichTextEditor } from "./RichTextEditor";
-import { HTMLEditor } from "./HTMLEditor";
 import { PostScheduler } from "./PostScheduler";
+import { PostBasicInfo } from "./forms/PostBasicInfo";
+import { PostContent } from "./forms/PostContent";
+import { PostSEOForm } from "./forms/PostSEOForm";
+import { PostVideoSEO } from "./forms/PostVideoSEO";
+import { PostSocialForm } from "./forms/PostSocialForm";
+import { PostAdvancedSettings } from "./forms/PostAdvancedSettings";
 import { useToast } from "@/hooks/use-toast";
 
 interface PostEditorProps {
@@ -24,7 +23,6 @@ interface PostEditorProps {
 
 export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProps) => {
   const { toast } = useToast();
-  const [editorMode, setEditorMode] = useState<'visual' | 'html'>('visual');
   const [formData, setFormData] = useState<Partial<BlogPost>>({
     title: "",
     slug: "",
@@ -181,6 +179,11 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
     }));
   };
 
+  const handleTagsChange = (tagsString: string) => {
+    const tags = tagsString.split(',').map(tag => tag.trim()).filter(tag => tag);
+    setFormData(prev => ({ ...prev, tags }));
+  };
+
   const handleSave = () => {
     if (!formData.title || !formData.content) {
       toast({
@@ -306,18 +309,6 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
     onPreview?.(previewData);
   };
 
-  const handleTagsChange = (tagsString: string) => {
-    const tags = tagsString.split(',').map(tag => tag.trim()).filter(tag => tag);
-    setFormData(prev => ({ ...prev, tags }));
-  };
-
-  const handleMetaTitleChange = (metaTitle: string) => {
-    setFormData(prev => ({
-      ...prev,
-      metaTitle: metaTitle.length > 60 ? metaTitle.substring(0, 57) + '...' : metaTitle,
-    }));
-  };
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -350,375 +341,66 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
             </TabsList>
 
             <TabsContent value="content" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Basic Information</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="title">Title *</Label>
-                    <Input
-                      id="title"
-                      value={formData.title}
-                      onChange={(e) => handleTitleChange(e.target.value)}
-                      placeholder="Enter post title"
-                    />
-                  </div>
+              <PostBasicInfo
+                formData={{
+                  title: formData.title || "",
+                  slug: formData.slug || "",
+                  excerpt: formData.excerpt || "",
+                  author: formData.author || "",
+                  category: formData.category || "",
+                  tags: formData.tags || [],
+                  image: formData.image || "",
+                  imageAlt: formData.imageAlt || "",
+                  imageTitle: formData.imageTitle || ""
+                }}
+                onTitleChange={handleTitleChange}
+                onFieldChange={updateFormData}
+                onTagsChange={handleTagsChange}
+              />
 
-                  <div className="space-y-2">
-                    <Label htmlFor="slug">URL Slug</Label>
-                    <Input
-                      id="slug"
-                      value={formData.slug}
-                      onChange={(e) => updateFormData('slug', e.target.value)}
-                      placeholder="url-friendly-slug"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="excerpt">Excerpt</Label>
-                    <Textarea
-                      id="excerpt"
-                      value={formData.excerpt}
-                      onChange={(e) => updateFormData('excerpt', e.target.value)}
-                      placeholder="Brief description of the post"
-                      rows={3}
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="author">Author *</Label>
-                      <Input
-                        id="author"
-                        value={formData.author}
-                        onChange={(e) => updateFormData('author', e.target.value)}
-                        placeholder="Author name"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="category">Category *</Label>
-                      <Select value={formData.category} onValueChange={(value) => updateFormData('category', value)}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select category" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {blogCategories.map((cat) => (
-                            <SelectItem key={cat.id} value={cat.id}>
-                              {cat.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="tags">Tags (comma-separated)</Label>
-                    <Input
-                      id="tags"
-                      value={formData.tags?.join(', ')}
-                      onChange={(e) => handleTagsChange(e.target.value)}
-                      placeholder="tag1, tag2, tag3"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="image">Featured Image URL</Label>
-                    <Input
-                      id="image"
-                      value={formData.image}
-                      onChange={(e) => updateFormData('image', e.target.value)}
-                      placeholder="https://example.com/image.jpg"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="imageAlt">Image Alt Text (SEO)</Label>
-                    <Input
-                      id="imageAlt"
-                      value={formData.imageAlt}
-                      onChange={(e) => updateFormData('imageAlt', e.target.value)}
-                      placeholder="Descriptive alt text for featured image"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="imageTitle">Image Title</Label>
-                    <Input
-                      id="imageTitle"
-                      value={formData.imageTitle}
-                      onChange={(e) => updateFormData('imageTitle', e.target.value)}
-                      placeholder="Image title attribute"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle>Content Editor</CardTitle>
-                    <div className="flex gap-2">
-                      <Button
-                        variant={editorMode === 'visual' ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => setEditorMode('visual')}
-                      >
-                        Visual
-                      </Button>
-                      <Button
-                        variant={editorMode === 'html' ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => setEditorMode('html')}
-                      >
-                        <Code size={16} className="mr-1" />
-                        HTML
-                      </Button>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  {editorMode === 'visual' ? (
-                    <RichTextEditor
-                      content={formData.content || ''}
-                      onChange={handleContentChange}
-                      placeholder="Write your post content..."
-                    />
-                  ) : (
-                    <HTMLEditor
-                      content={formData.content || ''}
-                      onChange={handleContentChange}
-                    />
-                  )}
-                </CardContent>
-              </Card>
+              <PostContent
+                content={formData.content || ""}
+                onChange={handleContentChange}
+              />
             </TabsContent>
 
             <TabsContent value="seo" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>SEO Optimization</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="focusKeyword">Focus Keyword</Label>
-                    <Input
-                      id="focusKeyword"
-                      value={formData.focusKeyword}
-                      onChange={(e) => setFormData({ ...formData, focusKeyword: e.target.value })}
-                      placeholder="Primary keyword for this post"
-                    />
-                  </div>
+              <PostSEOForm
+                formData={{
+                  focusKeyword: formData.focusKeyword || "",
+                  seoTitle: formData.seoTitle || "",
+                  metaDescription: formData.metaDescription || "",
+                  keywords: formData.keywords || "",
+                  canonicalUrl: formData.canonicalUrl || "",
+                  noIndex: formData.noIndex || false,
+                  noFollow: formData.noFollow || false,
+                  metaTitle: formData.metaTitle || ""
+                }}
+                onFieldChange={updateFormData}
+              />
 
-                  <div className="space-y-2">
-                    <Label htmlFor="seoTitle">SEO Title</Label>
-                    <Input
-                      id="seoTitle"
-                      value={formData.seoTitle}
-                      onChange={(e) => setFormData({ ...formData, seoTitle: e.target.value })}
-                      placeholder="SEO optimized title (50-60 characters)"
-                    />
-                    <p className="text-sm text-gray-500">
-                      {formData.seoTitle?.length || 0}/60 characters
-                    </p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="metaDescription">Meta Description</Label>
-                    <Textarea
-                      id="metaDescription"
-                      value={formData.metaDescription}
-                      onChange={(e) => setFormData({ ...formData, metaDescription: e.target.value })}
-                      placeholder="SEO meta description (150-160 characters)"
-                      rows={3}
-                    />
-                    <p className="text-sm text-gray-500">
-                      {formData.metaDescription?.length || 0}/160 characters
-                    </p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="keywords">SEO Keywords</Label>
-                    <Input
-                      id="keywords"
-                      value={formData.keywords}
-                      onChange={(e) => setFormData({ ...formData, keywords: e.target.value })}
-                      placeholder="keyword1, keyword2, keyword3"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="canonicalUrl">Canonical URL</Label>
-                    <Input
-                      id="canonicalUrl"
-                      value={formData.canonicalUrl}
-                      onChange={(e) => setFormData({ ...formData, canonicalUrl: e.target.value })}
-                      placeholder="https://example.com/canonical-url"
-                    />
-                  </div>
-
-                  <div className="flex items-center space-x-6">
-                    <div className="flex items-center space-x-2">
-                      <Switch
-                        id="noIndex"
-                        checked={formData.noIndex}
-                        onCheckedChange={(checked) => setFormData({ ...formData, noIndex: checked })}
-                      />
-                      <Label htmlFor="noIndex">No Index</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Switch
-                        id="noFollow"
-                        checked={formData.noFollow}
-                        onCheckedChange={(checked) => setFormData({ ...formData, noFollow: checked })}
-                      />
-                      <Label htmlFor="noFollow">No Follow</Label>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="metaTitle">Meta Title (Alternative)</Label>
-                    <Input
-                      id="metaTitle"
-                      value={formData.metaTitle}
-                      onChange={(e) => handleMetaTitleChange(e.target.value)}
-                      placeholder="Alternative meta title if different from SEO title"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Video SEO (if applicable)</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="videoTitle">Video Title</Label>
-                    <Input
-                      id="videoTitle"
-                      value={formData.videoSEO?.title || ""}
-                      onChange={(e) => setFormData({ 
-                        ...formData, 
-                        videoSEO: { ...formData.videoSEO, title: e.target.value }
-                      })}
-                      placeholder="Video title for SEO"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="videoDescription">Video Description</Label>
-                    <Textarea
-                      id="videoDescription"
-                      value={formData.videoSEO?.description || ""}
-                      onChange={(e) => setFormData({ 
-                        ...formData, 
-                        videoSEO: { ...formData.videoSEO, description: e.target.value }
-                      })}
-                      placeholder="Video description for SEO"
-                      rows={3}
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="videoDuration">Video Duration</Label>
-                      <Input
-                        id="videoDuration"
-                        value={formData.videoSEO?.duration || ""}
-                        onChange={(e) => setFormData({ 
-                          ...formData, 
-                          videoSEO: { ...formData.videoSEO, duration: e.target.value }
-                        })}
-                        placeholder="PT5M30S (5 min 30 sec)"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="videoThumbnail">Video Thumbnail URL</Label>
-                      <Input
-                        id="videoThumbnail"
-                        value={formData.videoSEO?.thumbnailUrl || ""}
-                        onChange={(e) => setFormData({ 
-                          ...formData, 
-                          videoSEO: { ...formData.videoSEO, thumbnailUrl: e.target.value }
-                        })}
-                        placeholder="https://example.com/thumb.jpg"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="videoTranscript">Video Transcript (SEO boost)</Label>
-                    <Textarea
-                      id="videoTranscript"
-                      value={formData.videoSEO?.transcript || ""}
-                      onChange={(e) => setFormData({ 
-                        ...formData, 
-                        videoSEO: { ...formData.videoSEO, transcript: e.target.value }
-                      })}
-                      placeholder="Full video transcript for SEO..."
-                      rows={6}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
+              <PostVideoSEO
+                videoSEO={formData.videoSEO || {
+                  title: "",
+                  description: "",
+                  duration: "",
+                  thumbnailUrl: "",
+                  transcript: ""
+                }}
+                onFieldChange={updateFormData}
+              />
             </TabsContent>
 
             <TabsContent value="social" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Social Media Optimization</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-4">
-                    <h4 className="font-semibold">Open Graph (Facebook)</h4>
-                    <div className="space-y-2">
-                      <Label htmlFor="ogTitle">OG Title</Label>
-                      <Input
-                        id="ogTitle"
-                        value={formData.ogTitle}
-                        onChange={(e) => setFormData({ ...formData, ogTitle: e.target.value })}
-                        placeholder="Facebook share title"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="ogDescription">OG Description</Label>
-                      <Textarea
-                        id="ogDescription"
-                        value={formData.ogDescription}
-                        onChange={(e) => setFormData({ ...formData, ogDescription: e.target.value })}
-                        placeholder="Facebook share description"
-                        rows={2}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <h4 className="font-semibold">Twitter</h4>
-                    <div className="space-y-2">
-                      <Label htmlFor="twitterTitle">Twitter Title</Label>
-                      <Input
-                        id="twitterTitle"
-                        value={formData.twitterTitle}
-                        onChange={(e) => setFormData({ ...formData, twitterTitle: e.target.value })}
-                        placeholder="Twitter share title"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="twitterDescription">Twitter Description</Label>
-                      <Textarea
-                        id="twitterDescription"
-                        value={formData.twitterDescription}
-                        onChange={(e) => setFormData({ ...formData, twitterDescription: e.target.value })}
-                        placeholder="Twitter share description"
-                        rows={2}
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <PostSocialForm
+                formData={{
+                  ogTitle: formData.ogTitle || "",
+                  ogDescription: formData.ogDescription || "",
+                  twitterTitle: formData.twitterTitle || "",
+                  twitterDescription: formData.twitterDescription || ""
+                }}
+                onFieldChange={updateFormData}
+              />
             </TabsContent>
 
             <TabsContent value="schedule" className="space-y-6">
@@ -732,43 +414,14 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
             </TabsContent>
 
             <TabsContent value="advanced" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Advanced Settings</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="schema">Schema Markup (JSON-LD)</Label>
-                    <Textarea
-                      id="schema"
-                      value={formData.schema}
-                      onChange={(e) => updateFormData('schema', e.target.value)}
-                      placeholder="Custom schema markup in JSON-LD format"
-                      rows={8}
-                      className="font-mono"
-                    />
-                  </div>
-
-                  <div className="flex items-center space-x-6">
-                    <div className="flex items-center space-x-2">
-                      <Switch
-                        id="published"
-                        checked={formData.published}
-                        onCheckedChange={(checked) => updateFormData('published', checked)}
-                      />
-                      <Label htmlFor="published">Published</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Switch
-                        id="featured"
-                        checked={formData.featured}
-                        onCheckedChange={(checked) => updateFormData('featured', checked)}
-                      />
-                      <Label htmlFor="featured">Featured</Label>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <PostAdvancedSettings
+                formData={{
+                  schema: formData.schema || "",
+                  published: formData.published || false,
+                  featured: formData.featured || false
+                }}
+                onFieldChange={updateFormData}
+              />
             </TabsContent>
           </Tabs>
         </div>
