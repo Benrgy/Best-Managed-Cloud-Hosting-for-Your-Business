@@ -9,7 +9,7 @@ const Blog = () => {
   return (
     <>
       <SEO 
-        title="Cloud Hosting Blog | Expert Tips & Reviews | Cloudways"
+        title="Cloud Hosting Blog | Expert Tips & Reviews | CloudHost Pro"
         description="Latest insights on managed cloud hosting, performance optimization, security tips, and expert reviews. Stay updated with hosting trends and best practices."
         keywords="cloud hosting blog, managed hosting tips, web hosting tutorials, cloudways guides, hosting performance, website optimization, hosting security"
         canonicalUrl="https://best-managed-cloud-hosting-for-business.lovable.app/blog"
