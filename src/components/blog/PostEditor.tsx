@@ -1,15 +1,14 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { CategorySelect } from "./CategorySelect";
 import { TagSelect } from "./TagSelect";
@@ -18,21 +17,13 @@ import { PostSEOForm } from "./forms/PostSEOForm";
 import { PostSocialForm } from "./forms/PostSocialForm";
 import { PostVideoSEO } from "./forms/PostVideoSEO";
 import { PostAdvancedSettings } from "./forms/PostAdvancedSettings";
-import { BlogPost, BlogCategory, BlogTag } from "@/data/blogData";
+import { BlogPost } from "@/data/blogData";
 
 interface PostEditorProps {
   post: BlogPost | null;
   onSave: (post: BlogPost) => void;
   onCancel: () => void;
   onPreview: (post: BlogPost) => void;
-}
-
-interface VideoSEO {
-  title?: string;
-  description?: string;
-  duration?: string;
-  thumbnailUrl?: string;
-  transcript?: string;
 }
 
 export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProps) => {
@@ -42,17 +33,24 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
       title: "",
       slug: "",
       author: "Your Name",
-      publishDate: new Date(),
+      publishDate: new Date().toISOString(),
       category: "",
       tags: [],
       excerpt: "",
       content: "",
-      imageUrl: "",
+      image: "",
+      imageAlt: "",
+      imageTitle: "",
       published: false,
       featured: false,
+      focusKeyword: "",
+      seoTitle: "",
       metaTitle: "",
       metaDescription: "",
       keywords: "",
+      canonicalUrl: "",
+      noIndex: false,
+      noFollow: false,
       ogTitle: "",
       ogDescription: "",
       twitterTitle: "",
@@ -67,7 +65,7 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
       }
     }
   );
-  const [date, setDate] = useState<Date | undefined>(formData.publishDate);
+
   const categories = [
     { label: "Technology", value: "technology" },
     { label: "Travel", value: "travel" },
@@ -83,18 +81,9 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleCategoryChange = (category: string) => {
-    setFormData(prev => ({ ...prev, category }));
-  };
-
-  const handleTagChange = (tags: string[]) => {
-    setFormData(prev => ({ ...prev, tags }));
-  };
-
   const handleDateChange = (date: Date | undefined) => {
-    setDate(date);
     if (date) {
-      setFormData(prev => ({ ...prev, publishDate: date }));
+      setFormData(prev => ({ ...prev, publishDate: date.toISOString() }));
     }
   };
 
@@ -145,6 +134,7 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
           <PostBasicInfo
             formData={formData}
             onFieldChange={handleFieldChange}
+            onDateChange={handleDateChange}
             categories={categories}
             tags={tags}
           />
@@ -157,12 +147,26 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
 
         <div className="space-y-6">
           <PostSEOForm
-            formData={formData}
+            formData={{
+              focusKeyword: formData.focusKeyword || "",
+              seoTitle: formData.seoTitle || "",
+              metaDescription: formData.metaDescription || "",
+              keywords: formData.keywords || "",
+              canonicalUrl: formData.canonicalUrl || "",
+              noIndex: formData.noIndex || false,
+              noFollow: formData.noFollow || false,
+              metaTitle: formData.metaTitle || ""
+            }}
             onFieldChange={handleFieldChange}
           />
 
           <PostSocialForm
-            formData={formData}
+            formData={{
+              ogTitle: formData.ogTitle || "",
+              ogDescription: formData.ogDescription || "",
+              twitterTitle: formData.twitterTitle || "",
+              twitterDescription: formData.twitterDescription || ""
+            }}
             onFieldChange={handleFieldChange}
           />
 
@@ -174,11 +178,15 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
               thumbnailUrl: formData.videoSEO?.thumbnailUrl || '',
               transcript: formData.videoSEO?.transcript || ''
             }}
-            onChange={handleVideoSEOChange}
+            onFieldChange={handleVideoSEOChange}
           />
 
           <PostAdvancedSettings
-            formData={formData}
+            formData={{
+              schema: formData.schema || "",
+              published: formData.published || false,
+              featured: formData.featured || false
+            }}
             onFieldChange={handleFieldChange}
           />
 
@@ -199,11 +207,14 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
 interface PostBasicInfoProps {
   formData: BlogPost;
   onFieldChange: (field: string, value: any) => void;
+  onDateChange: (date: Date | undefined) => void;
   categories: { label: string; value: string; }[];
   tags: { label: string; value: string; }[];
 }
 
-const PostBasicInfo = ({ formData, onFieldChange, categories, tags }: PostBasicInfoProps) => {
+const PostBasicInfo = ({ formData, onFieldChange, onDateChange, categories, tags }: PostBasicInfoProps) => {
+  const publishDate = formData.publishDate ? new Date(formData.publishDate) : undefined;
+
   return (
     <Card>
       <CardHeader>
@@ -249,11 +260,11 @@ const PostBasicInfo = ({ formData, onFieldChange, categories, tags }: PostBasicI
                 variant={"outline"}
                 className={cn(
                   "w-[240px] justify-start text-left font-normal",
-                  !formData.publishDate && "text-muted-foreground"
+                  !publishDate && "text-muted-foreground"
                 )}
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
-                {formData.publishDate ? format(formData.publishDate, "PPP") : (
+                {publishDate ? format(publishDate, "PPP") : (
                   <span>Pick a date</span>
                 )}
               </Button>
@@ -261,11 +272,9 @@ const PostBasicInfo = ({ formData, onFieldChange, categories, tags }: PostBasicI
             <PopoverContent className="w-auto p-0" align="start">
               <Calendar
                 mode="single"
-                selected={formData.publishDate}
-                onSelect={(date) => date && onFieldChange('publishDate', date)}
-                disabled={(date) =>
-                  date > new Date()
-                }
+                selected={publishDate}
+                onSelect={onDateChange}
+                disabled={(date) => date > new Date()}
                 initialFocus
               />
             </PopoverContent>
@@ -291,11 +300,11 @@ const PostBasicInfo = ({ formData, onFieldChange, categories, tags }: PostBasicI
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="imageUrl">Image URL</Label>
+          <Label htmlFor="image">Image URL</Label>
           <Input
-            id="imageUrl"
-            value={formData.imageUrl}
-            onChange={(e) => onFieldChange('imageUrl', e.target.value)}
+            id="image"
+            value={formData.image || ""}
+            onChange={(e) => onFieldChange('image', e.target.value)}
             placeholder="Featured image URL"
           />
         </div>

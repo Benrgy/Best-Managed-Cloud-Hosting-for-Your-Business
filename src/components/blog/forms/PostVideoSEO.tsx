@@ -16,10 +16,6 @@ interface PostVideoSEOProps {
 }
 
 export const PostVideoSEO = ({ videoSEO, onFieldChange }: PostVideoSEOProps) => {
-  const handleVideoFieldChange = (field: string, value: string) => {
-    onFieldChange('videoSEO', { ...videoSEO, [field]: value });
-  };
-
   return (
     <Card>
       <CardHeader>
@@ -31,7 +27,7 @@ export const PostVideoSEO = ({ videoSEO, onFieldChange }: PostVideoSEOProps) => 
           <Input
             id="videoTitle"
             value={videoSEO?.title || ""}
-            onChange={(e) => handleVideoFieldChange('title', e.target.value)}
+            onChange={(e) => onFieldChange('title', e.target.value)}
             placeholder="Video title for SEO"
           />
         </div>
@@ -41,7 +37,7 @@ export const PostVideoSEO = ({ videoSEO, onFieldChange }: PostVideoSEOProps) => 
           <Textarea
             id="videoDescription"
             value={videoSEO?.description || ""}
-            onChange={(e) => handleVideoFieldChange('description', e.target.value)}
+            onChange={(e) => onFieldChange('description', e.target.value)}
             placeholder="Video description for SEO"
             rows={3}
           />
@@ -53,7 +49,7 @@ export const PostVideoSEO = ({ videoSEO, onFieldChange }: PostVideoSEOProps) => 
             <Input
               id="videoDuration"
               value={videoSEO?.duration || ""}
-              onChange={(e) => handleVideoFieldChange('duration', e.target.value)}
+              onChange={(e) => onFieldChange('duration', e.target.value)}
               placeholder="PT5M30S (5 min 30 sec)"
             />
           </div>
@@ -63,7 +59,7 @@ export const PostVideoSEO = ({ videoSEO, onFieldChange }: PostVideoSEOProps) => 
             <Input
               id="videoThumbnail"
               value={videoSEO?.thumbnailUrl || ""}
-              onChange={(e) => handleVideoFieldChange('thumbnailUrl', e.target.value)}
+              onChange={(e) => onFieldChange('thumbnailUrl', e.target.value)}
               placeholder="https://example.com/thumb.jpg"
             />
           </div>
@@ -74,7 +70,7 @@ export const PostVideoSEO = ({ videoSEO, onFieldChange }: PostVideoSEOProps) => 
           <Textarea
             id="videoTranscript"
             value={videoSEO?.transcript || ""}
-            onChange={(e) => handleVideoFieldChange('transcript', e.target.value)}
+            onChange={(e) => onFieldChange('transcript', e.target.value)}
             placeholder="Full video transcript for SEO..."
             rows={6}
           />
