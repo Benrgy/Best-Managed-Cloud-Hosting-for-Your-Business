@@ -26,42 +26,44 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
   const { toast } = useToast();
   const [editorMode, setEditorMode] = useState<'visual' | 'html'>('visual');
   const [formData, setFormData] = useState<Partial<BlogPost>>({
-    title: post?.title || "",
-    slug: post?.slug || "",
-    excerpt: post?.excerpt || "",
-    content: post?.content || "",
-    author: post?.author || "",
-    category: post?.category || "",
-    tags: post?.tags || [],
-    image: post?.image || "",
-    metaDescription: post?.metaDescription || "",
-    keywords: post?.keywords || "",
-    published: post?.published || false,
-    featured: post?.featured || false,
-    focusKeyword: post?.focusKeyword || "",
-    seoTitle: post?.seoTitle || "",
-    ogTitle: post?.ogTitle || "",
-    ogDescription: post?.ogDescription || "",
-    twitterTitle: post?.twitterTitle || "",
-    twitterDescription: post?.twitterDescription || "",
-    canonicalUrl: post?.canonicalUrl || "",
-    noIndex: post?.noIndex || false,
-    noFollow: post?.noFollow || false,
-    schema: post?.schema || "",
-    publishDate: post?.publishDate || "",
-    publishTime: post?.publishTime || "",
-    scheduled: post?.scheduled || false,
-    autoPublish: post?.autoPublish || false,
-    metaTitle: post?.metaTitle || "",
-    imageAlt: post?.imageAlt || "",
-    imageTitle: post?.imageTitle || "",
-    videoSEO: post?.videoSEO || {
+    title: "",
+    slug: "",
+    excerpt: "",
+    content: "",
+    author: "",
+    publishDate: new Date().toISOString().split('T')[0],
+    publishTime: "09:00",
+    scheduled: false,
+    autoPublish: false,
+    category: "",
+    tags: [],
+    image: "",
+    imageAlt: "",
+    imageTitle: "",
+    readTime: 1,
+    published: false,
+    metaTitle: "",
+    metaDescription: "",
+    focusKeyword: "",
+    keywords: "",
+    canonicalUrl: "",
+    ogTitle: "",
+    ogDescription: "",
+    ogImage: "",
+    twitterTitle: "",
+    twitterDescription: "",
+    twitterImage: "",
+    noIndex: false,
+    noFollow: false,
+    schema: "",
+    videoSEO: {
       title: "",
       description: "",
-      transcript: "",
       duration: "",
+      uploadDate: "",
       thumbnailUrl: ""
-    }
+    },
+    ...post
   });
 
   const generateSlug = (title: string) => {
@@ -81,16 +83,51 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
     });
   };
 
+  const updateFormData = (field: string, value: any) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value,
+      metaTitle: field === 'title' && !prev.metaTitle ? value : prev.metaTitle
+    }));
+  };
+
+  const handleImageSEOChange = (field: 'imageAlt' | 'imageTitle', value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleVideoSEOChange = (field: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      videoSEO: {
+        ...prev.videoSEO,
+        [field]: value
+      }
+    }));
+  };
+
+  const handleMetaTitleChange = (value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      metaTitle: value
+    }));
+  };
+
   const handleScheduleChange = (schedule: {
     publishDate: string;
     publishTime: string;
     scheduled: boolean;
     autoPublish: boolean;
   }) => {
-    setFormData({
-      ...formData,
-      ...schedule
-    });
+    setFormData(prev => ({
+      ...prev,
+      publishDate: schedule.publishDate,
+      publishTime: schedule.publishTime,
+      scheduled: schedule.scheduled,
+      autoPublish: schedule.autoPublish
+    }));
   };
 
   const handleSave = () => {
@@ -258,7 +295,7 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                     <Input
                       id="imageAlt"
                       value={formData.imageAlt}
-                      onChange={(e) => setFormData({ ...formData, imageAlt: e.target.value })}
+                      onChange={(e) => handleImageSEOChange('imageAlt', e.target.value)}
                       placeholder="Descriptive alt text for featured image"
                     />
                   </div>
@@ -268,7 +305,7 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                     <Input
                       id="imageTitle"
                       value={formData.imageTitle}
-                      onChange={(e) => setFormData({ ...formData, imageTitle: e.target.value })}
+                      onChange={(e) => handleImageSEOChange('imageTitle', e.target.value)}
                       placeholder="Image title attribute"
                     />
                   </div>
@@ -402,7 +439,7 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                     <Input
                       id="metaTitle"
                       value={formData.metaTitle}
-                      onChange={(e) => setFormData({ ...formData, metaTitle: e.target.value })}
+                      onChange={(e) => handleMetaTitleChange(e.target.value)}
                       placeholder="Alternative meta title if different from SEO title"
                     />
                   </div>

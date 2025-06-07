@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Target, Search, Share2, CheckCircle, AlertCircle, XCircle } from "lucide-react";
+import { Target, CheckCircle, AlertCircle, XCircle } from "lucide-react";
 import { BlogCategory } from "@/data/blogData";
 
 interface CategorySEOProps {

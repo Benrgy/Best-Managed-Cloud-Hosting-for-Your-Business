@@ -40,6 +40,17 @@ export const TagEditor = ({ tag, onSave, onCancel }: TagEditorProps) => {
       </div>
 
       <div className="space-y-2">
+        <Label htmlFor="tagMetaTitle">Meta Title (SEO)</Label>
+        <Input
+          id="tagMetaTitle"
+          value={formData.metaTitle || ""}
+          onChange={(e) => setFormData({ ...formData, metaTitle: e.target.value })}
+          placeholder="SEO meta title for tag page"
+        />
+        <p className="text-xs text-gray-500">{(formData.metaTitle || "").length}/60 characters</p>
+      </div>
+
+      <div className="space-y-2">
         <Label htmlFor="tagMetaDescription">Meta Description (SEO)</Label>
         <Textarea
           id="tagMetaDescription"
@@ -48,15 +59,16 @@ export const TagEditor = ({ tag, onSave, onCancel }: TagEditorProps) => {
           placeholder="SEO meta description for tag page"
           rows={2}
         />
+        <p className="text-xs text-gray-500">{(formData.metaDescription || "").length}/160 characters</p>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="tagKeywords">Keywords</Label>
+        <Label htmlFor="tagKeywords">Keywords (SEO)</Label>
         <Input
           id="tagKeywords"
           value={formData.keywords || ""}
           onChange={(e) => setFormData({ ...formData, keywords: e.target.value })}
-          placeholder="SEO keywords for tag"
+          placeholder="SEO keywords for tag (comma separated)"
         />
       </div>
 

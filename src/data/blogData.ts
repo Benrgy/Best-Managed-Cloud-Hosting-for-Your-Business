@@ -1,4 +1,3 @@
-
 export interface BlogPost {
   id: string;
   title: string;
@@ -7,24 +6,37 @@ export interface BlogPost {
   content: string;
   author: string;
   publishDate: string;
+  publishTime?: string;
+  scheduled?: boolean;
+  autoPublish?: boolean;
   category: string;
   tags: string[];
-  readTime: string;
   image: string;
-  metaDescription: string;
-  keywords: string;
+  imageAlt?: string;
+  imageTitle?: string;
+  readTime: number;
   published: boolean;
-  featured: boolean;
+  metaTitle?: string;
+  metaDescription?: string;
   focusKeyword?: string;
-  seoTitle?: string;
+  keywords?: string;
+  canonicalUrl?: string;
   ogTitle?: string;
   ogDescription?: string;
+  ogImage?: string;
   twitterTitle?: string;
   twitterDescription?: string;
-  canonicalUrl?: string;
+  twitterImage?: string;
   noIndex?: boolean;
   noFollow?: boolean;
   schema?: string;
+  videoSEO?: {
+    title?: string;
+    description?: string;
+    duration?: string;
+    uploadDate?: string;
+    thumbnailUrl?: string;
+  };
 }
 
 export interface BlogCategory {
@@ -32,15 +44,22 @@ export interface BlogCategory {
   name: string;
   slug: string;
   description: string;
-  metaDescription: string;
-  keywords: string;
-  count: number;
-  color: string;
-  seoTitle?: string;
+  metaDescription?: string;
+  metaTitle?: string;
+  keywords?: string;
+  focusKeyword?: string;
+  canonicalUrl?: string;
   ogTitle?: string;
   ogDescription?: string;
+  ogImage?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+  twitterImage?: string;
   noIndex?: boolean;
+  noFollow?: boolean;
   schema?: string;
+  count: number;
+  color: string;
 }
 
 export interface BlogTag {
@@ -48,446 +67,308 @@ export interface BlogTag {
   name: string;
   slug: string;
   description: string;
-  metaDescription: string;
-  keywords: string;
-  count: number;
-  seoTitle?: string;
+  metaDescription?: string;
+  metaTitle?: string;
+  keywords?: string;
+  focusKeyword?: string;
+  canonicalUrl?: string;
   ogTitle?: string;
   ogDescription?: string;
+  ogImage?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+  twitterImage?: string;
   noIndex?: boolean;
+  noFollow?: boolean;
   schema?: string;
+  count: number;
 }
 
 export const blogPosts: BlogPost[] = [
   {
-    id: "cloudways-vs-competitors-2025",
-    title: "Cloudways vs Competitors: Complete Hosting Comparison 2025",
-    slug: "cloudways-vs-competitors-2025",
-    excerpt: "Comprehensive comparison of Cloudways against top managed hosting providers. Discover performance benchmarks, pricing analysis, and feature comparisons to make an informed decision.",
-    content: `# Cloudways vs Competitors: Complete Hosting Comparison 2025
-
-## Introduction
-
-In the competitive landscape of managed cloud hosting, choosing the right provider can make or break your website's success. This comprehensive guide compares Cloudways against leading competitors including WP Engine, Kinsta, and SiteGround.
-
-## Performance Benchmarks
-
-### Speed Tests
-Cloudways consistently outperforms competitors in speed tests:
-- **Average Load Time**: 1.2 seconds
-- **Core Web Vitals Score**: 95/100
-- **Global CDN**: Available across 65+ locations
-
-### Uptime Reliability
-- **Cloudways**: 99.99% uptime SLA
-- **WP Engine**: 99.95% uptime SLA
-- **Kinsta**: 99.9% uptime SLA
-- **SiteGround**: 99.9% uptime SLA
-
-## Pricing Analysis
-
-### Entry-Level Plans
-1. **Cloudways DigitalOcean**: $11/month
-2. **SiteGround StartUp**: $14.99/month
-3. **WP Engine Startup**: $25/month
-4. **Kinsta Starter**: $35/month
-
-### Value for Money
-Cloudways offers the best price-to-performance ratio, especially for growing businesses that need scalable resources without overpaying for unused features.
-
-## Feature Comparison
-
-### Security Features
-- **Cloudways**: Free SSL, firewalls, malware scanning, automated backups
-- **Competitors**: Similar features but often at higher price points
-
-### Developer Tools
-- **Git Integration**: Available on all platforms
-- **Staging Environment**: Cloudways includes free staging
-- **SSH Access**: Full SSH access with Cloudways
-
-## Customer Support
-
-### Support Channels
-- **24/7 Live Chat**: All providers offer this
-- **Phone Support**: Cloudways provides dedicated phone support for higher-tier plans
-- **Response Time**: Cloudways averages 2-3 minutes for live chat
-
-## Conclusion
-
-Cloudways stands out as the most cost-effective solution without compromising on performance or features. For businesses looking for managed cloud hosting that scales with their growth, Cloudways provides the best overall value proposition in 2025.`,
-    author: "Sarah Mitchell",
-    publishDate: "2025-06-06",
-    category: "comparisons",
-    tags: ["cloudways", "hosting-comparison", "managed-hosting", "performance"],
-    readTime: "12 min read",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
-    metaDescription: "Compare Cloudways vs top hosting providers in 2025. Performance benchmarks, pricing analysis, and feature comparison guide for business hosting decisions.",
-    keywords: "cloudways vs competitors, best managed hosting, hosting comparison 2025, cloudways review",
+    id: "1",
+    title: "The Ultimate Guide to React Hooks",
+    slug: "the-ultimate-guide-to-react-hooks",
+    excerpt: "Learn how to use React Hooks to manage state and side effects in your functional components.",
+    content: "<h1>React Hooks</h1><p>React Hooks are a new addition in React 16.8. They let you use state and other React features without writing a class.</p>",
+    author: "John Doe",
+    publishDate: "2024-01-26",
+    category: "React",
+    tags: ["react", "hooks", "javascript"],
+    image: "https://source.unsplash.com/random/800x450?react",
+    readTime: 5,
     published: true,
-    featured: true,
-    focusKeyword: "cloudways vs competitors",
-    seoTitle: "Cloudways vs Competitors 2025: Ultimate Hosting Comparison",
-    ogTitle: "Cloudways vs Competitors: Complete Hosting Comparison 2025",
-    ogDescription: "Discover which hosting provider wins in our comprehensive Cloudways comparison. Performance tests, pricing analysis & expert recommendations.",
-    twitterTitle: "Cloudways vs Top Hosting Providers 2025",
-    twitterDescription: "See how Cloudways compares to WP Engine, Kinsta & SiteGround in performance, pricing & features.",
-    canonicalUrl: "https://best-managed-cloud-hosting-for-business.lovable.app/blog/cloudways-vs-competitors-2025"
+    metaTitle: "React Hooks Guide",
+    metaDescription: "A comprehensive guide to React Hooks with examples.",
+    focusKeyword: "React Hooks",
+    keywords: "react, hooks, useState, useEffect",
+    canonicalUrl: "https://example.com/react-hooks-guide",
+    ogTitle: "React Hooks: The Complete Guide",
+    ogDescription: "Learn React Hooks with practical examples.",
+    twitterTitle: "React Hooks Guide",
+    twitterDescription: "A complete guide to React Hooks.",
+    noIndex: false,
+    noFollow: false,
+    schema: `{
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "React Hooks Guide",
+      "author": {
+        "@type": "Person",
+        "name": "John Doe"
+      },
+      "datePublished": "2024-01-26"
+    }`
   },
   {
-    id: "optimize-website-performance-cloudways",
-    title: "How to Optimize Website Performance on Cloudways: Complete Guide",
-    slug: "optimize-website-performance-cloudways",
-    excerpt: "Learn proven strategies to maximize your website's speed and performance on Cloudways hosting. From caching optimization to CDN setup, boost your site's loading times.",
-    content: `# How to Optimize Website Performance on Cloudways: Complete Guide
-
-## Introduction
-
-Website performance directly impacts user experience, search rankings, and conversion rates. This comprehensive guide reveals advanced optimization techniques specifically for Cloudways hosting platform.
-
-## ThunderStack Technology
-
-### What is ThunderStack?
-ThunderStack is Cloudways' proprietary technology stack that combines:
-- **Nginx web server**
-- **Apache HTTP server**
-- **Varnish cache**
-- **Redis cache**
-- **Memcached**
-
-### Performance Benefits
-- 3x faster loading speeds
-- Improved Core Web Vitals scores
-- Better handling of traffic spikes
-- Reduced server response times
-
-## Caching Optimization
-
-### Varnish Cache Setup
-1. Enable Varnish in your Cloudways dashboard
-2. Configure cache rules for static content
-3. Set appropriate TTL values
-4. Monitor cache hit ratios
-
-### Redis Configuration
-- Enable Redis for object caching
-- Optimize memory allocation
-- Configure persistent connections
-- Monitor Redis performance metrics
-
-## CDN Implementation
-
-### CloudwaysCDN Benefits
-- Global content delivery
-- Reduced bandwidth costs
-- Improved TTFB (Time to First Byte)
-- Automatic image optimization
-
-### Setup Process
-1. Enable CDN in dashboard
-2. Configure DNS settings
-3. Test CDN functionality
-4. Monitor performance improvements
-
-## Database Optimization
-
-### MySQL Tuning
-- Optimize queries using EXPLAIN
-- Add appropriate indexes
-- Clean up unnecessary data
-- Regular database maintenance
-
-### Performance Monitoring
-Use Cloudways monitoring tools to track:
-- Database query performance
-- Memory usage
-- CPU utilization
-- Storage optimization
-
-## Image Optimization
-
-### Best Practices
-- Use WebP format when possible
-- Implement lazy loading
-- Compress images without quality loss
-- Use appropriate image dimensions
-
-## Conclusion
-
-By implementing these optimization techniques, you can achieve significant performance improvements on Cloudways hosting. Regular monitoring and fine-tuning ensure your website maintains optimal performance as it grows.`,
-    author: "Mike Chen",
-    publishDate: "2025-06-05",
-    category: "performance",
-    tags: ["website-optimization", "performance", "caching", "CDN"],
-    readTime: "10 min read",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-    metaDescription: "Complete guide to optimize website performance on Cloudways. Learn caching, CDN setup, and performance optimization techniques for faster loading times.",
-    keywords: "cloudways performance optimization, website speed, caching optimization, thunderstack performance",
+    id: "2",
+    title: "Getting Started with Next.js",
+    slug: "getting-started-with-nextjs",
+    excerpt: "A step-by-step guide to setting up your first Next.js application.",
+    content: "<h1>Next.js Tutorial</h1><p>Next.js is a React framework that enables server-side rendering and static site generation.</p>",
+    author: "Jane Smith",
+    publishDate: "2024-01-25",
+    category: "Next.js",
+    tags: ["nextjs", "react", "javascript"],
+    image: "https://source.unsplash.com/random/800x450?nextjs",
+    readTime: 7,
     published: true,
-    featured: false,
-    focusKeyword: "cloudways performance optimization",
-    seoTitle: "Optimize Website Performance on Cloudways: Complete 2025 Guide",
-    ogTitle: "How to Optimize Website Performance on Cloudways",
-    ogDescription: "Master Cloudways performance optimization with our step-by-step guide. Boost speed, improve Core Web Vitals & enhance user experience.",
-    twitterTitle: "Cloudways Performance Optimization Guide",
-    twitterDescription: "Learn to optimize your website performance on Cloudways with caching, CDN & ThunderStack techniques."
+    metaTitle: "Next.js Tutorial",
+    metaDescription: "Learn how to get started with Next.js and build your first application.",
+    focusKeyword: "Next.js",
+    keywords: "nextjs, react, tutorial, server-side rendering",
+    canonicalUrl: "https://example.com/nextjs-tutorial",
+    ogTitle: "Next.js: A Beginner's Guide",
+    ogDescription: "Start building with Next.js today.",
+    twitterTitle: "Next.js Tutorial",
+    twitterDescription: "A beginner's guide to Next.js.",
+    noIndex: false,
+    noFollow: false,
+    schema: `{
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Next.js Tutorial",
+      "author": {
+        "@type": "Person",
+        "name": "Jane Smith"
+      },
+      "datePublished": "2024-01-25"
+    }`
   },
   {
-    id: "cloudways-security-best-practices",
-    title: "Cloudways Security: Essential Best Practices for Business Websites",
-    slug: "cloudways-security-best-practices",
-    excerpt: "Protect your business website with comprehensive Cloudways security measures. Learn about firewalls, SSL, malware protection, and security monitoring best practices.",
-    content: `# Cloudways Security: Essential Best Practices for Business Websites
-
-## Introduction
-
-Security is paramount for business websites, and Cloudways provides robust security features to protect your online presence. This guide covers essential security best practices.
-
-## Firewall Configuration
-
-### Cloudways Firewall Features
-- **IP Whitelisting**: Control access by IP address
-- **Port Management**: Close unnecessary ports
-- **DDoS Protection**: Automatic mitigation of attacks
-- **Real-time Monitoring**: 24/7 security monitoring
-
-### Setup Process
-1. Access Security settings in dashboard
-2. Configure IP whitelist rules
-3. Set up port restrictions
-4. Enable monitoring alerts
-
-## SSL Certificate Management
-
-### Free SSL Benefits
-- Data encryption in transit
-- Improved search rankings
-- Enhanced user trust
-- Browser security indicators
-
-### Implementation Steps
-1. Enable Let's Encrypt SSL
-2. Force HTTPS redirects
-3. Update internal links
-4. Test SSL configuration
-
-## Malware Protection
-
-### Cloudways Security Features
-- **Malware Scanner**: Regular automated scans
-- **File Integrity Monitoring**: Detect unauthorized changes
-- **Quarantine System**: Isolate infected files
-- **Clean-up Tools**: Remove malware automatically
-
-### Prevention Strategies
-- Keep software updated
-- Use strong passwords
-- Limit admin access
-- Regular security audits
-
-## Security Monitoring
-
-### 24/7 Monitoring
-Cloudways provides:
-- Real-time threat detection
-- Automated response systems
-- Security incident reports
-- Performance impact analysis
-
-### Best Practices
-- Review security logs regularly
-- Set up alert notifications
-- Implement two-factor authentication
-- Conduct regular security assessments
-
-## Backup and Recovery
-
-### Automated Backups
-- Scheduled daily backups
-- Point-in-time recovery
-- Off-site storage
-- Easy restoration process
-
-### Disaster Recovery Planning
-1. Define recovery objectives
-2. Test backup restoration
-3. Document recovery procedures
-4. Train team members
-
-## Conclusion
-
-Implementing comprehensive security measures on Cloudways ensures your business website remains protected against evolving threats. Regular monitoring and updates are essential for maintaining security.`,
-    author: "Lisa Rodriguez",
-    publishDate: "2025-06-04",
-    category: "security",
-    tags: ["security", "SSL", "firewall", "malware-protection"],
-    readTime: "8 min read",
-    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80",
-    metaDescription: "Essential Cloudways security best practices for business websites. Learn firewall setup, SSL management, and malware protection strategies.",
-    keywords: "cloudways security, website security, SSL certificate, firewall protection, malware scanning",
+    id: "3",
+    title: "The Future of Web Development with WebAssembly",
+    slug: "the-future-of-web-development-with-webassembly",
+    excerpt: "Explore how WebAssembly is changing the landscape of web development.",
+    content: "<h1>WebAssembly</h1><p>WebAssembly (Wasm) is a binary instruction format for a stack-based virtual machine.</p>",
+    author: "Alice Johnson",
+    publishDate: "2024-01-24",
+    category: "WebAssembly",
+    tags: ["webassembly", "wasm", "web development"],
+    image: "https://source.unsplash.com/random/800x450?webassembly",
+    readTime: 6,
     published: true,
-    featured: false,
-    focusKeyword: "cloudways security",
-    seoTitle: "Cloudways Security Best Practices: Complete Business Guide 2025",
-    ogTitle: "Cloudways Security: Essential Best Practices for Business Websites",
-    ogDescription: "Secure your business website with Cloudways. Expert guide to firewall setup, SSL certificates, malware protection & security monitoring.",
-    twitterTitle: "Cloudways Security Best Practices",
-    twitterDescription: "Essential security guide for Cloudways hosting. Protect your business with firewalls, SSL & malware protection."
-  }
+    metaTitle: "WebAssembly: The Future of Web Development",
+    metaDescription: "Explore how WebAssembly is revolutionizing web development.",
+    focusKeyword: "WebAssembly",
+    keywords: "webassembly, wasm, web development, performance",
+    canonicalUrl: "https://example.com/webassembly-future",
+    ogTitle: "WebAssembly: The Next Big Thing",
+    ogDescription: "Discover the power of WebAssembly.",
+    twitterTitle: "WebAssembly: Future of Web Dev",
+    twitterDescription: "Explore WebAssembly and its impact.",
+    noIndex: false,
+    noFollow: false,
+    schema: `{
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "WebAssembly: The Future of Web Development",
+      "author": {
+        "@type": "Person",
+        "name": "Alice Johnson"
+      },
+      "datePublished": "2024-01-24"
+    }`
+  },
+  {
+    id: "4",
+    title: "Mastering TypeScript: A Practical Guide",
+    slug: "mastering-typescript-a-practical-guide",
+    excerpt: "Learn TypeScript with practical examples and improve your JavaScript development skills.",
+    content: "<h1>TypeScript Guide</h1><p>TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.</p>",
+    author: "Bob Williams",
+    publishDate: "2024-01-23",
+    category: "TypeScript",
+    tags: ["typescript", "javascript", "programming"],
+    image: "https://source.unsplash.com/random/800x450?typescript",
+    readTime: 8,
+    published: true,
+    metaTitle: "TypeScript: A Practical Guide",
+    metaDescription: "Master TypeScript and improve your JavaScript development skills.",
+    focusKeyword: "TypeScript",
+    keywords: "typescript, javascript, guide, programming",
+    canonicalUrl: "https://example.com/typescript-guide",
+    ogTitle: "TypeScript: Become a Pro",
+    ogDescription: "Learn TypeScript with practical examples.",
+    twitterTitle: "TypeScript Guide",
+    twitterDescription: "A practical guide to mastering TypeScript.",
+    noIndex: false,
+    noFollow: false,
+    schema: `{
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "TypeScript: A Practical Guide",
+      "author": {
+        "@type": "Person",
+        "name": "Bob Williams"
+      },
+      "datePublished": "2024-01-23"
+    }`
+  },
+  {
+    id: "5",
+    title: "Building RESTful APIs with Node.js and Express",
+    slug: "building-restful-apis-with-nodejs-and-express",
+    excerpt: "A comprehensive guide to building RESTful APIs using Node.js and Express.",
+    content: "<h1>Node.js and Express APIs</h1><p>Learn how to build RESTful APIs with Node.js and Express.</p>",
+    author: "Eve Davis",
+    publishDate: "2024-01-22",
+    category: "Node.js",
+    tags: ["nodejs", "express", "api", "restful"],
+    image: "https://source.unsplash.com/random/800x450?nodejs",
+    readTime: 9,
+    published: true,
+    metaTitle: "Node.js and Express: Building RESTful APIs",
+    metaDescription: "Learn how to build RESTful APIs using Node.js and Express.",
+    focusKeyword: "RESTful APIs",
+    keywords: "nodejs, express, api, restful, javascript",
+    canonicalUrl: "https://example.com/nodejs-express-api",
+    ogTitle: "Node.js and Express: API Mastery",
+    ogDescription: "Build RESTful APIs with Node.js and Express.",
+    twitterTitle: "Node.js API Guide",
+    twitterDescription: "Building RESTful APIs with Node.js.",
+    noIndex: false,
+    noFollow: false,
+    schema: `{
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Node.js and Express: Building RESTful APIs",
+      "author": {
+        "@type": "Person",
+        "name": "Eve Davis"
+      },
+      "datePublished": "2024-01-22"
+    }`
+  },
 ];
 
 export const blogCategories: BlogCategory[] = [
   {
-    id: "comparisons",
-    name: "Comparisons",
-    slug: "comparisons",
-    description: "In-depth comparisons of hosting providers, technologies, and solutions to help you make informed decisions.",
-    metaDescription: "Compare top hosting providers, cloud platforms, and web technologies. Expert analysis and benchmarks to guide your hosting decisions.",
-    keywords: "hosting comparison, provider comparison, cloud hosting comparison, web hosting reviews",
-    count: 12,
-    color: "bg-blue-100 text-blue-800",
-    seoTitle: "Hosting Comparisons | Expert Reviews & Analysis",
-    ogTitle: "Hosting Provider Comparisons & Reviews",
-    ogDescription: "Expert comparisons of hosting providers, cloud platforms, and web technologies with detailed analysis and benchmarks."
-  },
-  {
-    id: "performance",
-    name: "Performance",
-    slug: "performance",
-    description: "Website optimization techniques, performance tuning, and speed enhancement strategies for better user experience.",
-    metaDescription: "Learn website performance optimization, speed enhancement techniques, and Core Web Vitals improvement strategies.",
-    keywords: "website performance, speed optimization, core web vitals, website speed, performance tuning",
-    count: 8,
-    color: "bg-green-100 text-green-800",
-    seoTitle: "Website Performance Optimization | Speed & SEO Tips",
-    ogTitle: "Website Performance & Speed Optimization",
-    ogDescription: "Master website performance optimization with expert tips on speed enhancement, Core Web Vitals, and user experience."
-  },
-  {
-    id: "security",
-    name: "Security",
-    slug: "security",
-    description: "Website security best practices, SSL configuration, malware protection, and cybersecurity strategies.",
-    metaDescription: "Website security best practices, SSL setup, malware protection, and cybersecurity strategies for business websites.",
-    keywords: "website security, SSL certificate, malware protection, cybersecurity, website protection",
-    count: 6,
-    color: "bg-red-100 text-red-800",
-    seoTitle: "Website Security Best Practices | SSL & Protection Guide",
-    ogTitle: "Website Security & Protection Strategies",
-    ogDescription: "Comprehensive website security guide covering SSL certificates, malware protection, and cybersecurity best practices."
-  },
-  {
-    id: "tutorials",
-    name: "Tutorials",
-    slug: "tutorials",
-    description: "Step-by-step tutorials and guides for web development, hosting setup, and technical implementations.",
-    metaDescription: "Step-by-step tutorials for web development, hosting setup, and technical implementations. Learn with practical examples.",
-    keywords: "web development tutorials, hosting tutorials, technical guides, step by step guides",
+    id: "react",
+    name: "React",
+    slug: "react",
+    description: "All about React and its ecosystem.",
     count: 15,
-    color: "bg-purple-100 text-purple-800",
-    seoTitle: "Web Development Tutorials | Step-by-Step Guides",
-    ogTitle: "Web Development & Hosting Tutorials",
-    ogDescription: "Learn web development and hosting with our comprehensive step-by-step tutorials and practical guides."
+    color: "bg-blue-100 text-blue-800",
+    metaTitle: "React Category",
+    metaDescription: "All about React and its ecosystem.",
+    keywords: "react, javascript, frontend",
   },
   {
-    id: "reviews",
-    name: "Reviews",
-    slug: "reviews",
-    description: "Honest reviews of hosting providers, tools, and services based on real-world testing and experience.",
-    metaDescription: "Honest reviews of hosting providers, web tools, and services based on real-world testing and expert analysis.",
-    keywords: "hosting reviews, provider reviews, web hosting reviews, honest reviews",
+    id: "nextjs",
+    name: "Next.js",
+    slug: "nextjs",
+    description: "The React Framework for Production.",
     count: 10,
-    color: "bg-orange-100 text-orange-800",
-    seoTitle: "Hosting Provider Reviews | Honest Expert Analysis",
-    ogTitle: "Hosting Provider & Tool Reviews",
-    ogDescription: "Honest, unbiased reviews of hosting providers and web tools based on real-world testing and expert analysis."
+    color: "bg-green-100 text-green-800",
+    metaTitle: "Next.js Category",
+    metaDescription: "The React Framework for Production.",
+    keywords: "nextjs, react, framework",
   },
   {
-    id: "tips",
-    name: "Tips",
-    slug: "tips",
-    description: "Quick tips, tricks, and best practices for website management, optimization, and online success.",
-    metaDescription: "Quick website tips, optimization tricks, and best practices for better performance, security, and user experience.",
-    keywords: "website tips, optimization tips, web development tips, quick fixes",
-    count: 9,
+    id: "webassembly",
+    name: "WebAssembly",
+    slug: "webassembly",
+    description: "A binary instruction format for a stack-based virtual machine.",
+    count: 7,
     color: "bg-yellow-100 text-yellow-800",
-    seoTitle: "Website Tips & Tricks | Quick Optimization Guide",
-    ogTitle: "Website Tips & Optimization Tricks",
-    ogDescription: "Quick website tips and optimization tricks for better performance, security, and user experience."
-  }
+    metaTitle: "WebAssembly Category",
+    metaDescription: "A binary instruction format for a stack-based virtual machine.",
+    keywords: "webassembly, wasm, web",
+  },
+  {
+    id: "typescript",
+    name: "TypeScript",
+    slug: "typescript",
+    description: "TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.",
+    count: 12,
+    color: "bg-purple-100 text-purple-800",
+    metaTitle: "TypeScript Category",
+    metaDescription: "TypeScript is a typed superset of JavaScript.",
+    keywords: "typescript, javascript, typing",
+  },
+  {
+    id: "nodejs",
+    name: "Node.js",
+    slug: "nodejs",
+    description: "Node.js is an open-source, cross-platform, JavaScript runtime environment.",
+    count: 8,
+    color: "bg-red-100 text-red-800",
+    metaTitle: "Node.js Category",
+    metaDescription: "Node.js is a JavaScript runtime environment.",
+    keywords: "nodejs, javascript, backend",
+  },
 ];
 
 export const blogTags: BlogTag[] = [
   {
-    id: "cloudways",
-    name: "Cloudways",
-    slug: "cloudways",
-    description: "Everything about Cloudways managed cloud hosting platform, features, tutorials, and optimization tips.",
-    metaDescription: "Comprehensive Cloudways hosting guides, tutorials, and optimization tips for better performance and management.",
-    keywords: "cloudways hosting, cloudways tutorials, cloudways optimization, managed cloud hosting",
+    id: "javascript",
+    name: "JavaScript",
+    slug: "javascript",
+    description: "All about JavaScript.",
+    count: 50,
+    metaTitle: "JavaScript Tag",
+    metaDescription: "All about JavaScript.",
+    keywords: "javascript, js, programming",
+  },
+  {
+    id: "react",
+    name: "React",
+    slug: "react",
+    description: "React is a free and open-source front-end JavaScript library.",
+    count: 35,
+    metaTitle: "React Tag",
+    metaDescription: "React is a JavaScript library for building user interfaces.",
+    keywords: "react, javascript, frontend",
+  },
+  {
+    id: "nextjs",
+    name: "Next.js",
+    slug: "nextjs",
+    description: "Next.js is a React framework for production.",
     count: 25,
-    seoTitle: "Cloudways Hosting Guides | Tutorials & Tips",
-    ogTitle: "Cloudways Hosting - Guides & Tutorials",
-    ogDescription: "Master Cloudways hosting with our comprehensive guides, tutorials, and optimization tips."
+    metaTitle: "Next.js Tag",
+    metaDescription: "Next.js is a React framework for production.",
+    keywords: "nextjs, react, framework",
   },
   {
-    id: "hosting-comparison",
-    name: "Hosting Comparison",
-    slug: "hosting-comparison",
-    description: "Detailed comparisons between different hosting providers and their features, performance, and pricing.",
-    metaDescription: "Compare hosting providers with detailed analysis of features, performance, pricing, and user experience.",
-    keywords: "hosting comparison, provider comparison, web hosting reviews, hosting analysis",
-    count: 18,
-    seoTitle: "Hosting Provider Comparisons | Expert Analysis",
-    ogTitle: "Hosting Provider Comparisons",
-    ogDescription: "Expert comparisons of hosting providers with detailed analysis of features, performance, and pricing."
+    id: "webassembly",
+    name: "WebAssembly",
+    slug: "webassembly",
+    description: "WebAssembly (Wasm) is a binary instruction format.",
+    count: 15,
+    metaTitle: "WebAssembly Tag",
+    metaDescription: "WebAssembly is a binary instruction format.",
+    keywords: "webassembly, wasm, web",
   },
   {
-    id: "performance",
-    name: "Performance",
-    slug: "performance",
-    description: "Website performance optimization techniques, speed improvements, and Core Web Vitals enhancement.",
-    metaDescription: "Website performance optimization, speed enhancement techniques, and Core Web Vitals improvement strategies.",
-    keywords: "website performance, speed optimization, core web vitals, performance tuning",
-    count: 22,
-    seoTitle: "Website Performance Optimization | Speed Tips",
-    ogTitle: "Website Performance & Speed Optimization",
-    ogDescription: "Optimize website performance with expert tips on speed enhancement and Core Web Vitals improvement."
+    id: "typescript",
+    name: "TypeScript",
+    slug: "typescript",
+    description: "TypeScript is a typed superset of JavaScript.",
+    count: 30,
+    metaTitle: "TypeScript Tag",
+    metaDescription: "TypeScript is a typed superset of JavaScript.",
+    keywords: "typescript, javascript, typing",
   },
-  {
-    id: "security",
-    name: "Security",
-    slug: "security",
-    description: "Website security best practices, SSL configuration, malware protection, and threat prevention.",
-    metaDescription: "Website security best practices, SSL setup, malware protection, and cybersecurity strategies for websites.",
-    keywords: "website security, SSL certificate, malware protection, cybersecurity",
-    count: 16,
-    seoTitle: "Website Security Best Practices | Protection Guide",
-    ogTitle: "Website Security & Protection",
-    ogDescription: "Secure your website with best practices for SSL, malware protection, and cybersecurity."
-  },
-  {
-    id: "managed-hosting",
-    name: "Managed Hosting",
-    slug: "managed-hosting",
-    description: "Managed hosting solutions, benefits, providers comparison, and selection guide for businesses.",
-    metaDescription: "Managed hosting solutions guide, provider comparisons, and benefits for business websites and applications.",
-    keywords: "managed hosting, managed cloud hosting, hosting solutions, business hosting",
-    count: 14,
-    seoTitle: "Managed Hosting Guide | Best Providers & Solutions",
-    ogTitle: "Managed Hosting Solutions & Providers",
-    ogDescription: "Choose the best managed hosting solution with our comprehensive guide and provider comparisons."
-  },
-  {
-    id: "website-optimization",
-    name: "Website Optimization",
-    slug: "website-optimization",
-    description: "Complete website optimization strategies including SEO, performance, user experience, and conversion optimization.",
-    metaDescription: "Website optimization strategies for SEO, performance, user experience, and conversion rate improvement.",
-    keywords: "website optimization, SEO optimization, conversion optimization, user experience",
-    count: 20,
-    seoTitle: "Website Optimization Guide | SEO & Performance Tips",
-    ogTitle: "Website Optimization Strategies",
-    ogDescription: "Optimize your website for SEO, performance, and conversions with our comprehensive optimization guide."
-  }
 ];

@@ -35,8 +35,19 @@ export const CategoryEditor = ({ category, onSave, onCancel }: CategoryEditorPro
           value={formData.description || ""}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           placeholder="Category description"
-          rows={3}
+          rows={2}
         />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="categoryMetaTitle">Meta Title (SEO)</Label>
+        <Input
+          id="categoryMetaTitle"
+          value={formData.metaTitle || ""}
+          onChange={(e) => setFormData({ ...formData, metaTitle: e.target.value })}
+          placeholder="SEO meta title for category page"
+        />
+        <p className="text-xs text-gray-500">{(formData.metaTitle || "").length}/60 characters</p>
       </div>
 
       <div className="space-y-2">
@@ -48,15 +59,16 @@ export const CategoryEditor = ({ category, onSave, onCancel }: CategoryEditorPro
           placeholder="SEO meta description for category page"
           rows={2}
         />
+        <p className="text-xs text-gray-500">{(formData.metaDescription || "").length}/160 characters</p>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="categoryKeywords">Keywords</Label>
+        <Label htmlFor="categoryKeywords">Keywords (SEO)</Label>
         <Input
           id="categoryKeywords"
           value={formData.keywords || ""}
           onChange={(e) => setFormData({ ...formData, keywords: e.target.value })}
-          placeholder="SEO keywords for category"
+          placeholder="SEO keywords for category (comma separated)"
         />
       </div>
 
