@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -18,13 +18,20 @@ const BlogAdmin = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("posts");
-  const [posts, setPosts] = useState<BlogPost[]>(blogPosts);
-  const [categories, setCategories] = useState<BlogCategory[]>(blogCategories);
-  const [tags, setTags] = useState<BlogTag[]>(blogTags);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [categories, setCategories] = useState<BlogCategory[]>([]);
+  const [tags, setTags] = useState<BlogTag[]>([]);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState<'all' | 'published' | 'draft'>('all');
+
+  // Initialize data from imported data
+  useEffect(() => {
+    setPosts(blogPosts);
+    setCategories(blogCategories);
+    setTags(blogTags);
+  }, []);
 
   // Filter posts based on search and status
   const filteredPosts = posts.filter(post => {
@@ -40,26 +47,46 @@ const BlogAdmin = () => {
   });
 
   const handleSavePost = (postData: BlogPost) => {
+    console.log('Saving post:', postData);
+    
     if (editingPost) {
-      setPosts(posts.map(p => p.id === editingPost.id ? postData : p));
+      // Update existing post
+      setPosts(prevPosts => {
+        const updatedPosts = prevPosts.map(p => p.id === editingPost.id ? postData : p);
+        console.log('Updated posts:', updatedPosts);
+        return updatedPosts;
+      });
       toast({
         title: "Success",
         description: "Post updated successfully"
       });
     } else {
-      setPosts([...posts, postData]);
+      // Create new post
+      setPosts(prevPosts => {
+        const newPosts = [...prevPosts, postData];
+        console.log('New posts:', newPosts);
+        return newPosts;
+      });
       toast({
         title: "Success",
         description: "Post created successfully"
       });
     }
+    
+    // Clear editing state
     setEditingPost(null);
+    setIsCreating(false);
+  };
+
+  const handleEditPost = (post: BlogPost) => {
+    console.log('Editing post:', post);
+    setEditingPost({ ...post }); // Create a copy to avoid reference issues
     setIsCreating(false);
   };
 
   const handleDeletePost = (post: BlogPost) => {
     if (window.confirm(`Are you sure you want to delete "${post.title}"?`)) {
-      setPosts(posts.filter(p => p.id !== post.id));
+      setPosts(prevPosts => prevPosts.filter(p => p.id !== post.id));
       toast({
         title: "Success",
         description: "Post deleted successfully"
@@ -68,7 +95,19 @@ const BlogAdmin = () => {
   };
 
   const handlePreviewPost = (post: BlogPost) => {
+    // Create a temporary post in localStorage for preview
+    localStorage.setItem('previewPost', JSON.stringify(post));
     navigate(`/blog/${post.slug}`);
+  };
+
+  const handleCreateNew = () => {
+    setEditingPost(null);
+    setIsCreating(true);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingPost(null);
+    setIsCreating(false);
   };
 
   const handleUpdateCategory = (category: BlogCategory) => {
@@ -121,10 +160,7 @@ const BlogAdmin = () => {
           <PostEditor
             post={editingPost}
             onSave={handleSavePost}
-            onCancel={() => {
-              setEditingPost(null);
-              setIsCreating(false);
-            }}
+            onCancel={handleCancelEdit}
             onPreview={handlePreviewPost}
           />
         </div>
@@ -143,7 +179,7 @@ const BlogAdmin = () => {
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
             <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="posts">Posts</TabsTrigger>
+              <TabsTrigger value="posts">Posts ({posts.length})</TabsTrigger>
               <TabsTrigger value="categories">Categories</TabsTrigger>
               <TabsTrigger value="tags">Tags</TabsTrigger>
             </TabsList>
@@ -153,7 +189,7 @@ const BlogAdmin = () => {
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle>All Posts</CardTitle>
-                    <Button onClick={() => setIsCreating(true)}>
+                    <Button onClick={handleCreateNew}>
                       <Plus size={16} className="mr-2" />
                       New Post
                     </Button>
@@ -177,7 +213,7 @@ const BlogAdmin = () => {
                   ) : (
                     <PostsTable
                       posts={filteredPosts}
-                      onEdit={setEditingPost}
+                      onEdit={handleEditPost}
                       onDelete={handleDeletePost}
                       onPreview={handlePreviewPost}
                     />

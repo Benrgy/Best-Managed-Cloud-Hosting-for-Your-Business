@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,8 +41,10 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
     image: "",
     imageAlt: "",
     imageTitle: "",
-    readTime: 1,
+    readTime: "1 min read",
     published: false,
+    featured: false,
+    seoTitle: "",
     metaTitle: "",
     metaDescription: "",
     focusKeyword: "",
@@ -61,10 +64,72 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
       description: "",
       duration: "",
       uploadDate: "",
-      thumbnailUrl: ""
-    },
-    ...post
+      thumbnailUrl: "",
+      transcript: ""
+    }
   });
+
+  // Initialize form data when post prop changes
+  useEffect(() => {
+    if (post) {
+      setFormData({
+        ...post,
+        videoSEO: {
+          title: "",
+          description: "",
+          duration: "",
+          uploadDate: "",
+          thumbnailUrl: "",
+          transcript: "",
+          ...post.videoSEO
+        }
+      });
+    } else {
+      // Reset form for new post
+      setFormData({
+        title: "",
+        slug: "",
+        excerpt: "",
+        content: "",
+        author: "",
+        publishDate: new Date().toISOString().split('T')[0],
+        publishTime: "09:00",
+        scheduled: false,
+        autoPublish: false,
+        category: "",
+        tags: [],
+        image: "",
+        imageAlt: "",
+        imageTitle: "",
+        readTime: "1 min read",
+        published: false,
+        featured: false,
+        seoTitle: "",
+        metaTitle: "",
+        metaDescription: "",
+        focusKeyword: "",
+        keywords: "",
+        canonicalUrl: "",
+        ogTitle: "",
+        ogDescription: "",
+        ogImage: "",
+        twitterTitle: "",
+        twitterDescription: "",
+        twitterImage: "",
+        noIndex: false,
+        noFollow: false,
+        schema: "",
+        videoSEO: {
+          title: "",
+          description: "",
+          duration: "",
+          uploadDate: "",
+          thumbnailUrl: "",
+          transcript: ""
+        }
+      });
+    }
+  }, [post]);
 
   const generateSlug = (title: string) => {
     return title
@@ -74,44 +139,31 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
   };
 
   const handleTitleChange = (title: string) => {
-    setFormData({
-      ...formData,
-      title,
-      slug: generateSlug(title),
-      seoTitle: title.length > 60 ? title.substring(0, 57) + '...' : title,
-      metaTitle: title
-    });
-  };
-
-  const updateFormData = (field: string, value: any) => {
+    const newSlug = generateSlug(title);
     setFormData(prev => ({
       ...prev,
-      [field]: value,
-      metaTitle: field === 'title' && !prev.metaTitle ? value : prev.metaTitle
+      title,
+      slug: newSlug,
+      seoTitle: title.length > 60 ? title.substring(0, 57) + '...' : title,
+      metaTitle: title
     }));
   };
 
-  const handleImageSEOChange = (field: 'imageAlt' | 'imageTitle', value: string) => {
+  const updateFormData = (field: string, value: any) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
     }));
   };
 
-  const handleVideoSEOChange = (field: string, value: string) => {
+  const handleContentChange = (content: string) => {
+    const wordCount = content.replace(/<[^>]*>/g, ' ').split(/\s+/).filter(word => word.length > 0).length;
+    const readTime = Math.ceil(wordCount / 250);
+    
     setFormData(prev => ({
       ...prev,
-      videoSEO: {
-        ...prev.videoSEO,
-        [field]: value
-      }
-    }));
-  };
-
-  const handleMetaTitleChange = (value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      metaTitle: value
+      content,
+      readTime: `${readTime} min read`
     }));
   };
 
@@ -140,11 +192,63 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
       return;
     }
 
+    if (!formData.author) {
+      toast({
+        title: "Error",
+        description: "Author is required",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!formData.category) {
+      toast({
+        title: "Error",
+        description: "Category is required",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Calculate read time if not set
+    const wordCount = formData.content.replace(/<[^>]*>/g, ' ').split(/\s+/).filter(word => word.length > 0).length;
+    const readTime = Math.ceil(wordCount / 250);
+
     const postData: BlogPost = {
       id: post?.id || Date.now().toString(),
-      publishDate: post?.publishDate || new Date().toISOString().split('T')[0],
-      readTime: `${Math.ceil((formData.content?.length || 0) / 250)} min read`,
-      ...formData as BlogPost
+      title: formData.title || "",
+      slug: formData.slug || generateSlug(formData.title || ""),
+      excerpt: formData.excerpt || "",
+      content: formData.content || "",
+      author: formData.author || "",
+      publishDate: formData.publishDate || new Date().toISOString().split('T')[0],
+      publishTime: formData.publishTime,
+      scheduled: formData.scheduled,
+      autoPublish: formData.autoPublish,
+      category: formData.category || "",
+      tags: formData.tags || [],
+      image: formData.image || "",
+      imageAlt: formData.imageAlt,
+      imageTitle: formData.imageTitle,
+      readTime: `${readTime} min read`,
+      published: formData.published || false,
+      featured: formData.featured,
+      seoTitle: formData.seoTitle,
+      metaTitle: formData.metaTitle,
+      metaDescription: formData.metaDescription,
+      focusKeyword: formData.focusKeyword,
+      keywords: formData.keywords,
+      canonicalUrl: formData.canonicalUrl,
+      ogTitle: formData.ogTitle,
+      ogDescription: formData.ogDescription,
+      ogImage: formData.ogImage,
+      twitterTitle: formData.twitterTitle,
+      twitterDescription: formData.twitterDescription,
+      twitterImage: formData.twitterImage,
+      noIndex: formData.noIndex,
+      noFollow: formData.noFollow,
+      schema: formData.schema,
+      videoSEO: formData.videoSEO
     };
 
     onSave(postData);
@@ -160,11 +264,44 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
       return;
     }
 
+    const wordCount = formData.content.replace(/<[^>]*>/g, ' ').split(/\s+/).filter(word => word.length > 0).length;
+    const readTime = Math.ceil(wordCount / 250);
+
     const previewData: BlogPost = {
       id: post?.id || "preview",
-      publishDate: post?.publishDate || new Date().toISOString().split('T')[0],
-      readTime: `${Math.ceil((formData.content?.length || 0) / 250)} min read`,
-      ...formData as BlogPost
+      title: formData.title || "",
+      slug: formData.slug || generateSlug(formData.title || ""),
+      excerpt: formData.excerpt || "",
+      content: formData.content || "",
+      author: formData.author || "Preview Author",
+      publishDate: formData.publishDate || new Date().toISOString().split('T')[0],
+      publishTime: formData.publishTime,
+      scheduled: formData.scheduled,
+      autoPublish: formData.autoPublish,
+      category: formData.category || "",
+      tags: formData.tags || [],
+      image: formData.image || "",
+      imageAlt: formData.imageAlt,
+      imageTitle: formData.imageTitle,
+      readTime: `${readTime} min read`,
+      published: true, // Always show as published in preview
+      featured: formData.featured,
+      seoTitle: formData.seoTitle,
+      metaTitle: formData.metaTitle,
+      metaDescription: formData.metaDescription,
+      focusKeyword: formData.focusKeyword,
+      keywords: formData.keywords,
+      canonicalUrl: formData.canonicalUrl,
+      ogTitle: formData.ogTitle,
+      ogDescription: formData.ogDescription,
+      ogImage: formData.ogImage,
+      twitterTitle: formData.twitterTitle,
+      twitterDescription: formData.twitterDescription,
+      twitterImage: formData.twitterImage,
+      noIndex: formData.noIndex,
+      noFollow: formData.noFollow,
+      schema: formData.schema,
+      videoSEO: formData.videoSEO
     };
 
     onPreview?.(previewData);
@@ -172,7 +309,7 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
 
   const handleTagsChange = (tagsString: string) => {
     const tags = tagsString.split(',').map(tag => tag.trim()).filter(tag => tag);
-    setFormData({ ...formData, tags });
+    setFormData(prev => ({ ...prev, tags }));
   };
 
   return (
@@ -227,7 +364,7 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                     <Input
                       id="slug"
                       value={formData.slug}
-                      onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                      onChange={(e) => updateFormData('slug', e.target.value)}
                       placeholder="url-friendly-slug"
                     />
                   </div>
@@ -237,7 +374,7 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                     <Textarea
                       id="excerpt"
                       value={formData.excerpt}
-                      onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
+                      onChange={(e) => updateFormData('excerpt', e.target.value)}
                       placeholder="Brief description of the post"
                       rows={3}
                     />
@@ -245,17 +382,17 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="author">Author</Label>
+                      <Label htmlFor="author">Author *</Label>
                       <Input
                         id="author"
                         value={formData.author}
-                        onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                        onChange={(e) => updateFormData('author', e.target.value)}
                         placeholder="Author name"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="category">Category</Label>
-                      <Select value={formData.category} onValueChange={(value) => setFormData({ ...formData, category: value })}>
+                      <Label htmlFor="category">Category *</Label>
+                      <Select value={formData.category} onValueChange={(value) => updateFormData('category', value)}>
                         <SelectTrigger>
                           <SelectValue placeholder="Select category" />
                         </SelectTrigger>
@@ -285,7 +422,7 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                     <Input
                       id="image"
                       value={formData.image}
-                      onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                      onChange={(e) => updateFormData('image', e.target.value)}
                       placeholder="https://example.com/image.jpg"
                     />
                   </div>
@@ -295,7 +432,7 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                     <Input
                       id="imageAlt"
                       value={formData.imageAlt}
-                      onChange={(e) => handleImageSEOChange('imageAlt', e.target.value)}
+                      onChange={(e) => updateFormData('imageAlt', e.target.value)}
                       placeholder="Descriptive alt text for featured image"
                     />
                   </div>
@@ -305,7 +442,7 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                     <Input
                       id="imageTitle"
                       value={formData.imageTitle}
-                      onChange={(e) => handleImageSEOChange('imageTitle', e.target.value)}
+                      onChange={(e) => updateFormData('imageTitle', e.target.value)}
                       placeholder="Image title attribute"
                     />
                   </div>
@@ -339,13 +476,13 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                   {editorMode === 'visual' ? (
                     <RichTextEditor
                       content={formData.content || ''}
-                      onChange={(content) => setFormData({ ...formData, content })}
+                      onChange={handleContentChange}
                       placeholder="Write your post content..."
                     />
                   ) : (
                     <HTMLEditor
                       content={formData.content || ''}
-                      onChange={(content) => setFormData({ ...formData, content })}
+                      onChange={handleContentChange}
                     />
                   )}
                 </CardContent>
@@ -599,7 +736,7 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                     <Textarea
                       id="schema"
                       value={formData.schema}
-                      onChange={(e) => setFormData({ ...formData, schema: e.target.value })}
+                      onChange={(e) => updateFormData('schema', e.target.value)}
                       placeholder="Custom schema markup in JSON-LD format"
                       rows={8}
                       className="font-mono"
@@ -611,7 +748,7 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                       <Switch
                         id="published"
                         checked={formData.published}
-                        onCheckedChange={(checked) => setFormData({ ...formData, published: checked })}
+                        onCheckedChange={(checked) => updateFormData('published', checked)}
                       />
                       <Label htmlFor="published">Published</Label>
                     </div>
@@ -619,7 +756,7 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
                       <Switch
                         id="featured"
                         checked={formData.featured}
-                        onCheckedChange={(checked) => setFormData({ ...formData, featured: checked })}
+                        onCheckedChange={(checked) => updateFormData('featured', checked)}
                       />
                       <Label htmlFor="featured">Featured</Label>
                     </div>
