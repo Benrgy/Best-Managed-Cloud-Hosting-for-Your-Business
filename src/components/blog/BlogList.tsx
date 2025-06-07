@@ -11,6 +11,21 @@ export const BlogList = () => {
   const navigate = useNavigate();
   const publishedPosts = blogPosts.filter(post => post.published);
 
+  const handleReadMore = (post: any) => {
+    // Ensure the post has a valid slug before navigating
+    if (post.slug) {
+      navigate(`/blog/${post.slug}`);
+    } else {
+      console.error('Post does not have a valid slug:', post);
+      // Create a fallback slug from the title if needed
+      const fallbackSlug = post.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
+      navigate(`/blog/${fallbackSlug}`);
+    }
+  };
+
   return (
     <div className="space-y-8">
       <h2 className="text-2xl font-bold text-gray-900 mb-6">Latest Articles</h2>
@@ -36,7 +51,8 @@ export const BlogList = () => {
                   {post.featured && <Badge variant="outline">Featured</Badge>}
                   <span className="text-sm text-gray-500">{post.readTime}</span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+                <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 cursor-pointer hover:text-blue-600 transition-colors" 
+                    onClick={() => handleReadMore(post)}>
                   {post.title}
                 </h3>
                 <div className="flex items-center gap-4 text-sm text-gray-500">
@@ -64,7 +80,7 @@ export const BlogList = () => {
                   <Button 
                     variant="outline" 
                     size="sm"
-                    onClick={() => navigate(`/blog/${post.slug}`)}
+                    onClick={() => handleReadMore(post)}
                   >
                     Read More
                   </Button>
@@ -75,11 +91,20 @@ export const BlogList = () => {
         </Card>
       ))}
       
-      <div className="text-center mt-12">
-        <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-          Load More Articles
-        </Button>
-      </div>
+      {publishedPosts.length === 0 && (
+        <div className="text-center py-12">
+          <p className="text-gray-500 text-lg">No published posts yet.</p>
+          <p className="text-gray-400 mt-2">Check back soon for new content!</p>
+        </div>
+      )}
+      
+      {publishedPosts.length > 0 && (
+        <div className="text-center mt-12">
+          <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
+            Load More Articles
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

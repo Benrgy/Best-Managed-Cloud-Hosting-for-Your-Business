@@ -1,3 +1,4 @@
+
 import { useParams, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { SEO } from "@/components/SEO";
@@ -15,30 +16,75 @@ const BlogPost = () => {
   const navigate = useNavigate();
   const [post, setPost] = useState<BlogPostType | null>(null);
   const [isPreview, setIsPreview] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
+    console.log('Looking for post with slug:', slug);
+    console.log('Available posts:', blogPosts.map(p => ({ id: p.id, slug: p.slug, title: p.title })));
+    
     // First check for preview post in localStorage
     const previewPost = localStorage.getItem('previewPost');
     if (previewPost) {
-      const parsedPost = JSON.parse(previewPost);
-      if (parsedPost.slug === slug) {
-        setPost(parsedPost);
-        setIsPreview(true);
-        // Clear preview post after loading
+      try {
+        const parsedPost = JSON.parse(previewPost);
+        if (parsedPost.slug === slug) {
+          setPost(parsedPost);
+          setIsPreview(true);
+          setIsLoading(false);
+          // Clear preview post after loading
+          localStorage.removeItem('previewPost');
+          return;
+        }
+      } catch (error) {
+        console.error('Error parsing preview post:', error);
         localStorage.removeItem('previewPost');
-        return;
       }
     }
     
     // Otherwise find the post in the regular blog posts
     const foundPost = blogPosts.find(p => p.slug === slug);
     if (foundPost) {
+      console.log('Found post:', foundPost.title);
       setPost(foundPost);
       setIsPreview(false);
+    } else {
+      console.log('Post not found for slug:', slug);
+      // Try to find by title-generated slug as fallback
+      const fallbackPost = blogPosts.find(p => {
+        const generatedSlug = p.title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)/g, '');
+        return generatedSlug === slug;
+      });
+      
+      if (fallbackPost) {
+        console.log('Found post with fallback slug:', fallbackPost.title);
+        setPost(fallbackPost);
+        setIsPreview(false);
+      }
     }
+    
+    setIsLoading(false);
   }, [slug]);
   
+  if (isLoading) {
+    return (
+      <SemanticLayout>
+        <div className="min-h-screen bg-white flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-pulse">
+              <div className="h-8 bg-gray-200 rounded w-64 mx-auto mb-4"></div>
+              <div className="h-4 bg-gray-200 rounded w-48 mx-auto"></div>
+            </div>
+          </div>
+        </div>
+      </SemanticLayout>
+    );
+  }
+  
   if (!post) {
+    console.log('No post found, redirecting to 404');
     return <Navigate to="/404" replace />;
   }
 
