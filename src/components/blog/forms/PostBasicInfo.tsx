@@ -18,17 +18,28 @@ interface PostBasicInfoProps {
     imageAlt: string;
     imageTitle: string;
   };
-  onTitleChange: (title: string) => void;
   onFieldChange: (field: string, value: any) => void;
-  onTagsChange: (tagsString: string) => void;
+  onDateChange: (date: Date | undefined) => void;
+  categories: { label: string; value: string; }[];
+  tags: { label: string; value: string; }[];
 }
 
 export const PostBasicInfo = ({ 
   formData, 
-  onTitleChange, 
   onFieldChange, 
-  onTagsChange 
+  onDateChange,
+  categories,
+  tags
 }: PostBasicInfoProps) => {
+  const handleTitleChange = (title: string) => {
+    onFieldChange('title', title);
+  };
+
+  const handleTagsChange = (tagsString: string) => {
+    const tagsArray = tagsString.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+    onFieldChange('tags', tagsArray);
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -40,7 +51,7 @@ export const PostBasicInfo = ({
           <Input
             id="title"
             value={formData.title}
-            onChange={(e) => onTitleChange(e.target.value)}
+            onChange={(e) => handleTitleChange(e.target.value)}
             placeholder="Enter post title"
           />
         </div>
@@ -98,7 +109,7 @@ export const PostBasicInfo = ({
           <Input
             id="tags"
             value={formData.tags?.join(', ')}
-            onChange={(e) => onTagsChange(e.target.value)}
+            onChange={(e) => handleTagsChange(e.target.value)}
             placeholder="tag1, tag2, tag3"
           />
         </div>
