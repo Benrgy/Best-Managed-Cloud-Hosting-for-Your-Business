@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -310,6 +309,13 @@ export const PostEditor = ({ post, onSave, onCancel, onPreview }: PostEditorProp
   const handleTagsChange = (tagsString: string) => {
     const tags = tagsString.split(',').map(tag => tag.trim()).filter(tag => tag);
     setFormData(prev => ({ ...prev, tags }));
+  };
+
+  const handleMetaTitleChange = (metaTitle: string) => {
+    setFormData(prev => ({
+      ...prev,
+      metaTitle: metaTitle.length > 60 ? metaTitle.substring(0, 57) + '...' : metaTitle,
+    }));
   };
 
   return (

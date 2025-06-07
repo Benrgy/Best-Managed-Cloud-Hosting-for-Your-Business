@@ -40,17 +40,6 @@ export const CategoryEditor = ({ category, onSave, onCancel }: CategoryEditorPro
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="categoryMetaTitle">Meta Title (SEO)</Label>
-        <Input
-          id="categoryMetaTitle"
-          value={formData.metaTitle || ""}
-          onChange={(e) => setFormData({ ...formData, metaTitle: e.target.value })}
-          placeholder="SEO meta title for category page"
-        />
-        <p className="text-xs text-gray-500">{(formData.metaTitle || "").length}/60 characters</p>
-      </div>
-
-      <div className="space-y-2">
         <Label htmlFor="categoryMetaDescription">Meta Description (SEO)</Label>
         <Textarea
           id="categoryMetaDescription"
