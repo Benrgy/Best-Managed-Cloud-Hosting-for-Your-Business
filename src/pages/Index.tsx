@@ -42,7 +42,7 @@ const Index = () => {
   return (
     <>
       <SEO 
-        title="Best Managed Cloud Hosting 2025 | Cloudways"
+        title="Best Managed Cloud Hosting 2025 | CloudHost Pro"
         description="Cloudways is the #1 managed cloud hosting choice. Enterprise performance, 24/7 support, flexible pricing from $11/month. Free migration."
         keywords="best managed cloud hosting, cloudways hosting, business cloud hosting, managed hosting services, cloud hosting providers, wordpress hosting, ecommerce hosting, enterprise hosting, web hosting comparison, managed hosting reviews, thunderstack technology, aws hosting, google cloud hosting"
         canonicalUrl="https://best-managed-cloud-hosting-for-business.lovable.app"
