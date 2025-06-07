@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar, User, Tag } from "lucide-react";
 import { blogPosts, blogCategories } from "@/data/blogData";
 import { useNavigate } from "react-router-dom";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 export const BlogList = () => {
   const navigate = useNavigate();
@@ -18,10 +19,12 @@ export const BlogList = () => {
         <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
           <div className="md:flex">
             <div className="md:w-1/3">
-              <img 
-                src={post.image} 
-                alt={post.title}
+              <OptimizedImage
+                src={post.image}
+                alt={post.imageAlt || post.title}
                 className="w-full h-48 md:h-full object-cover"
+                width={400}
+                height={200}
               />
             </div>
             <div className="md:w-2/3">

@@ -8,6 +8,7 @@ import { Calendar, User, Tag, Clock, ArrowLeft } from "lucide-react";
 import { blogPosts, blogCategories } from "@/data/blogData";
 import { useNavigate } from "react-router-dom";
 import { BlogPostRenderer } from "@/components/blog/BlogPostRenderer";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 const BlogPost = () => {
   const { slug } = useParams();
@@ -94,10 +95,13 @@ const BlogPost = () => {
                 </div>
               </div>
               
-              <img 
-                src={post.image} 
-                alt={post.title}
+              <OptimizedImage
+                src={post.image}
+                alt={post.imageAlt || post.title}
                 className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
+                width={800}
+                height={400}
+                priority={true}
               />
             </div>
           </div>
