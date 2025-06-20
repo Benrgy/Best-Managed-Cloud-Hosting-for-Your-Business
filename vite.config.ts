@@ -23,8 +23,8 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    sourcemap: false,
-    minify: 'terser',
+    sourcemap: mode === 'development',
+    minify: mode === 'production' ? 'terser' : false,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -33,7 +33,13 @@ export default defineConfig(({ mode }) => ({
           ui: ['@radix-ui/react-accordion', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu']
         }
       }
-    }
+    },
+    terserOptions: mode === 'production' ? {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    } : undefined,
   },
   base: './'
 }));
