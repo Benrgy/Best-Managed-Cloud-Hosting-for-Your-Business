@@ -49,7 +49,6 @@ const App = () => {
       const criticalResources = [
         'https://fonts.googleapis.com',
         'https://fonts.gstatic.com',
-        'https://www.googletagmanager.com'
       ];
 
       criticalResources.forEach(url => {
@@ -69,44 +68,6 @@ const App = () => {
     };
 
     preloadResources();
-
-    // Enhanced performance monitoring
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(() => {
-        console.log('App initialized during idle time - optimal performance');
-        
-        // Report performance metrics
-        if ('PerformanceObserver' in window) {
-          const observer = new PerformanceObserver((list) => {
-            const entries = list.getEntries();
-            entries.forEach((entry) => {
-              if (entry.entryType === 'navigation') {
-                const navEntry = entry as PerformanceNavigationTiming;
-                console.log('Navigation timing:', {
-                  domContentLoaded: navEntry.domContentLoadedEventEnd - navEntry.domContentLoadedEventStart,
-                  loadComplete: navEntry.loadEventEnd - navEntry.loadEventStart,
-                  firstPaint: navEntry.loadEventEnd - navEntry.fetchStart
-                });
-              }
-            });
-          });
-          observer.observe({ entryTypes: ['navigation'] });
-        }
-      });
-    }
-
-    // Service worker registration for PWA capabilities
-    if ('serviceWorker' in navigator && 'production' === process.env.NODE_ENV) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then((registration) => {
-            console.log('SW registered: ', registration);
-          })
-          .catch((registrationError) => {
-            console.log('SW registration failed: ', registrationError);
-          });
-      });
-    }
   }, []);
 
   return (
@@ -118,13 +79,19 @@ const App = () => {
             <Toaster />
             <Sonner />
             <BrowserRouter>
-              <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+              <Suspense fallback={
+                <div className="flex items-center justify-center min-h-screen bg-white">
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                    <p className="text-gray-600">Loading...</p>
+                  </div>
+                </div>
+              }>
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/blog" element={<Blog />} />
                   <Route path="/blog/:slug" element={<BlogPost />} />
                   <Route path="/admin/blog" element={<BlogAdmin />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
