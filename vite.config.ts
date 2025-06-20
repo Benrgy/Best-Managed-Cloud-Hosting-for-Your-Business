@@ -23,8 +23,8 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    sourcemap: mode === 'development',
-    minify: mode === 'production' ? 'terser' : false,
+    sourcemap: false, // Disable sourcemaps for production
+    minify: 'terser',
     rollupOptions: {
       output: {
         manualChunks: {
@@ -34,12 +34,12 @@ export default defineConfig(({ mode }) => ({
         }
       }
     },
-    terserOptions: mode === 'production' ? {
+    terserOptions: {
       compress: {
         drop_console: true,
         drop_debugger: true,
       },
-    } : undefined,
+    },
   },
-  base: './'
+  base: './' // Ensure relative paths for deployment
 }));
