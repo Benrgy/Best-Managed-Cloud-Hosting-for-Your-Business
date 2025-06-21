@@ -1,3 +1,4 @@
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -51,9 +52,9 @@ export default defineConfig(({ mode }) => ({
     },
     terserOptions: {
       compress: {
-        drop_console: true,
+        drop_console: false,
         drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn']
+        pure_funcs: ['console.debug']
       },
       mangle: true,
       format: {
@@ -63,7 +64,7 @@ export default defineConfig(({ mode }) => ({
     chunkSizeWarningLimit: 1000,
     assetsInlineLimit: 4096
   },
-  base: './',
+  base: process.env.NODE_ENV === 'production' ? '/best-managed-cloud-hosting-for-business/' : '/',
   define: {
     'process.env.NODE_ENV': JSON.stringify(mode)
   }

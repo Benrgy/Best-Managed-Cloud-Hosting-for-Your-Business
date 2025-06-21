@@ -92,6 +92,9 @@ const App = () => {
     }
   }, []);
 
+  // Get the base path for GitHub Pages
+  const basename = process.env.NODE_ENV === 'production' ? '/best-managed-cloud-hosting-for-business' : '';
+
   return (
     <ErrorBoundary>
       <HelmetProvider>
@@ -100,7 +103,7 @@ const App = () => {
             {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
             <Toaster />
             <Sonner />
-            <BrowserRouter>
+            <BrowserRouter basename={basename}>
               <Suspense fallback={
                 <div className="flex items-center justify-center min-h-screen bg-white">
                   <div className="text-center">
