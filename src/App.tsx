@@ -83,7 +83,7 @@ const App = () => {
                 response: perfData.responseEnd - perfData.requestStart,
                 dom: perfData.domContentLoadedEventEnd - perfData.responseEnd,
                 load: perfData.loadEventEnd - perfData.loadEventStart,
-                total: perfData.loadEventEnd - perfData.navigationStart
+                total: perfData.loadEventEnd - perfData.fetchStart
               });
             }
           }, 0);
