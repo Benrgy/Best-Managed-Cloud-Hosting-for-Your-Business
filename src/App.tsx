@@ -1,3 +1,4 @@
+
 import { useEffect, lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -36,12 +37,23 @@ const queryClient = new QueryClient({
 
 const App = () => {
   useEffect(() => {
+    console.log('App starting...');
+    console.log('Current location:', window.location.href);
+    console.log('Environment:', process.env.NODE_ENV);
+    
     // Handle GitHub Pages SPA redirects
-    const isRedirected = window.sessionStorage.redirect;
-    if (isRedirected) {
-      delete window.sessionStorage.redirect;
-      window.history.replaceState(null, '', isRedirected);
-    }
+    const handleRedirect = () => {
+      const search = window.location.search;
+      console.log('Search params:', search);
+      
+      if (search && search.includes('/?/')) {
+        const redirectPath = search.replace('/?/', '').replace(/&/g, '?').replace(/~and~/g, '&');
+        console.log('Redirecting to:', redirectPath);
+        window.history.replaceState(null, '', redirectPath + window.location.hash);
+      }
+    };
+
+    handleRedirect();
 
     // Enhanced resource preloading for production
     const preloadResources = () => {
@@ -91,8 +103,10 @@ const App = () => {
     }
   }, []);
 
-  // Get the base path for GitHub Pages
+  // Determine the basename - for GitHub Pages, we need the repository name
   const basename = process.env.NODE_ENV === 'production' ? '/Best-Managed-Cloud-Hosting-for-Your-Business' : '';
+  
+  console.log('Using basename:', basename);
 
   return (
     <ErrorBoundary>

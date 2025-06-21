@@ -35,11 +35,15 @@
     
     <!-- GitHub Pages SPA redirect script -->
     <script type="text/javascript">
+      console.log('Index page loading...');
+      console.log('Current URL:', window.location.href);
+      
       (function(l) {
         if (l.search[1] === '/' ) {
           var decoded = l.search.slice(1).split('&').map(function(s) { 
             return s.replace(/~and~/g, '&')
           }).join('?');
+          console.log('SPA redirect detected, redirecting to:', decoded);
           window.history.replaceState(null, null,
               l.pathname.slice(0, -1) + decoded + l.hash
           );
@@ -74,9 +78,11 @@
     <!-- Remove loading fallback once app loads -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded');
         setTimeout(function() {
           var loadingFallback = document.getElementById('loading-fallback');
           if (loadingFallback) {
+            console.log('Hiding loading fallback');
             loadingFallback.style.display = 'none';
           }
         }, 100);
