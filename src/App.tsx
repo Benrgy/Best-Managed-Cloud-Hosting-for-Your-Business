@@ -37,24 +37,6 @@ const queryClient = new QueryClient({
 
 const App = () => {
   useEffect(() => {
-    console.log('App starting...');
-    console.log('Current location:', window.location.href);
-    console.log('Environment:', process.env.NODE_ENV);
-    
-    // Handle GitHub Pages SPA redirects
-    const handleRedirect = () => {
-      const search = window.location.search;
-      console.log('Search params:', search);
-      
-      if (search && search.includes('/?/')) {
-        const redirectPath = search.replace('/?/', '').replace(/&/g, '?').replace(/~and~/g, '&');
-        console.log('Redirecting to:', redirectPath);
-        window.history.replaceState(null, '', redirectPath + window.location.hash);
-      }
-    };
-
-    handleRedirect();
-
     // Enhanced resource preloading for production
     const preloadResources = () => {
       const criticalResources = [
@@ -103,10 +85,8 @@ const App = () => {
     }
   }, []);
 
-  // Determine the basename - for GitHub Pages, we need the repository name
+  // Determine the basename for GitHub Pages
   const basename = process.env.NODE_ENV === 'production' ? '/Best-Managed-Cloud-Hosting-for-Your-Business' : '';
-  
-  console.log('Using basename:', basename);
 
   return (
     <ErrorBoundary>

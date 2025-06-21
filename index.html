@@ -33,17 +33,16 @@
     <link rel="preconnect" href="https://www.cloudways.com" />
     <link rel="dns-prefetch" href="https://www.cloudways.com" />
     
-    <!-- GitHub Pages SPA redirect script -->
+    <!-- Single Page Apps for GitHub Pages -->
     <script type="text/javascript">
-      console.log('Index page loading...');
-      console.log('Current URL:', window.location.href);
-      
+      // Single Page Apps for GitHub Pages
+      // MIT License
+      // https://github.com/rafgraph/spa-github-pages
       (function(l) {
         if (l.search[1] === '/' ) {
           var decoded = l.search.slice(1).split('&').map(function(s) { 
             return s.replace(/~and~/g, '&')
           }).join('?');
-          console.log('SPA redirect detected, redirecting to:', decoded);
           window.history.replaceState(null, null,
               l.pathname.slice(0, -1) + decoded + l.hash
           );
@@ -73,16 +72,14 @@
     </div>
     
     <!-- Vite will automatically inject the built assets here during production build -->
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="./src/main.tsx"></script>
     
     <!-- Remove loading fallback once app loads -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        console.log('DOM loaded');
         setTimeout(function() {
           var loadingFallback = document.getElementById('loading-fallback');
           if (loadingFallback) {
-            console.log('Hiding loading fallback');
             loadingFallback.style.display = 'none';
           }
         }, 100);
