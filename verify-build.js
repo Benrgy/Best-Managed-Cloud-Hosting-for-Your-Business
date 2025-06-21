@@ -16,6 +16,14 @@ if (!fs.existsSync(distPath)) {
   process.exit(1);
 }
 
+// Check PostCSS configuration
+const postcssConfigPath = path.join(__dirname, 'postcss.config.cjs');
+if (fs.existsSync(postcssConfigPath)) {
+  console.log('✅ PostCSS configuration found (postcss.config.cjs)');
+} else {
+  console.warn('⚠️  Warning: PostCSS configuration not found');
+}
+
 // Check required files
 let allFilesExist = true;
 requiredFiles.forEach(file => {
