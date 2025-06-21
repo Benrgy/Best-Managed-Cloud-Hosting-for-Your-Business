@@ -12,7 +12,7 @@ import Index from "./pages/Index";
 import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
 
-// Lazy load components
+// Lazy load components for better performance
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const BlogAdmin = lazy(() => import("./pages/BlogAdmin"));
 
@@ -44,7 +44,7 @@ const App = () => {
       window.history.replaceState(null, '', isRedirected);
     }
 
-    // Enhanced resource preloading
+    // Enhanced resource preloading for production
     const preloadResources = () => {
       const criticalResources = [
         'https://fonts.googleapis.com',
@@ -68,6 +68,28 @@ const App = () => {
     };
 
     preloadResources();
+
+    // Production performance monitoring
+    if (process.env.NODE_ENV === 'production') {
+      // Monitor performance metrics
+      if ('performance' in window) {
+        window.addEventListener('load', () => {
+          setTimeout(() => {
+            const perfData = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+            if (perfData) {
+              console.log('Page Load Performance:', {
+                dns: perfData.domainLookupEnd - perfData.domainLookupStart,
+                connect: perfData.connectEnd - perfData.connectStart,
+                response: perfData.responseEnd - perfData.requestStart,
+                dom: perfData.domContentLoadedEventEnd - perfData.responseEnd,
+                load: perfData.loadEventEnd - perfData.loadEventStart,
+                total: perfData.loadEventEnd - perfData.navigationStart
+              });
+            }
+          }, 0);
+        });
+      }
+    }
   }, []);
 
   return (
@@ -75,7 +97,7 @@ const App = () => {
       <HelmetProvider>
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
-            <PerformanceMonitor />
+            {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
             <Toaster />
             <Sonner />
             <BrowserRouter>
@@ -83,7 +105,7 @@ const App = () => {
                 <div className="flex items-center justify-center min-h-screen bg-white">
                   <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                    <p className="text-gray-600">Loading...</p>
+                    <p className="text-gray-600">Loading CloudHost Pro...</p>
                   </div>
                 </div>
               }>

@@ -23,23 +23,39 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    sourcemap: false, // Disable sourcemaps for production
+    sourcemap: false,
     minify: 'terser',
+    target: 'es2015',
     rollupOptions: {
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
-          ui: ['@radix-ui/react-accordion', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu']
-        }
+          ui: ['@radix-ui/react-accordion', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
+          query: ['@tanstack/react-query'],
+          utils: ['clsx', 'tailwind-merge', 'class-variance-authority']
+        },
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]'
       }
     },
     terserOptions: {
       compress: {
         drop_console: true,
         drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn']
       },
+      mangle: true,
+      format: {
+        comments: false
+      }
     },
+    chunkSizeWarningLimit: 1000,
+    assetsInlineLimit: 4096
   },
-  base: './' // Ensure relative paths for deployment
+  base: './',
+  define: {
+    'process.env.NODE_ENV': JSON.stringify(mode)
+  }
 }));
