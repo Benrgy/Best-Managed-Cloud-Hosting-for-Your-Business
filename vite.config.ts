@@ -54,6 +54,7 @@ export default defineConfig(({ mode }) => ({
     chunkSizeWarningLimit: 1000,
     assetsInlineLimit: 4096
   },
+  // Set base to relative paths for flexible deployment
   base: './',
   define: {
     'process.env.NODE_ENV': JSON.stringify(mode)
