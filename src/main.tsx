@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
+console.log('Starting React app...');
+
 // Enhanced error handling for production
 const handleError = (error: Error, errorInfo?: any) => {
   console.error('Application Error:', error);
@@ -32,8 +34,11 @@ window.addEventListener('unhandledrejection', (event) => {
 // Ensure the root element exists before attempting to render
 const rootElement = document.getElementById("root");
 if (!rootElement) {
+  console.error('Root element not found!');
   throw new Error('Failed to find the root element');
 }
+
+console.log('Root element found, initializing React...');
 
 // Remove loading fallback once React takes over
 const loadingFallback = document.getElementById('loading-fallback');
@@ -42,8 +47,11 @@ if (loadingFallback) {
 }
 
 try {
+  console.log('Creating React root...');
   createRoot(rootElement).render(<App />);
+  console.log('React app rendered successfully!');
 } catch (error) {
+  console.error('Failed to render React app:', error);
   handleError(error as Error);
   
   // Fallback UI if React fails to render

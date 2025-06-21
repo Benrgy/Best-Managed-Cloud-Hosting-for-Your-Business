@@ -64,7 +64,7 @@ export default defineConfig(({ mode }) => ({
     chunkSizeWarningLimit: 1000,
     assetsInlineLimit: 4096
   },
-  base: process.env.NODE_ENV === 'production' ? '/best-managed-cloud-hosting-for-business/' : '/',
+  base: '/',
   define: {
     'process.env.NODE_ENV': JSON.stringify(mode)
   }
