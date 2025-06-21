@@ -1,4 +1,3 @@
-
 import { useEffect, lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -92,6 +91,9 @@ const App = () => {
     }
   }, []);
 
+  // Get the base path for GitHub Pages
+  const basename = process.env.NODE_ENV === 'production' ? '/Best-Managed-Cloud-Hosting-for-Your-Business' : '';
+
   return (
     <ErrorBoundary>
       <HelmetProvider>
@@ -100,7 +102,7 @@ const App = () => {
             {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
             <Toaster />
             <Sonner />
-            <BrowserRouter>
+            <BrowserRouter basename={basename}>
               <Suspense fallback={
                 <div className="flex items-center justify-center min-h-screen bg-white">
                   <div className="text-center">

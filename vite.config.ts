@@ -3,8 +3,6 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
-import tailwindcss from "tailwindcss";
-import autoprefixer from "autoprefixer";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -25,8 +23,8 @@ export default defineConfig(({ mode }) => ({
   css: {
     postcss: {
       plugins: [
-        tailwindcss(),
-        autoprefixer(),
+        require('tailwindcss'),
+        require('autoprefixer'),
       ],
     },
   },
@@ -45,9 +43,9 @@ export default defineConfig(({ mode }) => ({
           query: ['@tanstack/react-query'],
           utils: ['clsx', 'tailwind-merge', 'class-variance-authority']
         },
-        entryFileNames: 'assets/[name]-[hash].js',
-        chunkFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]'
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash].[ext]'
       }
     },
     terserOptions: {
@@ -64,7 +62,7 @@ export default defineConfig(({ mode }) => ({
     chunkSizeWarningLimit: 1000,
     assetsInlineLimit: 4096
   },
-  base: '/',
+  base: mode === 'production' ? '/Best-Managed-Cloud-Hosting-for-Your-Business/' : '/',
   define: {
     'process.env.NODE_ENV': JSON.stringify(mode)
   }
