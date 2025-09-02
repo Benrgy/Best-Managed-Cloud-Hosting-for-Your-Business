@@ -1,3 +1,5 @@
 
-# Netlify redirects for SPA routing
+# SPA fallback for Netlify with specific routes
+/blog /index.html 200
+/admin/blog /index.html 200
 /*    /index.html   200

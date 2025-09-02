@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
 import { PerformanceMonitor } from "@/components/PerformanceMonitor";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { SEOWrapper } from "@/components/SEOWrapper";
 import Index from "./pages/Index";
 import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
@@ -97,22 +98,24 @@ const App = () => {
             <Toaster />
             <Sonner />
             <BrowserRouter basename={basename}>
-              <Suspense fallback={
-                <div className="flex items-center justify-center min-h-screen bg-white">
-                  <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                    <p className="text-gray-600">Loading CloudHost Pro...</p>
+              <SEOWrapper>
+                <Suspense fallback={
+                  <div className="flex items-center justify-center min-h-screen bg-white">
+                    <div className="text-center">
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                      <p className="text-gray-600">Loading CloudHost Pro...</p>
+                    </div>
                   </div>
-                </div>
-              }>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/blog" element={<Blog />} />
-                  <Route path="/blog/:slug" element={<BlogPost />} />
-                  <Route path="/admin/blog" element={<BlogAdmin />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Suspense>
+                }>
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/blog" element={<Blog />} />
+                    <Route path="/blog/:slug" element={<BlogPost />} />
+                    <Route path="/admin/blog" element={<BlogAdmin />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </Suspense>
+              </SEOWrapper>
             </BrowserRouter>
           </TooltipProvider>
         </QueryClientProvider>
