@@ -1,0 +1,16 @@
+# Netlify Configuration
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Edge Function for Blog SEO Enhancement
+[[edge_functions]]
+  function = "blog-seo"
+  path = "/blog/*"
+
+# SPA Redirect Rules
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
